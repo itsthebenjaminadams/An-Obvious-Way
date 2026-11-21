@@ -342,3 +342,24 @@ html[data-motion="quiet"] .btn:hover{transform:none}
 .report-flags{padding-left:1.1rem;margin:.4rem 0;color:var(--muted);line-height:1.55}
 .report-related{margin-top:1rem}
 @media(max-width:570px){.report-scroll-hint{display:block}}
+
+/* Services: a native disclosure finder with no script or visitor data. */
+.service-finder{margin-top:1.5rem}
+.service-finder .window-body{padding:clamp(.8rem,3vw,1.45rem)}
+.service-finder h2{margin-bottom:.2rem}
+.service-finder h2+p{margin:.4rem 0 .85rem}
+.finder-list{display:grid;gap:.42rem}
+.finder-list details{min-width:0;border:1px solid var(--line);border-radius:.35rem;background:#0a1527}
+.finder-list details[open]{border-color:color-mix(in srgb,var(--accent) 58%,var(--line))}
+.finder-list summary{
+ display:list-item;min-height:44px;padding:.62rem .78rem;
+ color:var(--text);font-weight:650;line-height:1.35;cursor:pointer;overflow-wrap:anywhere;
+}
+.finder-list summary::marker{color:var(--accent)}
+.finder-list summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:.25rem}
+.finder-index{margin:0 .55rem 0 .22rem;color:var(--accent);font:700 .73rem var(--aow-mono)}
+.finder-answer{padding:.05rem .8rem .8rem 1.15rem;border-top:1px solid var(--line)}
+.finder-answer p{margin:.5rem 0 .45rem}
+.finder-answer strong{color:var(--text)}
+.finder-answer .actions{margin-top:.65rem}
+@media(max-width:460px){.finder-answer .actions{display:grid;grid-template-columns:1fr}.finder-answer .btn{width:100%}}
