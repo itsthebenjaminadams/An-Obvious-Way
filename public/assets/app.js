@@ -43,7 +43,6 @@ function setupIntro() {
     'Support · Websites · Automation',
     'Ready.'
   ];
-  const seenKey = 'aow-console-intro-v1';
   let timer;
   let playing = false;
 
@@ -60,7 +59,6 @@ function setupIntro() {
     if (playing || motion.matches) return;
     playing = true;
     let step = 0;
-    savePreference('sessionStorage', seenKey, 'yes');
     button.textContent = 'Skip intro';
     output.textContent = '';
     bar.style.width = '0%';
@@ -85,9 +83,8 @@ function setupIntro() {
   button.addEventListener('click', () => playing ? finish() : start());
   document.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); });
   window.addEventListener('pagehide', finish);
-  let sameSite = false;
-  try { sameSite = new URL(document.referrer).origin === window.location.origin; } catch { /* No referrer. */ }
-  if (!sameSite && !window.location.hash && !loadPreference('sessionStorage', seenKey)) start();
+  window.addEventListener('pageshow', event => { if (event.persisted) start(); });
+  start();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
