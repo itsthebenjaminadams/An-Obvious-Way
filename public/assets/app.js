@@ -32,7 +32,12 @@ function setupIntro() {
   if (!consolePanel || !intro || !output || !bar || !button) return;
 
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const bootLines = ['AOW / SYSTEM INITIALIZATION', 'Checking service modules…', 'Support · Websites · Automation', 'Ready.'];
+  const bootLines = [
+    'AOW BIOS ' + consolePanel.dataset.biosVersion,
+    'Initializing system…',
+    'Support · Websites · Automation',
+    'Ready.'
+  ];
   const seenKey = 'aow-console-intro-v1';
   let timer;
   let playing = false;
