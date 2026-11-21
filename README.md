@@ -30,4 +30,8 @@ Edit the relevant HTML or CSS file directly in GitHub and click Commit changes o
 
 The contact page uses a `mailto:` link to open a quote-request draft addressed to `contact@anobviousway.com`. The home and services pages link to specific quote topics on the contact page; those links prefill the service in the email draft. The site does not collect submissions or send email itself. Do not add passwords, tokens, or API keys to this repository.
 
-The homepage console intro plays in the page, not over it. It plays only on a direct or external homepage visit once per browser tab, can be skipped/replayed, and is disabled with reduced motion. Navigation and quote links are plain HTML and work without JavaScript.
+The homepage console intro plays in the page, not over it. It plays on every homepage visit or reload, including visits from another AOW page. It can be skipped or replayed, and is disabled with reduced motion. Navigation and quote links are plain HTML and work without JavaScript.
+
+## BIOS release number
+
+The static `data-bios-release` block in `public/index.html` is the only source for the version and release-build time shown in the homepage and its intro. It starts at `1.0`. For each subsequent user-visible production release, update its `data-bios-version` text to the next tenth from the last verified live number (`1.0` → `1.1`, and `1.9` → `2.0`). In the same block update the `<time>` machine timestamp and visible label to the matching UTC build time, accurate to the minute. The build time is not a claim about the exact moment Cloudflare published it. Carry the change with the release; do not bump it for drafts, retries, or checks. Verify the version and timestamp on the live homepage and in Replay intro before preparing another bump.
