@@ -8,7 +8,7 @@
 
   // Path, label, helpful action, and aliases. All destinations are static site links.
   const pages = [
-    ['/services/', 'Choose a service', 'Not sure which kind of help fits? Start by goal.', 'service finder options compare services prices pricing cost rates'],
+    ['/services/#all-services', 'Services and starting prices', 'Compare services, starting prices and quote options.', 'service finder options compare services prices pricing cost rates'],
     ['/services/#tech-support', 'Tech support', 'Get help with devices, Windows, Wi-Fi or setup.', 'computer laptop pc fix repair troubleshooting internet wifi wireless network connection hardware remote access'],
     ['/services/#web-development', 'Web development', 'Build or improve a small-business site.', 'website websites web design create new landing page mobile small business business site hosting navigation'],
     ['/services/#workflow-automation', 'Workflow automation', 'Cut repetitive steps from a report or spreadsheet.', 'automate automated script task data processing spreadsheet excel csv recurring report repeat manual'],
@@ -16,12 +16,12 @@
     ['/contact/#quote-web', 'Start a website quote', 'Use an email draft or copy the webmail template.', 'web design website site quote cost price mobile email contact estimate'],
     ['/contact/#quote-automation', 'Start an automation quote', 'Use an email draft or copy the webmail template.', 'workflow automation report spreadsheet data quote price cost email estimate'],
     ['/contact/#preflight-title', 'Prepare a quote request', 'Gather the right details before you reach out.', 'start contact intake preflight scope brief question estimate prepare checklist'],
-    ['/portfolio/#report-demo-title', 'Report repair challenge', 'Fix fictional records and rerun the report yourself.', 'demo game interactive play challenge repair automation spreadsheet data workflow fix errors'],
-    ['/portfolio/#support-puzzle', 'Dropping call puzzle', 'Compare three clues in a fictional Wi-Fi case.', 'tech support wifi repair demo game interactive troubleshooting diagnosis internet network video call team meeting'],
+    ['/portfolio/#report-demo-title', 'Report repair challenge', 'Optional demo: see how a report flags bad rows.', 'demo game interactive play challenge lab repair automation spreadsheet data workflow fix errors'],
+    ['/portfolio/#support-puzzle', 'Dropping call puzzle', 'Optional demo: see how we narrow down a Wi-Fi problem.', 'tech support wifi repair demo game lab interactive troubleshooting diagnosis internet network video call team meeting'],
     ['/portfolio/#featured-project', 'Website case study', 'See how AOW replaced a dead-end contact form.', 'portfolio work examples project sample before after site design contact quote flow'],
     ['/about/#how-we-work', 'How AOW works', 'See how we scope and hand off small projects.', 'about team process delivery project support approach'],
     ['/contact/', 'Contact AOW', 'Find ways to start a conversation or request a quote.', 'mail email contact get in touch ask message'],
-    ['/portfolio/', 'Explore the portfolio', 'See the case study and hands-on examples.', 'projects previous work fun demo samples interactive'],
+    ['/portfolio/', 'Explore the portfolio', 'Start with AOW’s live website case study; demos are optional.', 'projects previous work fun demo samples interactive'],
     ['/', 'AOW homepage', 'Return to the main site.', 'home homepage start bios mission control landing page']
   ];
 
@@ -30,7 +30,8 @@
   const searchIndex = pages.map(([url, title, description, aliases]) => ({
     url, title, description, titleWords: tokenize(title), otherWords: tokenize(description + ' ' + aliases)
   }));
-  const featured = [0, 1, 2, 3, 8].map(index => searchIndex[index]);
+  const featured = [0, 1, 2, 3, 12].map(index => searchIndex[index]);
+  const demoPaths = new Set(['/portfolio/#report-demo-title', '/portfolio/#support-puzzle']);
 
   function near(term, word) {
     if (term.length < 5 || Math.abs(term.length - word.length) > 1) return false;
@@ -54,10 +55,16 @@
   function search(query) {
     const terms = [...new Set(tokenize(query.slice(0, 80)).filter(word => !noise.has(word)))];
     if (!terms.length) return null;
+    // Put service information ahead of optional demos unless the visitor asks for a demo.
+    const buying = terms.some(term => ['quote', 'pricing', 'price', 'prices', 'cost', 'estimate'].includes(term));
+    const demoIntent = !buying && (terms.some(term => ['demo', 'game', 'puzzle', 'lab', 'challenge', 'interactive'].includes(term))
+      || (terms.includes('dropping') && terms.includes('call'))
+      || (terms.includes('report') && terms.includes('repair')));
+    const priority = match => demoPaths.has(match.item.url) === demoIntent ? 1 : 0;
     return searchIndex.map(item => {
       const scores = terms.map(term => Math.max(wordScore(term, item.titleWords, 8), wordScore(term, item.otherWords, 4)));
       return { item, weight: scores.every(score => score > 0) ? scores.reduce((sum, score) => sum + score, 0) : 0 };
-    }).filter(match => match.weight > 0).sort((a, b) => b.weight - a.weight).slice(0, 7).map(match => match.item);
+    }).filter(match => match.weight > 0).sort((a, b) => priority(b) - priority(a) || b.weight - a.weight).slice(0, 7).map(match => match.item);
   }
 
   function make(tag, cls, content) {
@@ -84,7 +91,7 @@
   input.maxLength = 80;
   input.autocomplete = 'off';
   input.spellcheck = false;
-  input.placeholder = 'Try “Wi-Fi”, “quote”, or “demo”';
+  input.placeholder = 'Try “Wi-Fi”, “website quote”, or “pricing”';
   input.setAttribute('aria-describedby', 'quick-find-hint');
   const hint = make('p', 'quick-find-hint', 'Type a goal or topic, then Tab to the links. Searches stay on this page.');
   hint.id = 'quick-find-hint';
