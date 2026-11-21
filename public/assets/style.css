@@ -293,3 +293,27 @@ html[data-motion="quiet"] .btn:hover{transform:none}
 @keyframes aow-lock{from{opacity:.48}to{opacity:1}}
 @keyframes aow-panel-mark{from{transform:scaleX(.15);transform-origin:left;opacity:.25}to{transform:scaleX(1);transform-origin:left}}
 @keyframes aow-title{from{text-shadow:0 0 1.75rem #8dc4ff60}to{text-shadow:0 0 .9rem #a8d5ff1b}}
+
+/* The portfolio comparison is a static, responsive diagram, not a form. */
+.case-comparison{margin:1.7rem 0 1rem}
+.case-comparison figcaption{margin-bottom:.65rem;color:var(--muted)}
+.case-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.85rem}
+.case-frame{
+ min-width:0;padding:clamp(.8rem,3vw,1.2rem);border:1px solid var(--line);border-radius:.45rem;
+ background:linear-gradient(160deg,#142138,#081220);color:var(--text);
+}
+.case-after{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.case-code{margin-bottom:.6rem;font:700 .72rem var(--aow-mono);letter-spacing:.1em;color:var(--muted)}
+.case-after .case-code{color:var(--accent)}
+.case-steps{
+ margin:.85rem 0 0;padding:0 0 0 1.45rem;
+ list-style:decimal-leading-zero;font-size:.9rem;line-height:1.55;color:var(--muted);
+}
+.case-steps li{padding:.45rem 0 .45rem .2rem}
+.case-steps li+li{border-top:1px dashed var(--line)}
+.case-steps li::marker{font:700 .72rem var(--aow-mono);color:var(--muted)}
+.case-steps strong{color:var(--text)}
+.case-after .case-steps li::marker{color:var(--accent)}
+.case-scope{padding-left:1.25rem;color:var(--muted);line-height:1.65}
+.case-scope li+li{margin-top:.4rem}
+@media(max-width:640px){.case-grid{grid-template-columns:1fr}}
