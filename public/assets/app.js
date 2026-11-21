@@ -23,25 +23,56 @@ function setupTheme() {
   group.hidden = false;
 }
 
-function setupIntro() {
+function setupMotion() {
+  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const button = document.querySelector('[data-motion-switch]');
+  const callbacks = [];
+  let quiet = loadPreference('localStorage', 'aow-motion') === 'quiet';
+  const motion = {
+    get matches() { return media.matches || quiet; },
+    listen(callback) { callbacks.push(callback); }
+  };
+  function sync() {
+    document.documentElement.dataset.motion = motion.matches ? 'quiet' : 'full';
+    if (button) {
+      button.disabled = media.matches;
+      button.setAttribute('aria-pressed', String(motion.matches));
+      button.title = media.matches ? 'Motion reduced by your device setting' : 'Reduce site motion';
+    }
+    callbacks.forEach(callback => callback());
+  }
+  button?.addEventListener('click', () => {
+    if (media.matches) return;
+    quiet = !quiet;
+    savePreference('localStorage', 'aow-motion', quiet ? 'quiet' : 'full');
+    sync();
+  });
+  media.addEventListener?.('change', sync);
+  sync();
+  return motion;
+}
+
+function setupIntro(motion) {
+  const shell = document.querySelector('[data-cinematic-console]');
   const consolePanel = document.querySelector('[data-console]');
   const intro = document.querySelector('[data-intro]');
   const output = document.querySelector('[data-intro-output]');
   const bar = document.querySelector('[data-intro-bar]');
   const button = document.querySelector('[data-intro-control]');
-  if (!consolePanel || !intro || !output || !bar || !button) return;
+  const signal = document.querySelector('[data-signal-status]');
+  if (!shell || !consolePanel || !intro || !output || !bar || !button || !signal) return;
 
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const release = document.querySelector('[data-bios-release]');
   const biosVersion = release?.querySelector('[data-bios-version]')?.textContent.trim();
   const releasedAt = release?.querySelector('[data-bios-released]')?.getAttribute('datetime');
   if (!biosVersion || !releasedAt) return;
   const releaseUtc = releasedAt.slice(0, 16).replace('T', ' ') + ' UTC';
-  const bootLines = [
-    'AOW BIOS ' + biosVersion,
-    'Build: ' + releaseUtc,
-    'Support · Websites · Automation',
-    'Ready.'
+  const stages = [
+    { phase: 'sync', status: 'CIRCUIT SYNC', line: 'AOW BIOS ' + biosVersion, progress: 14, hold: 340 },
+    { phase: 'sync', status: 'CIRCUIT SYNC', line: 'Build: ' + releaseUtc, progress: 28, hold: 410 },
+    { phase: 'scan', status: 'SIGNAL SWEEP', line: '01 / Scanning service channels…', progress: 57, hold: 1100 },
+    { phase: 'lock', status: 'SIGNAL ACQUIRED', line: '02 / Three modules locked.', progress: 83, hold: 520 },
+    { phase: 'lock', status: 'ARRAY READY', line: '03 / Interface ready.', progress: 100, hold: 540 }
   ];
   let timer;
   let playing = false;
@@ -52,6 +83,9 @@ function setupIntro() {
     clearTimeout(timer);
     intro.hidden = true;
     consolePanel.classList.remove('is-playing');
+    shell.classList.remove('is-cinematic');
+    delete shell.dataset.stage;
+    signal.textContent = 'ARRAY READY';
     button.textContent = 'Replay intro';
   }
 
@@ -64,12 +98,16 @@ function setupIntro() {
     bar.style.width = '0%';
     intro.hidden = false;
     consolePanel.classList.add('is-playing');
+    shell.classList.add('is-cinematic');
     function tick() {
       if (!playing) return;
-      output.textContent += (step ? '\n' : '') + bootLines[step];
+      const { phase, status, line, progress, hold } = stages[step];
+      shell.dataset.stage = phase;
+      signal.textContent = status;
+      output.textContent += (step ? '\n' : '') + line;
+      bar.style.width = progress + '%';
       step += 1;
-      bar.style.width = (step / bootLines.length * 100) + '%';
-      timer = setTimeout(step === bootLines.length ? finish : tick, step === bootLines.length ? 500 : 220);
+      timer = setTimeout(step === stages.length ? finish : tick, hold);
     }
     tick();
   }
@@ -79,7 +117,7 @@ function setupIntro() {
     button.hidden = motion.matches;
   }
   syncMotion();
-  motion.addEventListener?.('change', syncMotion);
+  motion.listen(syncMotion);
   button.addEventListener('click', () => playing ? finish() : start());
   document.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); });
   window.addEventListener('pagehide', finish);
@@ -110,6 +148,6 @@ function setupQuoteTemplates() {
 
 document.addEventListener('DOMContentLoaded', () => {
   setupTheme();
-  setupIntro();
+  setupIntro(setupMotion());
   setupQuoteTemplates();
 });
