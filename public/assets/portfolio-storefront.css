@@ -20,3 +20,31 @@
 .portfolio-lab[open]>summary{border-bottom:1px solid var(--line)}
 .portfolio-lab>.window{margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 @media(max-width:460px){.portfolio-proof-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* An illustration, not a screenshot or a second clickable quote control. */
+.portfolio-layout-proof{margin-top:1.35rem;padding-top:1rem;border-top:1px solid var(--line)}
+.portfolio-layout-proof h3{margin-bottom:.4rem}
+.portfolio-layout-figure{margin:.6rem 0 .85rem}
+.portfolio-layout-figure figcaption{margin-bottom:.5rem;color:var(--muted);font-size:.82rem}
+.portfolio-layout-figure dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem;margin:0}
+.portfolio-layout-figure dl>div{min-width:0;padding:.6rem .72rem;border:1px solid var(--line);border-radius:.4rem;background:#0a1527}
+.portfolio-layout-figure dt{color:var(--accent);font:700 .72rem/1.4 var(--aow-mono,monospace);text-transform:uppercase}
+.portfolio-layout-figure dd{margin:0;color:var(--text);font-size:.86rem;line-height:1.4}
+.portfolio-fold{
+ position:relative;height:5.4rem;margin:.45rem 0;border:1px solid var(--line);border-radius:.3rem;
+ background:linear-gradient(#102139 0 66%,#081321 66%);pointer-events:none;
+}
+.portfolio-fold-copy{
+ position:absolute;inset:.55rem .6rem auto;height:.95rem;max-width:72%;
+ background:repeating-linear-gradient(to bottom,#8199b14d 0 2px,transparent 2px 5px)
+}
+.portfolio-fold-edge{
+ position:absolute;inset:auto 0 34%;padding:0 .3rem .08rem 0;border-bottom:1px dashed var(--muted);
+ color:var(--muted);text-align:right;font-size:.64rem;line-height:1.3
+}
+.portfolio-fold-marker{
+ position:absolute;top:74%;left:.6rem;padding:.08rem .32rem;border:1px dotted currentColor;border-radius:.18rem;
+ color:var(--muted);font:700 .66rem/1.3 var(--aow-mono,monospace)
+}
+.portfolio-fold-after .portfolio-fold-marker{top:31%;color:var(--accent)}
+@media(max-width:460px){.portfolio-layout-figure dl{grid-template-columns:minmax(0,1fr)}}
