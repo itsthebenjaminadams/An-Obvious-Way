@@ -1,0 +1,38 @@
+/* Keep Find beside the wordmark; the five-link mobile nav row is unchanged. */
+.quick-find-brand{display:flex;align-items:center;gap:clamp(.28rem,1vw,.65rem);min-width:0}
+.quick-find-toggle{
+ display:inline-flex;align-items:center;justify-content:center;gap:.28rem;min-height:44px;
+ padding:0 .4rem;border:1px solid var(--line);border-radius:.35rem;
+ background:#0a1426;color:var(--text);font:700 .68rem/1 var(--aow-mono,monospace);cursor:pointer
+}
+.quick-find-toggle svg{color:var(--accent);flex:none}
+.quick-find-toggle:hover,.quick-find-close:hover{border-color:var(--accent)}
+.quick-find-toggle:focus-visible,.quick-find-close:focus-visible,.quick-find-panel :is(input,a):focus-visible{
+ outline:2px solid var(--accent);outline-offset:2px
+}
+.quick-find-panel{
+ position:fixed;width:min(38rem,calc(100% - 1.2rem));max-height:calc(100% - 1.2rem);overflow:auto;
+ margin:auto;padding:clamp(.8rem,3vw,1.35rem);border:1px solid var(--accent);border-radius:.55rem;
+ background:linear-gradient(145deg,#122139,#081321 70%);color:var(--text);
+ box-shadow:0 1.5rem 4rem #000a
+}
+.quick-find-panel::backdrop{background:#030812d9}
+.quick-find-header{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.7rem}
+.quick-find-header h2{margin:0;color:var(--accent);font-size:clamp(1.35rem,5vw,1.85rem)}
+.quick-find-close{min-height:44px;padding:0 .7rem;border:1px solid var(--line);border-radius:.35rem;background:#0a1426;color:var(--text);font:inherit;cursor:pointer}
+.quick-find-panel label{display:block;margin-bottom:.28rem;font-weight:650}
+.quick-find-input{
+ width:100%;min-height:44px;padding:.6rem .7rem;border:1px solid var(--line);
+ border-radius:.35rem;background:#060f1d;color:var(--text);font:inherit
+}
+.quick-find-input::placeholder{color:var(--muted);opacity:1}
+.quick-find-hint,.quick-find-status,.quick-find-empty{font-size:.82rem;margin:.55rem 0;line-height:1.45}
+.quick-find-status{color:var(--accent);font-family:var(--aow-mono,monospace)}
+.quick-find-results{list-style:none;margin:.45rem 0 0;padding:0;display:grid;gap:.4rem}
+.quick-find-results a{
+ display:grid;gap:.18rem;min-height:44px;padding:.55rem .62rem;
+ border:1px solid var(--line);border-radius:.3rem;background:#0a1527;color:var(--text)
+}
+.quick-find-results a:hover{border-color:var(--accent)}
+.quick-find-results a span{color:var(--muted);font-size:.81rem;line-height:1.38}
+@media(max-width:355px){.quick-find-toggle{gap:.2rem;padding-inline:.32rem}.quick-find-toggle svg{width:11px}}
