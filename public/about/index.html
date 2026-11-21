@@ -16,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://anobviousway.com/assets/aow-social.jpg">
   <meta name="twitter:image:alt" content="An Obvious Way terminal mark on a radar grid. Tech support, websites and automation.">
-</head><body data-page="about"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" >Portfolio</a><a href="/about/" aria-current="page">About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
+<link rel="stylesheet" href="/assets/page-interactions.css"><script src="/assets/page-interactions.js" defer></script></head><body data-page="about"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" >Portfolio</a><a href="/about/" aria-current="page">About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ about</div>
   <h1 class="page-title">A simpler way to <span class="accent">get things done.</span></h1>
   <p class="lead">An Obvious Way (AOW) is an independent technology business offering tech support, websites, and workflow automation for individuals and small businesses.</p>
@@ -31,7 +31,13 @@
   <section class="section" aria-labelledby="how-we-work">
     <div class="eyebrow">/ how we work</div>
     <h2 id="how-we-work">From first question to handoff</h2>
-    <div class="grid">
+    <div class="process-controls" data-process-controls hidden>
+      <button type="button" class="btn secondary" data-process-prev aria-label="Previous step">← Previous</button>
+      <p class="small mono" data-process-status role="status">Step 1 of 3</p>
+      <button type="button" class="btn secondary" data-process-next aria-label="Next step">Next →</button>
+      <button type="button" class="btn secondary" data-process-all aria-pressed="false">Show all steps</button>
+    </div>
+    <div class="grid" data-process-steps>
       <article class="card"><div class="tag">01 / UNDERSTAND</div><h3>Start with the outcome</h3><p>Tell us what you’re trying to do, what’s getting in the way, and what a good result would look like. You don’t need to know the technical fix.</p></article>
       <article class="card"><div class="tag">02 / SCOPE</div><h3>Agree on a practical next step</h3><p>We narrow down what to tackle, what can wait, and what’s included in the quote. That might mean diagnosing one issue before planning a larger change.</p></article>
       <article class="card"><div class="tag">03 / HANDOFF</div><h3>Make the result usable</h3><p>The goal is a fix or build you understand: what changed, how to use it, and what you may need to maintain after the work.</p></article>
