@@ -32,9 +32,14 @@ function setupIntro() {
   if (!consolePanel || !intro || !output || !bar || !button) return;
 
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const release = document.querySelector('[data-bios-release]');
+  const biosVersion = release?.querySelector('[data-bios-version]')?.textContent.trim();
+  const releasedAt = release?.querySelector('[data-bios-released]')?.getAttribute('datetime');
+  if (!biosVersion || !releasedAt) return;
+  const releaseUtc = releasedAt.slice(0, 16).replace('T', ' ') + ' UTC';
   const bootLines = [
-    'AOW BIOS ' + consolePanel.dataset.biosVersion,
-    'Initializing system…',
+    'AOW BIOS ' + biosVersion,
+    'Build: ' + releaseUtc,
     'Support · Websites · Automation',
     'Ready.'
   ];
