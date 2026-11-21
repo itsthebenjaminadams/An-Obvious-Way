@@ -1,0 +1,31 @@
+/* Portfolio-only controls for the fictional report repair challenge. */
+.report-repair{
+ min-width:0;margin:1rem 0 0;padding:.8rem clamp(.7rem,2vw,1rem) 1rem;
+ border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));
+ border-radius:.4rem;background:linear-gradient(145deg,#14203b,#081321 72%);
+}
+.report-repair legend,.report-repair-progress{
+ color:var(--accent);font:700 .76rem/1.45 var(--aow-mono,monospace);letter-spacing:.055em;
+}
+.report-repair legend{padding:0 .35rem;text-transform:uppercase}
+.report-repair>p{margin:.1rem 0 .7rem}
+.report-repair-progress{display:grid;grid-template-columns:auto minmax(2rem,1fr) auto;gap:.45rem .7rem;align-items:center}
+.report-repair-progress progress{width:100%;height:.7rem;accent-color:var(--accent)}
+.report-repair-progress [data-report-repair-count]{color:var(--text)}
+.report-repair-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin-top:.9rem}
+.report-repair-choices label{
+ display:grid;gap:.28rem;align-content:start;min-width:0;padding:.65rem;
+ border:1px solid var(--line);border-radius:.35rem;background:#0a1527;
+}
+.report-repair-choices label span{color:var(--muted);font-size:.78rem}
+.report-repair-choices select{
+ width:100%;min-height:44px;margin-top:.2rem;padding:.36rem .45rem;
+ border:1px solid var(--line);border-radius:.3rem;background:#081321;color:var(--text);
+ font:inherit;font-size:.88rem;
+}
+.report-repair-choices select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.report-repair[data-cleared="true"]{border-color:var(--accent)}
+.report-repair-clear{color:var(--accent);font-weight:700}
+@media(max-width:640px){.report-repair-choices{grid-template-columns:1fr}}
+@media(max-width:350px){.report-repair-progress{grid-template-columns:1fr auto}.report-repair-progress progress{grid-column:1/-1;grid-row:2}}
+.report-repair-actions{margin-top:.75rem}

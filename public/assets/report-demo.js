@@ -50,7 +50,15 @@
   const flaggedCount = get('flagged');
   const hours = get('hours');
   const byStatus = get('by-status');
-  if (![input, controls, run, reset, result, status, cleaned, flags, acceptedCount, flaggedCount, hours, byStatus].every(Boolean)) return;
+  const repairPanel = get('repair-panel');
+  const repairMeter = get('repair-meter');
+  const repairCount = get('repair-count');
+  const repairApply = get('repair-apply');
+  const clearMessage = get('clear');
+  const repairs = Array.from(demo.querySelectorAll('[data-report-repair]'));
+  const repairColumns = { owner: 1, hours: 2, status: 3 };
+  const repairJobs = new Set(repairs.map(select => select.dataset.job));
+  if (![input, controls, run, reset, result, status, cleaned, flags, acceptedCount, flaggedCount, hours, byStatus, repairPanel, repairMeter, repairCount, repairApply, clearMessage].every(Boolean) || !repairJobs.size) return;
 
   function makeText(tag, text) {
     const el = document.createElement(tag);
@@ -58,9 +66,17 @@
     return el;
   }
 
-  run.addEventListener('click', () => {
+  function runReport() {
     const rows = Array.from(input.rows, row => Array.from(row.cells, cell => cell.textContent));
+    const byJob = new Map(rows.map(row => [cleanText(row[0]), row]));
+    for (const selection of repairs) {
+      const row = byJob.get(selection.dataset.job);
+      const column = repairColumns[selection.dataset.reportRepair];
+      if (row && Number.isInteger(column) && selection.value !== '') row[column] = selection.value;
+    }
     const summary = summarize(rows);
+    const repaired = summary.accepted.filter(([job]) => repairJobs.has(job)).length;
+    const completed = repaired === repairJobs.size;
     const cleanRows = summary.accepted.map(([job, owner, hours, status]) => {
       const row = document.createElement('tr');
       const title = makeText('th', job);
@@ -74,13 +90,34 @@
     flaggedCount.textContent = summary.flagged.length;
     hours.textContent = summary.hours;
     byStatus.textContent = summary.done + ' done · ' + summary.inProgress + ' in progress';
+    flags.hidden = summary.flagged.length === 0;
+    clearMessage.hidden = summary.flagged.length !== 0;
+    repairMeter.max = repairJobs.size;
+    repairMeter.value = repaired;
+    repairCount.textContent = repaired + ' of ' + repairJobs.size + ' repaired';
+    repairPanel.dataset.cleared = String(completed);
+    repairPanel.hidden = false;
     result.hidden = false;
     reset.disabled = false;
-    status.textContent = 'Report ready: ' + summary.accepted.length + ' included, ' + summary.flagged.length + ' flagged, ' + summary.hours + ' total hours.';
+    status.textContent = 'Report ready: ' + summary.accepted.length + ' included, ' + summary.flagged.length + ' flagged, ' + summary.hours + ' total hours. ' + repaired + ' of ' + repairJobs.size + ' challenge rows repaired.';
+  }
+  run.addEventListener('click', runReport);
+  repairApply.addEventListener('click', runReport);
+
+  repairs.forEach(selection => {
+    selection.addEventListener('change', () => {
+      status.textContent = 'Choices changed. Rerun the report to check the selected fixes.';
+    });
   });
 
   reset.addEventListener('click', () => {
     result.hidden = true;
+    repairPanel.hidden = true;
+    repairPanel.dataset.cleared = 'false';
+    repairs.forEach(selection => { selection.selectedIndex = 0; });
+    repairMeter.value = 0;
+    repairCount.textContent = '0 of ' + repairJobs.size + ' repaired';
+    clearMessage.hidden = true;
     cleaned.replaceChildren();
     flags.replaceChildren();
     run.focus();

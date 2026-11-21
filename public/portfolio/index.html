@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=7"><script src="/assets/app.js?v=5" defer></script><script src="/assets/report-demo.js?v=1" defer></script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=7"><script src="/assets/app.js?v=5" defer></script><script src="/assets/report-demo.js?v=2" defer></script><link rel="stylesheet" href="/assets/report-challenge.css?v=1">
   <link rel="canonical" href="https://anobviousway.com/portfolio/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="An Obvious Way">
@@ -64,11 +64,11 @@
     <div class="eyebrow">/ project ideas</div>
     <h2 id="example-projects">Two problems worth solving</h2>
     <article class="window report-demo" data-report-demo aria-labelledby="report-demo-title">
-      <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / report workbench</div>
+      <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / report repair workbench</div>
       <div class="window-body">
         <div class="tag">INTERACTIVE EXAMPLE / FICTIONAL DATA</div>
-        <h3 id="report-demo-title">Turn a messy export into a weekly report</h3>
-        <p>Run a small automation on six sample jobs. It trims text, standardizes status labels and hours, and keeps questionable rows out of the totals. Nothing is uploaded, stored, or sent.</p>
+        <h3 id="report-demo-title">Rescue a weekly report</h3>
+        <p>Run the report to find three broken rows. Then choose fictional fixes and rerun it to see how the totals change. The original export stays untouched, and nothing is uploaded, stored, or sent.</p>
         <div class="report-input">
           <div class="report-stream">01 / RAW EXPORT</div>
           <p class="small report-scroll-hint">Swipe or scroll the tables sideways to see all columns.</p>
@@ -92,6 +92,33 @@
           <button class="btn secondary" type="button" data-report-reset disabled>Reset demo</button>
         </div>
         <p class="small report-announcement" data-report-status role="status" aria-atomic="true"></p>
+        <fieldset class="report-repair" data-report-repair-panel hidden>
+          <legend>Repair challenge</legend>
+          <p class="small">Only valid rows count toward the totals. A row needs an owner, non-negative hours with no more than two decimal places, and a status of Done or In progress.</p>
+          <div class="report-repair-progress">
+            <label for="report-repair-meter">Rows repaired</label>
+            <progress id="report-repair-meter" data-report-repair-meter max="3" value="0"></progress>
+            <span data-report-repair-count>0 of 3 repaired</span>
+          </div>
+          <div class="report-repair-choices">
+            <label for="report-repair-dispatch"><strong>Dispatch</strong><span>Set the missing owner</span>
+              <select id="report-repair-dispatch" data-report-repair="owner" data-job="Dispatch">
+                <option value="">Keep blank</option><option value="Cameron">Cameron</option><option value="Morgan">Morgan</option>
+              </select>
+            </label>
+            <label for="report-repair-archive"><strong>Archive</strong><span>Correct the hours</span>
+              <select id="report-repair-archive" data-report-repair="hours" data-job="Archive">
+                <option value="">Keep −1 hour</option><option value="1.50">1.50 hours</option><option value="1.555">1.555 hours</option>
+              </select>
+            </label>
+            <label for="report-repair-reconcile"><strong>Reconcile</strong><span>Use a report status</span>
+              <select id="report-repair-reconcile" data-report-repair="status" data-job="Reconcile">
+                <option value="">Keep Held</option><option value="Done">Done</option><option value="In progress">In progress</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions report-repair-actions"><button class="btn primary" type="button" data-report-repair-apply>Apply fixes &amp; rerun</button></div>
+        </fieldset>
         <div class="report-result" data-report-result hidden>
           <div class="report-stream">02 / COMPUTED REPORT</div>
           <dl class="report-counts">
@@ -109,6 +136,7 @@
           </div>
           <h4>Flagged for review</h4>
           <ul class="report-flags" data-report-flags></ul>
+          <p class="small report-repair-clear" data-report-clear hidden>No rows flagged. Report clear.</p>
         </div>
         <noscript>
           <div class="report-result">

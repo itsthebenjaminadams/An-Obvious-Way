@@ -1,0 +1,18 @@
+/* Local page instruments; the underlying service and quote routes remain static. */
+.mission-tuner { margin-block: 1rem; padding-block: 1rem; border-block: 1px solid var(--border, #334256); }
+.mission-tuner [data-mission-signal] { min-block-size: 2.75em; margin-block: .65rem; }
+.mission-controls, .process-controls, .finder-signal { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .8rem; }
+.mission-controls .btn, .process-controls .btn { min-height: 2.75rem; }
+.mission-controls [aria-pressed="true"], .process-controls [aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.hero-console[data-tuned="0"] .signal-targets circle:nth-of-type(2),
+.hero-console[data-tuned="1"] .signal-targets circle:nth-of-type(3),
+.hero-console[data-tuned="2"] .signal-targets circle:nth-of-type(4) { fill: currentColor; stroke-width: 3; }
+.finder-signal { justify-content: space-between; margin-block: .85rem; }
+.finder-signal p, .process-controls p { margin: 0; color: var(--accent); }
+.process-controls { margin-block: 1rem; }
+.process-controls p { order: -1; flex-basis: 100%; }
+.process-single { grid-template-columns: minmax(0, 1fr); }
+.quote-preflight { border: 1px solid var(--border, #334256); padding: .5rem 1rem; margin-block: 1rem; min-inline-size: 0; }
+.quote-preflight label { display: flex; align-items: center; gap: .65rem; min-block-size: 2.75rem; cursor: pointer; }
+.quote-preflight input { flex: none; width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
+.mission-tuner[hidden], .finder-signal[hidden], .process-controls[hidden], [data-process-steps] [hidden], .quote-preflight[hidden] { display: none; }
