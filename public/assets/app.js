@@ -87,7 +87,29 @@ function setupIntro() {
   start();
 }
 
+function setupQuoteTemplates() {
+  document.querySelectorAll('[data-quote-template]').forEach(template => {
+    const text = template.querySelector('[data-quote-text]');
+    const button = template.querySelector('[data-copy-quote]');
+    const status = template.querySelector('[data-copy-status]');
+    if (!text || !button || !status) return;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      status.textContent = '';
+      try {
+        await window.navigator.clipboard.writeText(text.value);
+        status.textContent = 'Template copied. Paste it into your email draft.';
+      } catch {
+        text.focus();
+        text.select();
+        status.textContent = 'Automatic copy is unavailable. Copy the selected text, or select it manually.';
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setupTheme();
   setupIntro();
+  setupQuoteTemplates();
 });

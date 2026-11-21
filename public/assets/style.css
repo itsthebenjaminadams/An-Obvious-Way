@@ -85,3 +85,13 @@ h1{font-size:clamp(2.25rem,5.55vw,4.5rem);margin-block:.8rem 1.15rem}
  .links a{padding-inline:.28rem}
 }
 @media(prefers-reduced-motion:reduce){.console-boot{display:none!important}}
+
+/* A selectable quote draft is available even when scripting or clipboard access is disabled. */
+.quote-template{margin-top:1rem;padding-top:.75rem;border-top:1px solid var(--line);min-width:0}
+.quote-template summary{min-height:44px;padding:.6rem .15rem;color:var(--accent);cursor:pointer}
+.quote-template summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.quote-template-inner{display:grid;gap:.55rem;min-width:0}
+.quote-template-inner p{margin:0;overflow-wrap:anywhere}
+.quote-template textarea{min-height:0;max-width:100%;font-size:.85rem;line-height:1.5}
+.quote-template .btn{justify-self:start;max-width:100%}
+.quote-status:empty{margin:0}
