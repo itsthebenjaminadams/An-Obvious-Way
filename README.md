@@ -28,4 +28,4 @@ Website for An Obvious Way (anobviousway.com). Hosted with Cloudflare Pages, dep
 
 Edit the relevant HTML or CSS file directly in GitHub and click Commit changes on `main`. Cloudflare will publish the updated site automatically.
 
-**Important:** The contact form is a visual prototype and does not send real messages until you connect it to a form handling service. Do not add passwords, tokens, or API keys to this repository.
+The contact page uses a `mailto:` link to open a quote-request draft addressed to `contact@anobviousway.com`. The home and services pages link to specific quote topics on the contact page; those links prefill the service in the email draft. The site does not collect submissions or send email itself. Do not add passwords, tokens, or API keys to this repository.
