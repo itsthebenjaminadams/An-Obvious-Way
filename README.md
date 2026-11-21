@@ -9,6 +9,7 @@ Website for An Obvious Way (anobviousway.com). Hosted with Cloudflare Pages, dep
 - `public/portfolio/index.html` - portfolio
 - `public/about/index.html` - about
 - `public/contact/index.html` - contact
+- `public/sitemap.xml` - the five public canonical URLs
 - `public/assets/style.css` - theme and layout
 - `public/assets/app.js` - animations and interactions
 
@@ -39,3 +40,5 @@ The static `data-bios-release` block in `public/index.html` is the only source f
 On Contact, each service also has a selectable webmail template that works without JavaScript. When changing a service email draft, keep its mailto subject/body and the matching webmail template aligned.
 
 The homepage intro animates an original inline SVG signal array in three phases. The FX button in the site header reduces decorative motion for this browser without changing the accent theme. The site always honors the operating system’s reduced-motion preference.
+
+When a public page URL changes, keep its canonical link, Open Graph URL, and the sitemap in sync. Crawler policy is managed outside this repository; do not add a replacement robots.txt here.
