@@ -1,0 +1,22 @@
+/* Put live proof first; demos occupy only their summaries until opened. */
+.portfolio-proof{margin-top:1.65rem}
+.portfolio-proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin:.8rem 0}
+.portfolio-proof-grid>div{
+ min-width:0;padding:.65rem .8rem;border:1px solid var(--line);border-radius:.35rem;background:#0a1527
+}
+.portfolio-proof-grid dt{color:var(--accent);font:700 .72rem/1.4 var(--aow-mono,monospace);text-transform:uppercase}
+.portfolio-proof-grid dd{margin:.28rem 0 0;color:var(--text);font-size:.9rem;line-height:1.4}
+.portfolio-lab{margin:.55rem 0;min-width:0;border:1px solid var(--line);border-radius:.45rem;background:#0a1527}
+.portfolio-lab>summary{
+ min-height:44px;padding:.68rem .78rem;color:var(--text);cursor:pointer;overflow-wrap:anywhere
+}
+.portfolio-lab>summary::marker{color:var(--accent)}
+.portfolio-lab>summary>span{
+ display:inline-flex;align-items:baseline;flex-wrap:wrap;gap:.22rem .6rem;max-width:calc(100% - 1.5rem)
+}
+.portfolio-lab>summary>span>span{color:var(--muted);font-size:.84rem}
+.portfolio-lab>summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;border-radius:.4rem}
+.portfolio-lab>summary:target{box-shadow:inset 2px 0 var(--accent)}
+.portfolio-lab[open]>summary{border-bottom:1px solid var(--line)}
+.portfolio-lab>.window{margin:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+@media(max-width:460px){.portfolio-proof-grid{grid-template-columns:minmax(0,1fr)}}
