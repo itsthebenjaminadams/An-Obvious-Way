@@ -1,16 +1,44 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="Explore AOW’s live terminal-inspired website and example projects for workflow automation and website hosting."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=5"><script src="/assets/app.js?v=5" defer></script></head><body data-page="portfolio"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" aria-current="page">Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then explore example projects for workflow automation and managed website hosting."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=6"><script src="/assets/app.js?v=5" defer></script></head><body data-page="portfolio"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" aria-current="page">Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ portfolio</div>
   <h1 class="page-title">See what AOW <span class="accent">can build.</span></h1>
   <p class="lead">Explore our own live website and two examples of projects we could scope with you. These are internal work and ideas, not paid client case studies.</p>
-  <section class="section">
+  <section class="section" aria-labelledby="featured-project">
     <div class="window"><div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / featured project</div>
       <div class="window-body">
-        <div class="tag">LIVE / AOW WEBSITE</div>
-        <h2>A business site with a terminal look</h2>
-        <p><strong>The brief:</strong> Give AOW a recognizable home online and make it easy for customers to understand the services and get in touch.</p>
-        <p><strong>What’s built:</strong> A responsive five-page site with keyboard-friendly navigation, switchable accent colors, a skippable retro intro, and service-specific quote links. The lightweight site is hosted independently of a home computer.</p>
-        <p><strong>Try it:</strong> Pick a service. The quote link takes you to the matching option on the Contact page, where you can open a prefilled email draft.</p>
-        <div class="actions"><a class="btn primary" href="/services/">Browse the services</a><a class="btn secondary" href="/contact/#quote-web">Ask about a site like this</a></div>
+        <div class="tag">LIVE CASE STUDY / AOW’S OWN WEBSITE</div>
+        <h2 id="featured-project">From a dead-end form to a usable quote path</h2>
+        <p>The first version of this site had a Contact form preview visitors couldn’t submit. The rebuild kept the terminal look and gave each service a clear path to an email draft, with a copyable template for visitors who prefer webmail.</p>
+        <figure class="case-comparison">
+          <figcaption class="small">Before and after: diagrams of the inquiry path, not interactive forms.</figcaption>
+          <div class="case-grid">
+            <div class="case-frame case-before">
+              <div class="case-code">01 / BEFORE</div>
+              <h3>A dead end at Contact</h3>
+              <ol class="case-steps">
+                <li>Open Contact</li>
+                <li>See a form preview</li>
+                <li><strong>Submission unavailable</strong></li>
+              </ol>
+            </div>
+            <div class="case-frame case-after">
+              <div class="case-code">02 / NOW</div>
+              <h3>Two ways to start a draft</h3>
+              <ol class="case-steps">
+                <li>Choose a service</li>
+                <li>Jump to its matching quote topic</li>
+                <li><strong>Open a prefilled draft</strong> or copy a template into webmail</li>
+              </ol>
+            </div>
+          </div>
+        </figure>
+        <p class="small"><a class="text-link" href="https://github.com/itsthebenjaminadams/An-Obvious-Way/blob/28881dfcb462b0a11d0788eebf119be1c74cda96/public/contact/index.html">View the original Contact page source on GitHub</a>. The current flow opens a draft in your email app or lets you copy text; the site itself does not send email.</p>
+        <h3>What a small project like this could cover</h3>
+        <ul class="case-scope">
+          <li>Trace how someone gets from a service page to an inquiry and identify where they get stuck.</li>
+          <li>Replace dead ends with a clear next step, including a fallback for visitors using webmail.</li>
+          <li>Check the revised path on small screens and with keyboard navigation.</li>
+        </ul>
+        <div class="actions"><a class="btn primary" href="/services/#web-development">Try it from Services</a><a class="btn secondary" href="/contact/#quote-web">Jump to the website quote option</a></div>
       </div>
     </div>
   </section>
