@@ -1,0 +1,35 @@
+/* Complement the existing quote action with a direct route to each real example. */
+.service-pathways{
+ display:flex;flex-wrap:wrap;align-items:center;column-gap:.72rem;row-gap:.16rem;
+ margin-top:auto;padding-top:.8rem
+}
+.service-pathways .card-link{margin:0}
+.pathway-example{
+ display:inline-flex;align-items:center;gap:.3rem;min-height:44px;max-width:100%;
+ color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);
+ text-underline-offset:.2em;overflow-wrap:anywhere
+}
+.pathway-example span{color:var(--accent);flex:none}
+.pathway-example:hover{color:var(--accent)}
+.finder-answer>.pathway-example{margin-top:.15rem}
+.portfolio-example-index{
+ margin:1rem 0 -.75rem;padding:.62rem .85rem;border:1px solid var(--line);border-radius:.45rem;background:#0a1527
+}
+.portfolio-example-index p{
+ margin:0;color:var(--accent);font:700 .74rem/1.4 var(--aow-mono,monospace);letter-spacing:.055em
+}
+.portfolio-example-index ul{
+ display:flex;flex-wrap:wrap;gap:0 .65rem;margin:.18rem 0 0;padding:0;list-style:none
+}
+.portfolio-example-index a{
+ display:inline-flex;align-items:center;gap:.38rem;min-height:44px;
+ color:var(--text);text-decoration:underline;text-underline-offset:.2em
+}
+.portfolio-example-index a span{color:var(--accent)}
+.portfolio-example-index a:hover{color:var(--accent)}
+.pathway-example:focus-visible,.portfolio-example-index a:focus-visible{
+ outline:2px solid var(--accent);outline-offset:2px;border-radius:.2rem
+}
+@media(max-width:480px){
+ .service-pathways,.portfolio-example-index ul{display:grid;grid-template-columns:minmax(0,1fr)}
+}
