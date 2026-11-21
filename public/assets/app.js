@@ -1,94 +1,86 @@
 const themes = { green: '#61e7aa', amber: '#ffc36b', cyan: '#65d9ed', purple: '#bc9bff' };
 
-function storedTheme() {
-  try {
-    return localStorage.getItem('aow-theme');
-  } catch {
-    return null;
-  }
+function loadPreference(storage, key) {
+  try { return window[storage].getItem(key); } catch { return null; }
 }
 
-function applyTheme(name) {
-  if (!Object.prototype.hasOwnProperty.call(themes, name)) name = 'green';
-  document.documentElement.style.setProperty('--accent', themes[name]);
-  try {
-    localStorage.setItem('aow-theme', name);
-  } catch {
-    // Theme switching still works if this browser blocks storage.
-  }
-  document.querySelectorAll('[data-theme]').forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset.theme === name));
-  });
+function savePreference(storage, key, value) {
+  try { window[storage].setItem(key, value); } catch { /* Private browsing may block storage. */ }
 }
 
-function setupBoot() {
-  const boot = document.querySelector('.boot');
-  if (!boot) return;
+function setupTheme() {
+  const group = document.querySelector('.settings');
+  if (!group) return;
+  const buttons = [...group.querySelectorAll('[data-theme]')];
+  function apply(name) {
+    if (!Object.prototype.hasOwnProperty.call(themes, name)) name = 'green';
+    document.documentElement.style.setProperty('--accent', themes[name]);
+    savePreference('localStorage', 'aow-theme', name);
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.theme === name)));
+  }
+  apply(loadPreference('localStorage', 'aow-theme'));
+  buttons.forEach(button => button.addEventListener('click', () => apply(button.dataset.theme)));
+  group.hidden = false;
+}
 
-  const button = boot.querySelector('button');
-  const pre = boot.querySelector('pre');
-  const bar = boot.querySelector('.boot-progress span');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  if (reduced.matches || !button || !pre || !bar) {
-    boot.remove();
-    return;
+function setupIntro() {
+  const consolePanel = document.querySelector('[data-console]');
+  const intro = document.querySelector('[data-intro]');
+  const output = document.querySelector('[data-intro-output]');
+  const bar = document.querySelector('[data-intro-bar]');
+  const button = document.querySelector('[data-intro-control]');
+  if (!consolePanel || !intro || !output || !bar || !button) return;
+
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const bootLines = ['AOW / SYSTEM INITIALIZATION', 'Checking service modules…', 'Support · Websites · Automation', 'Ready.'];
+  const seenKey = 'aow-console-intro-v1';
+  let timer;
+  let playing = false;
+
+  function finish() {
+    if (!playing) return;
+    playing = false;
+    clearTimeout(timer);
+    intro.hidden = true;
+    consolePanel.classList.remove('is-playing');
+    button.textContent = 'Replay intro';
   }
 
-  const lines = [
-    'AOW BIOS 1.0',
-    'Initializing brand interface...',
-    'Loading services [OK]',
-    'Loading portfolio [OK]',
-    'Checking connection [OK]',
-    'Welcome to An Obvious Way.'
-  ];
-  let index = 0;
-  let timeout;
-  let stopped = false;
-  const onEscape = event => {
-    if (event.key === 'Escape') finish();
-  };
-  const onMotion = event => {
-    if (event.matches) finish(true);
-  };
-
-  function finish(immediately = false) {
-    if (stopped) return;
-    stopped = true;
-    clearTimeout(timeout);
-    document.removeEventListener('keydown', onEscape);
-    reduced.removeEventListener?.('change', onMotion);
-    const hadFocus = boot.contains(document.activeElement);
-    boot.classList.add('hide');
-    button.tabIndex = -1;
-    if (hadFocus) document.querySelector('.top .brand')?.focus();
-    boot.setAttribute('aria-hidden', 'true');
-    if (immediately) boot.remove();
-    else setTimeout(() => boot.remove(), 500);
-  }
-
-  function step() {
-    if (index === lines.length) {
-      timeout = setTimeout(finish, 450);
-      return;
+  function start() {
+    if (playing || motion.matches) return;
+    playing = true;
+    let step = 0;
+    savePreference('sessionStorage', seenKey, 'yes');
+    button.textContent = 'Skip intro';
+    output.textContent = '';
+    bar.style.width = '0%';
+    intro.hidden = false;
+    consolePanel.classList.add('is-playing');
+    function tick() {
+      if (!playing) return;
+      output.textContent += (step ? '\n' : '') + bootLines[step];
+      step += 1;
+      bar.style.width = (step / bootLines.length * 100) + '%';
+      timer = setTimeout(step === bootLines.length ? finish : tick, step === bootLines.length ? 500 : 220);
     }
-    pre.textContent += lines[index] + '\n';
-    index++;
-    bar.style.width = (index / lines.length * 100) + '%';
-    timeout = setTimeout(step, 240);
+    tick();
   }
 
-  button.addEventListener('click', () => finish());
-  document.addEventListener('keydown', onEscape);
-  reduced.addEventListener?.('change', onMotion);
-  boot.classList.add('is-active');
-  timeout = setTimeout(step, 300);
+  function syncMotion() {
+    if (motion.matches) finish();
+    button.hidden = motion.matches;
+  }
+  syncMotion();
+  motion.addEventListener?.('change', syncMotion);
+  button.addEventListener('click', () => playing ? finish() : start());
+  document.addEventListener('keydown', event => { if (event.key === 'Escape') finish(); });
+  window.addEventListener('pagehide', finish);
+  let sameSite = false;
+  try { sameSite = new URL(document.referrer).origin === window.location.origin; } catch { /* No referrer. */ }
+  if (!sameSite && !window.location.hash && !loadPreference('sessionStorage', seenKey)) start();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  applyTheme(storedTheme());
-  document.querySelectorAll('[data-theme]').forEach(button => {
-    button.addEventListener('click', () => applyTheme(button.dataset.theme));
-  });
-  setupBoot();
+  setupTheme();
+  setupIntro();
 });
