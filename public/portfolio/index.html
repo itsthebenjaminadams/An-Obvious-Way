@@ -1,9 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then explore example projects for workflow automation and managed website hosting."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=6"><script src="/assets/app.js?v=5" defer></script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=7"><script src="/assets/app.js?v=5" defer></script><script src="/assets/report-demo.js?v=1" defer></script>
   <link rel="canonical" href="https://anobviousway.com/portfolio/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="An Obvious Way">
   <meta property="og:title" content="Portfolio &amp; Case Study | An Obvious Way">
-  <meta property="og:description" content="See how AOW rebuilt its own quote request path, then explore example projects for workflow automation and managed website hosting.">
+  <meta property="og:description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example.">
   <meta property="og:url" content="https://anobviousway.com/portfolio/">
 </head><body data-page="portfolio"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" aria-current="page">Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ portfolio</div>
@@ -52,20 +52,69 @@
   <section class="section" aria-labelledby="example-projects">
     <div class="eyebrow">/ project ideas</div>
     <h2 id="example-projects">Two problems worth solving</h2>
-    <div class="grid">
-      <article class="card">
-        <div class="tag">EXAMPLE / AUTOMATION</div><h3>Repeatable weekly report</h3>
-        <p><strong>Problem:</strong> Every week starts with an export that needs manual cleanup and sorting.</p>
-        <p><strong>Possible build:</strong> A workflow that reads the same export, flags missing data, and produces a consistent summary to review.</p>
+    <article class="window report-demo" data-report-demo aria-labelledby="report-demo-title">
+      <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / report workbench</div>
+      <div class="window-body">
+        <div class="tag">INTERACTIVE EXAMPLE / FICTIONAL DATA</div>
+        <h3 id="report-demo-title">Turn a messy export into a weekly report</h3>
+        <p>Run a small automation on six sample jobs. It trims text, standardizes status labels and hours, and keeps questionable rows out of the totals. Nothing is uploaded, stored, or sent.</p>
+        <div class="report-input">
+          <div class="report-stream">01 / RAW EXPORT</div>
+          <p class="small report-scroll-hint">Swipe or scroll the tables sideways to see all columns.</p>
+          <div class="report-table-shell" tabindex="0" role="region" aria-label="Sample export table">
+            <table class="report-table">
+              <caption>Six fictional rows before cleanup</caption>
+              <thead><tr><th scope="col">Job</th><th scope="col">Owner</th><th scope="col">Hours</th><th scope="col">Status</th></tr></thead>
+              <tbody data-report-input>
+                <tr><th scope="row">Intake</th><td>  Morgan  </td><td>2.50</td><td>DONE</td></tr>
+                <tr><th scope="row">Review</th><td>Reese</td><td>1.25</td><td> in progress </td></tr>
+                <tr><th scope="row">Export</th><td>Cameron</td><td>3</td><td>done</td></tr>
+                <tr><th scope="row">Dispatch</th><td class="report-empty" aria-label="Blank"></td><td>2</td><td>Done</td></tr>
+                <tr><th scope="row">Archive</th><td>Reese</td><td>-1</td><td>Done</td></tr>
+                <tr><th scope="row">Reconcile</th><td>Morgan</td><td>1</td><td>Held</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="actions report-controls" data-report-controls hidden>
+          <button class="btn primary" type="button" data-report-run>Run sample report</button>
+          <button class="btn secondary" type="button" data-report-reset disabled>Reset demo</button>
+        </div>
+        <p class="small report-announcement" data-report-status role="status" aria-atomic="true"></p>
+        <div class="report-result" data-report-result hidden>
+          <div class="report-stream">02 / COMPUTED REPORT</div>
+          <dl class="report-counts">
+            <div><dt>Included</dt><dd data-report-accepted>0</dd></div>
+            <div><dt>Flagged</dt><dd data-report-flagged>0</dd></div>
+            <div><dt>Total hours</dt><dd data-report-hours>0</dd></div>
+          </dl>
+          <p class="small" data-report-by-status></p>
+          <div class="report-table-shell" tabindex="0" role="region" aria-label="Cleaned sample rows">
+            <table class="report-table">
+              <caption>Cleaned rows included in totals</caption>
+              <thead><tr><th scope="col">Job</th><th scope="col">Owner</th><th scope="col">Hours</th><th scope="col">Status</th></tr></thead>
+              <tbody data-report-cleaned></tbody>
+            </table>
+          </div>
+          <h4>Flagged for review</h4>
+          <ul class="report-flags" data-report-flags></ul>
+        </div>
+        <noscript>
+          <div class="report-result">
+            <div class="report-stream">02 / EXPECTED REPORT</div>
+            <p>The interactive run needs JavaScript. Here’s what the six rows above produce: <strong>3 included, 3 flagged, 6.75 total hours.</strong> Of the included jobs, 2 are done and 1 is in progress.</p>
+            <ul class="report-flags"><li>Dispatch: missing owner.</li><li>Archive: hours must be a non-negative number.</li><li>Reconcile: status must be “Done” or “In progress”.</li></ul>
+          </div>
+        </noscript>
         <a class="card-link" href="/contact/#quote-automation">Discuss a workflow like this <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="card">
+      </div>
+    </article>
+      <article class="card report-related">
         <div class="tag">EXAMPLE / HOSTING</div><h3>Website that doesn’t depend on a home PC</h3>
         <p><strong>Problem:</strong> A simple site goes offline whenever the computer hosting it loses power or internet.</p>
         <p><strong>Possible build:</strong> A static site on managed hosting, with HTTPS and a repeatable deployment from GitHub.</p>
         <a class="card-link" href="/contact/#quote-web">Discuss website hosting <span aria-hidden="true">↗</span></a>
       </article>
-    </div>
   </section>
   <section class="section">
     <h2>Have a different project in mind?</h2><p>Share what you’re trying to accomplish and what’s in the way. A short description is enough to start.</p>

@@ -317,3 +317,28 @@ html[data-motion="quiet"] .btn:hover{transform:none}
 .case-scope{padding-left:1.25rem;color:var(--muted);line-height:1.65}
 .case-scope li+li{margin-top:.4rem}
 @media(max-width:640px){.case-grid{grid-template-columns:1fr}}
+
+/* Fictional weekly report workbench. Native tables scroll within the panel on narrow screens. */
+.report-demo .window-body{padding:clamp(.85rem,3vw,1.65rem)}
+.report-stream{margin-bottom:.7rem;font:700 .76rem var(--aow-mono);color:var(--accent);letter-spacing:.09em}
+.report-input,.report-result{margin-top:1rem;border:1px solid var(--line);border-radius:.4rem;padding:clamp(.65rem,2vw,1rem);background:#081321;min-width:0}
+.report-table-shell{max-width:100%;overflow:auto;overscroll-behavior-inline:contain;border-radius:.2rem}
+.report-table-shell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.report-table{width:100%;min-width:25rem;border-collapse:collapse;text-align:left;font-size:.88rem}
+.report-table caption{text-align:left;padding:0 .4rem .55rem;color:var(--muted);font-size:.82rem}
+.report-table th,.report-table td{padding:.55rem .45rem;border-bottom:1px solid var(--line);vertical-align:top}
+.report-table thead{background:#17263e;color:var(--text)}
+.report-table td{color:var(--muted);font-family:var(--aow-mono);white-space:pre-wrap}
+.report-table th[scope="row"]{font-weight:650}
+.report-empty::before{content:"—"}
+.report-scroll-hint{display:none;margin:.3rem 0 .6rem}
+.report-controls .btn:disabled{opacity:.55;cursor:default;transform:none}
+.report-announcement{min-height:1.5rem;margin:.6rem 0 0}
+.report-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.55rem;margin:.55rem 0}
+.report-counts>div{min-width:0;background:#122039;border:1px solid var(--line);border-radius:.35rem;padding:.6rem}
+.report-counts dt{color:var(--muted);font-size:.72rem;line-height:1.25}
+.report-counts dd{margin:.25rem 0 0;color:var(--accent);font:700 clamp(.9rem,3vw,1.4rem) var(--aow-mono)}
+.report-result h4{margin:.95rem 0 .4rem}
+.report-flags{padding-left:1.1rem;margin:.4rem 0;color:var(--muted);line-height:1.55}
+.report-related{margin-top:1rem}
+@media(max-width:570px){.report-scroll-hint{display:block}}
