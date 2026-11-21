@@ -1,9 +1,9 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=7"><script src="/assets/app.js?v=5" defer></script><script src="/assets/report-demo.js?v=2" defer></script><link rel="stylesheet" href="/assets/report-challenge.css?v=1">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#090f17"><meta name="description" content="Explore AOW’s website case study, then try two fictional challenges: narrow down a dropping call or repair a weekly report."><title>Portfolio | AOW - An Obvious Way</title><link rel="stylesheet" href="/assets/style.css?v=7"><script src="/assets/app.js?v=5" defer></script><script src="/assets/report-demo.js?v=2" defer></script><link rel="stylesheet" href="/assets/report-challenge.css?v=1">
   <link rel="canonical" href="https://anobviousway.com/portfolio/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="An Obvious Way">
   <meta property="og:title" content="Portfolio &amp; Case Study | An Obvious Way">
-  <meta property="og:description" content="See how AOW rebuilt its own quote request path, then try a fictional weekly-report automation and explore a managed website hosting example.">
+  <meta property="og:description" content="Explore AOW’s website case study, then try two fictional challenges: narrow down a dropping call or repair a weekly report.">
   <meta property="og:url" content="https://anobviousway.com/portfolio/">
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" type="image/x-icon">
   <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
@@ -17,7 +17,9 @@
   <meta name="twitter:image" content="https://anobviousway.com/assets/aow-social.jpg">
   <meta name="twitter:image:alt" content="An Obvious Way terminal mark on a radar grid. Tech support, websites and automation.">
   <link rel="stylesheet" href="/assets/quick-find.css?v=1">
-  <script src="/assets/quick-find.js?v=1" defer></script>
+  <script src="/assets/quick-find.js?v=2" defer></script>
+  <link rel="stylesheet" href="/assets/support-puzzle.css?v=1">
+  <script src="/assets/support-puzzle.js?v=1" defer></script>
 </head><body data-page="portfolio"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><div class="quick-find-brand"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><button class="quick-find-toggle" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden><svg focusable="false" aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.15"/><path d="m10 10 4 4"/></svg><span>Find</span></button></div><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" aria-current="page">Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ portfolio</div>
   <h1 class="page-title">See what AOW <span class="accent">can build.</span></h1>
@@ -64,7 +66,63 @@
   </section>
   <section class="section" aria-labelledby="example-projects">
     <div class="eyebrow">/ project ideas</div>
-    <h2 id="example-projects">Two problems worth solving</h2>
+    <h2 id="example-projects">Try an example yourself</h2>
+    <article class="window support-puzzle" id="support-puzzle" tabindex="-1" data-support-puzzle aria-labelledby="support-puzzle-title">
+      <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / signal desk</div>
+      <div class="window-body">
+        <div class="tag">FIELD SIMULATION / FICTIONAL INCIDENTS</div>
+        <h3 id="support-puzzle-title">The Case of the Dropping Call</h3>
+        <p>A video call keeps dropping on a laptop. In each case, reveal three observations and choose what you’d investigate next.</p>
+        <p class="small">This is a simulation, not a test of your connection or a diagnosis.</p>
+        <div class="support-interactive" data-support-interactive hidden>
+          <div class="support-setup">
+            <div><label for="support-case">Choose a fictional case</label>
+              <select id="support-case" data-support-case>
+                <option value="a">Case A</option><option value="b">Case B</option><option value="c">Case C</option>
+              </select>
+            </div>
+            <button class="btn secondary" type="button" data-support-reset>Reset case</button>
+          </div>
+          <div class="support-signal">
+            <p class="support-signal-label">01 / SIGNAL PATH</p>
+            <ol aria-label="Fictional video call path"><li>Laptop</li><li>Wi-Fi</li><li>Router</li><li>Call service</li></ol>
+            <p class="small">Each comparison uses the same fictional incident, network, and call conditions.</p>
+          </div>
+          <div class="support-evidence-head">
+            <h4>02 / Gather evidence</h4>
+            <p data-support-progress>0 of 3 observations</p>
+          </div>
+          <ol class="support-evidence">
+            <li>
+              <button type="button" data-support-reveal="peer" aria-controls="support-evidence-peer" aria-expanded="false"><span>01</span> Second device, same spot</button>
+              <p id="support-evidence-peer" data-support-observation="peer" hidden></p>
+            </li>
+            <li>
+              <button type="button" data-support-reveal="near" aria-controls="support-evidence-near" aria-expanded="false"><span>02</span> Same laptop, near the router</button>
+              <p id="support-evidence-near" data-support-observation="near" hidden></p>
+            </li>
+            <li>
+              <button type="button" data-support-reveal="wired" aria-controls="support-evidence-wired" aria-expanded="false"><span>03</span> Same laptop, wired with Wi-Fi off</button>
+              <p id="support-evidence-wired" data-support-observation="wired" hidden></p>
+            </li>
+          </ol>
+          <fieldset class="support-answer" data-support-answer hidden>
+            <legend>03 / What would you investigate next?</legend>
+            <label><input type="radio" name="support-direction" value="device"> The laptop’s Wi-Fi adapter or settings</label>
+            <label><input type="radio" name="support-direction" value="room"> Wireless coverage or interference in that room</label>
+            <label><input type="radio" name="support-direction" value="shared"> Shared equipment or the connection beyond it</label>
+            <button class="btn primary" type="button" data-support-check>Check my guess</button>
+          </fieldset>
+          <p class="support-feedback small" role="status" aria-atomic="true" data-support-status></p>
+        </div>
+        <details class="support-worked" data-support-worked>
+          <summary>Read a worked case: the back room</summary>
+          <p>In the same fictional incident, a second device also drops on the same Wi-Fi in the back room. The affected laptop is stable near the router and is also stable when wired with Wi-Fi off.</p>
+          <p><strong>What to investigate first:</strong> Wireless coverage or interference in the back room. Both devices struggle in that spot, while moving the laptop or bypassing Wi-Fi helps. That is a lead, not proof of what caused the drops.</p>
+        </details>
+        <a class="card-link" href="/contact/#quote-support">Get a quote for tech support <span aria-hidden="true">↗</span></a>
+      </div>
+    </article>
     <article class="window report-demo" data-report-demo aria-labelledby="report-demo-title">
       <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / report repair workbench</div>
       <div class="window-body">

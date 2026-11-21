@@ -1,6 +1,6 @@
 # AOW Website
 
-Website for An Obvious Way (anobviousway.com). Hosted with Cloudflare Pages, deployed from GitHub.
+Website for An Obvious Way (anobviousway.com). Served by the Cloudflare Worker `an-obvious-way` and deployed from GitHub.
 
 ## Project layout
 
@@ -13,21 +13,18 @@ Website for An Obvious Way (anobviousway.com). Hosted with Cloudflare Pages, dep
 - `public/assets/style.css` - theme and layout
 - `public/assets/app.js` - animations and interactions
 
-## Cloudflare Pages Git integration settings
+## Cloudflare Workers deployment
 
-1. Cloudflare dashboard > Workers & Pages > Create application > Pages > Connect to Git.
-2. Connect GitHub and select this repository.
-3. Framework preset: None.
-4. Production branch: main.
-5. Build command: leave blank.
-6. Build output directory: `public`.
-7. Root directory: repository root / blank.
-8. Save and Deploy.
-9. Under your Pages project, add the custom domain `anobviousway.com` after verifying the pages.dev URL.
+Cloudflare builds this repository from its root with no build command. Wrangler serves the static files in `public`, with no Worker script. The existing custom domain is managed in the Cloudflare dashboard, not in this repository.
+
+- Pull request branches use `npx wrangler preview`. The `previews` block enables that command without any preview-specific bindings.
+- The production branch is `main`, deployed with `npx wrangler deploy`.
+
+Keep changes on a branch until the preview passes. After merging, confirm the release badge and any changed behavior on anobviousway.com.
 
 ## Editing
 
-Edit the relevant HTML or CSS file directly in GitHub and click Commit changes on `main`. Cloudflare will publish the updated site automatically.
+Edit the relevant HTML, CSS or JavaScript in `public`. No build is required for local content checks.
 
 The contact page uses a `mailto:` link to open a quote-request draft addressed to `contact@anobviousway.com`. The home and services pages link to specific quote topics on the contact page; those links prefill the service in the email draft. The site does not collect submissions or send email itself. Do not add passwords, tokens, or API keys to this repository.
 

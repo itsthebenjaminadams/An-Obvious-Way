@@ -17,6 +17,7 @@
     ['/contact/#quote-automation', 'Start an automation quote', 'Use an email draft or copy the webmail template.', 'workflow automation report spreadsheet data quote price cost email estimate'],
     ['/contact/#preflight-title', 'Prepare a quote request', 'Gather the right details before you reach out.', 'start contact intake preflight scope brief question estimate prepare checklist'],
     ['/portfolio/#report-demo-title', 'Report repair challenge', 'Fix fictional records and rerun the report yourself.', 'demo game interactive play challenge repair automation spreadsheet data workflow fix errors'],
+    ['/portfolio/#support-puzzle', 'Dropping call puzzle', 'Compare three clues in a fictional Wi-Fi case.', 'tech support wifi repair demo game interactive troubleshooting diagnosis internet network video call team meeting'],
     ['/portfolio/#featured-project', 'Website case study', 'See how AOW replaced a dead-end contact form.', 'portfolio work examples project sample before after site design contact quote flow'],
     ['/about/#how-we-work', 'How AOW works', 'See how we scope and hand off small projects.', 'about team process delivery project support approach'],
     ['/contact/', 'Contact AOW', 'Find ways to start a conversation or request a quote.', 'mail email contact get in touch ask message'],
