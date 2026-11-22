@@ -23,6 +23,10 @@ const first = new Map([
   ['small-business website quote', '/contact/#quote-web'],
   ['small business websites quote', '/contact/#quote-web'],
   ['website pricing', '/services/#web-development'],
+  ['small business website pricing', '/services/#web-development'],
+  ['small-business website prices', '/services/#web-development'],
+  ['website redesign cost', '/services/#web-development'],
+  ['small business website quote', '/contact/#quote-web'],
   ['website prices', '/services/#web-development'],
   ['website price', '/services/#web-development'],
   ['website case study', '/portfolio/#featured-project'],
@@ -39,4 +43,4 @@ for (const [query, url] of first) assert.equal(search(query)?.[0]?.url, url, que
 for (const query of ['website hosting pricing', 'hosting pricing', 'free website', 'Mac repair', 'WordPress website', 'iPhone screen repair', 'unrelated fictitious need']) {
   assert.equal(search(query)?.length, 0, query);
 }
-console.log('32 Quick Find buyer, demo, and unsupported-query regressions passed.');
+console.log('36 Quick Find buyer, demo, and unsupported-query regressions passed.');
