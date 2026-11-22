@@ -23,12 +23,14 @@
   <link rel="stylesheet" href="/assets/portfolio-storefront.css?v=3">
   <script src="/assets/portfolio-storefront.js?v=1" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
+  <link rel="stylesheet" href="/assets/window-panels.css?v=1">
+  <script src="/assets/window-panels.js?v=1" defer></script>
 </head><body data-page="portfolio"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><div class="quick-find-brand"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><button class="quick-find-toggle" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden><svg focusable="false" aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.15"/><path d="m10 10 4 4"/></svg><span>Find</span></button></div><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" aria-current="page">Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ portfolio</div>
   <h1 class="page-title">See what AOW <span class="accent">can build.</span></h1>
   <p class="lead">We made it easier for customers to ask for a quote on this site. Here’s what changed and what a similar update could do for your business.</p>
   <section class="section portfolio-proof" aria-labelledby="featured-project">
-    <div class="window"><div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / featured project</div>
+    <div class="window" data-window-panel="Featured project"><div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / featured project</div>
       <div class="window-body">
         <div class="tag">LIVE PROJECT / AOW’S OWN WEBSITE</div>
         <h2 id="featured-project" tabindex="-1">A clearer way to request a quote</h2>
@@ -73,7 +75,7 @@
     <p>These short fictional demos show how we narrow down a tech problem or automate a repetitive task. Open either one if you’d like to see how it works.</p>
     <details class="portfolio-lab" data-portfolio-lab>
       <summary id="support-puzzle"><span><strong>Tech support</strong><span>How we narrow down a dropping Wi-Fi call.</span></span></summary>
-      <article class="window support-puzzle" data-support-puzzle aria-labelledby="support-puzzle-title">
+      <article class="window support-puzzle" data-window-panel="Signal desk" data-support-puzzle aria-labelledby="support-puzzle-title">
       <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / signal desk</div>
       <div class="window-body">
         <div class="tag">FIELD SIMULATION / FICTIONAL INCIDENTS</div>
@@ -132,7 +134,7 @@
     </details>
     <details class="portfolio-lab" data-portfolio-lab>
       <summary id="report-demo-title"><span><strong>Workflow automation</strong><span>How we turn a messy export into a usable report.</span></span></summary>
-      <article class="window report-demo" data-report-demo aria-labelledby="report-workbench-title">
+      <article class="window report-demo" data-window-panel="Report repair workbench" data-report-demo aria-labelledby="report-workbench-title">
       <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / report repair workbench</div>
       <div class="window-body">
         <div class="tag">INTERACTIVE EXAMPLE / FICTIONAL DATA</div>
