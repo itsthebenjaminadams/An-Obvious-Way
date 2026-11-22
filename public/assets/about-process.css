@@ -1,0 +1,33 @@
+/* About's process cards are native disclosures; their entire summary is the control. */
+.about-process li { padding: 0; align-self: start; }
+.about-process li::before { content: none; }
+.about-process summary {
+  position: relative;
+  display: block;
+  padding: 1.15rem;
+  cursor: pointer;
+  border-radius: .6rem;
+}
+.about-process summary::-webkit-details-marker { display: none; }
+.about-process summary::before {
+  content: "0" counter(path-step) " /";
+  display: block;
+  margin-bottom: .65rem;
+  color: var(--accent);
+  font-family: ui-monospace, monospace;
+}
+.about-process summary::after {
+  content: "";
+  position: absolute;
+  inset: 1.2rem 1.2rem auto auto;
+  width: .5rem;
+  height: .5rem;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: rotate(45deg);
+}
+.about-process details[open] > summary::after { transform: rotate(225deg); }
+.about-process summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.about-process-detail { padding: 0 1.15rem 1.15rem; }
+.about-process-detail h3 { font-size: 1rem; margin: 0; }
+.about-process-detail p { margin: .4rem 0 0; }

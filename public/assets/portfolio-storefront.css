@@ -43,8 +43,9 @@
  color:var(--muted);text-align:right;font-size:.64rem;line-height:1.3
 }
 .portfolio-fold-marker{
- position:absolute;top:74%;left:.6rem;padding:.08rem .32rem;border:1px dotted currentColor;border-radius:.18rem;
+ position:absolute;top:74%;left:.6rem;padding:.08rem .32rem .08rem .52rem;border-inline-start:2px solid currentColor;
  color:var(--muted);font:700 .66rem/1.3 var(--aow-mono,monospace)
 }
 .portfolio-fold-after .portfolio-fold-marker{top:31%;color:var(--accent)}
 @media(max-width:460px){.portfolio-layout-figure dl{grid-template-columns:minmax(0,1fr)}}
+.portfolio-live-link{display:inline-flex;align-items:center;gap:.3rem;min-height:44px}
