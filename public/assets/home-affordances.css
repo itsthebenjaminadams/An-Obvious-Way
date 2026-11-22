@@ -1,0 +1,41 @@
+/* These service cards are links, not panels with a second focus target. */
+.home-service:focus-visible,
+.home-service:active {
+  border-color: var(--accent);
+}
+
+.console-service {
+  display: block;
+  border-radius: .2rem;
+}
+
+.console-service strong {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.console-service:focus-visible,
+.console-service:active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--text);
+}
+
+/* During the brief intro, keyboard focus reveals the actual service links. */
+.console-content.is-playing [data-readout]:not(:focus-within) {
+  pointer-events: none;
+}
+
+.console-content.is-playing [data-readout]:focus-within {
+  opacity: 1;
+}
+
+.console-content.is-playing:focus-within [data-intro] {
+  visibility: hidden;
+}
+
+@media (hover: hover) {
+  .console-service:hover {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--text);
+  }
+}

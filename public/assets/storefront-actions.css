@@ -1,0 +1,18 @@
+/* Only links and buttons look actionable in cards with multiple choices. */
+body[data-page="services"] #all-services .card:hover,
+body[data-page="contact"] .quote-topic:hover{border-color:var(--line)}
+.service-chooser,.contact-address{display:flex;align-items:center;gap:.4rem .65rem;flex-wrap:wrap}
+.service-chooser a{display:inline-flex;align-items:center;gap:.45rem;min-height:44px;padding:.35rem .7rem;border:1px solid var(--line);border-radius:.35rem;color:var(--accent)}
+.service-chooser a:hover{border-color:var(--accent);text-decoration:underline}
+.contact-address>.text-link{display:inline-flex;align-items:center;min-height:44px;overflow-wrap:anywhere;max-width:100%}
+.contact-copy.btn{min-height:44px;padding:.35rem .7rem;font-size:.86rem}
+.contact-copy.btn:hover{border-color:var(--accent);transform:none}
+.address-fallback,.address-status{flex-basis:100%}
+.address-fallback input{display:block;width:min(100%,24rem);min-height:44px;margin:.25rem 0 0;padding:.4rem .55rem;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:.35rem;font:inherit}
+.address-status{margin:.12rem 0 0}
+.address-status:empty{margin:0;block-size:0}
+/* Terminal punctuation, not imitation close/minimize/maximize controls. */
+body[data-page] .window-head .lights{align-items:center;gap:5px}
+body[data-page] .window-head .lights i{width:3px;height:9px;border-radius:1px;transform:skewX(-22deg);background:var(--accent);opacity:.65}
+body[data-page] .window-head .lights i:nth-child(2){opacity:.46}
+body[data-page] .window-head .lights i:nth-child(3){opacity:.28}
