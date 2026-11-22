@@ -24,3 +24,28 @@
     }
   });
 })();
+
+(() => {
+  for (const template of document.querySelectorAll('[data-quote-template]')) {
+    const status = template.querySelector('[data-copy-status]');
+    if (!status) continue;
+    for (const button of template.querySelectorAll('[data-copy-field]')) {
+      const field = document.getElementById(button.dataset.copyField);
+      if (!field || !template.contains(field) || !field.readOnly) continue;
+      const name = button.dataset.copyName || (field.tagName === 'INPUT' ? 'Subject' : 'Message');
+      button.hidden = false;
+      button.addEventListener('click', async () => {
+        status.textContent = '';
+        try {
+          await navigator.clipboard.writeText(field.value);
+          status.textContent = `${name} copied.`;
+        } catch {
+          if (!template.open) return;
+          field.focus();
+          field.select();
+          status.textContent = `Automatic copy is unavailable. Copy the selected ${name.toLowerCase()}.`;
+        }
+      });
+    }
+  }
+})();
