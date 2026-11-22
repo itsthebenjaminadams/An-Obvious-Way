@@ -1,0 +1,101 @@
+[data-window-panel][data-window-state] > .window-head {
+  min-height: 44px;
+  padding-block: 0;
+  gap: .6rem;
+  overflow-wrap: anywhere;
+}
+
+.window-panel-controls {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.window-panel-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  letter-spacing: normal;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 .4rem;
+  cursor: pointer;
+}
+
+.window-panel-button > span {
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 50%;
+  background: #ed7773;
+  color: #15121a;
+  font-size: .95rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.window-panel-minimize > span { background: #e8bb63; }
+.window-panel-expand > span { background: #60d5a0; }
+
+.window-panel-button:focus-visible,
+.window-panel-button:active {
+  background: #ffffff16;
+  outline-offset: -3px;
+  border-radius: .35rem;
+}
+
+@media (hover: hover) {
+  .window-panel-button:hover { background: #ffffff16; }
+}
+
+.window-panel-reopen,
+.window-panel-exit {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.window-panel-exit { margin-inline-start: auto; }
+
+html.aow-reading-open { overflow: hidden; }
+
+.window-reading-mode {
+  width: calc(100% - 1rem);
+  max-width: 75rem;
+  height: calc(100% - 1rem);
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: .8rem;
+  background: var(--panel);
+  color: var(--text);
+  overscroll-behavior: contain;
+}
+
+.window-reading-mode::backdrop { background: #050912d9; }
+
+.window-reading-mode > [data-window-expanded] {
+  width: 100%;
+  max-width: none;
+  min-height: 100%;
+  overflow: visible;
+  border: 0;
+  box-shadow: none;
+}
+
+.window-reading-mode [data-window-expanded] > .window-head {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding-inline: .75rem;
+}
+
+@media (max-width: 420px) {
+  [data-window-panel][data-window-state] > .window-head { padding-inline: .55rem; }
+  [data-window-panel][data-window-state] > .window-head > .window-channel { display: none; }
+}

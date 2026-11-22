@@ -20,6 +20,8 @@
   <script src="/assets/quick-find.js?v=4" defer></script>
   <link rel="stylesheet" href="/assets/portfolio-pathways.css?v=1">
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
+  <link rel="stylesheet" href="/assets/window-panels.css?v=1">
+  <script src="/assets/window-panels.js?v=1" defer></script>
 </head><body data-page="services"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><div class="quick-find-brand"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><button class="quick-find-toggle" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden><svg focusable="false" aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.15"/><path d="m10 10 4 4"/></svg><span>Find</span></button></div><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" aria-current="page">Services</a><a href="/portfolio/" >Portfolio</a><a href="/about/" >About</a><a href="/contact/" >Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button class="theme-btn" style="background:#61e7aa" data-theme="green" aria-label="Green theme"></button><button class="theme-btn" style="background:#ffc36b" data-theme="amber" aria-label="Amber theme"></button><button class="theme-btn" style="background:#65d9ed" data-theme="cyan" aria-label="Cyan theme"></button><button class="theme-btn" style="background:#bc9bff" data-theme="purple" aria-label="Purple theme"></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
   <div class="eyebrow">/ services</div>
   <h1 class="page-title">Tech help for <span class="accent">the job at hand.</span></h1>
@@ -71,7 +73,7 @@
     <p class="small">Prices shown are starting estimates. You’ll see what’s included and what it costs before deciding whether to proceed.</p>
   </section>
   <section class="section">
-    <div class="window"><div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / request</div>
+    <div class="window" data-window-panel="Request help"><div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / request</div>
       <div class="window-body">
         <h2>What happens after you reach out?</h2>
         <p>Tell us what’s getting in the way and what you want to happen instead. We’ll ask for any details we need to propose a next step. You don’t need to choose a service first.</p>
@@ -81,7 +83,7 @@
   </section>
   <details class="section">
     <summary>Not sure which service fits? Use the service finder</summary>
-  <section class="window service-finder" aria-labelledby="finder-title">
+  <section class="window service-finder" data-window-panel="Service finder" aria-labelledby="finder-title">
     <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / service finder</div>
     <div class="window-body">
       <h2 id="finder-title">What are you trying to do?</h2>
