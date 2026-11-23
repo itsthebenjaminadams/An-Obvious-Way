@@ -62,7 +62,7 @@
     [/^how much would\s+/, ''],
     [/^what does\s+/, ''],
     [/^can (?:you|someone) help(?: me)? with\s+/, ''],
-    [/^can you clean up\s+/, 'clean '],
+    [/^(?:can you )?clean up\s+/, 'clean '],
     [/^i need someone to\s+/, '']
   ];
 
