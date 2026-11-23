@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://anobviousway.com/assets/aow-social.jpg">
   <meta name="twitter:image:alt" content="An Obvious Way terminal mark on a radar grid. Tech support, websites and automation.">
 <link rel="stylesheet" href="/assets/page-interactions.css">  <link rel="stylesheet" href="/assets/quick-find.css?v=1">
-  <script src="/assets/quick-find.js?v=6" defer></script>
+  <script src="/assets/quick-find.js?v=7" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
   <script src="/assets/contact-affordances.js?v=3" defer></script>
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
@@ -27,7 +27,6 @@
     <p class="eyebrow">AOW / Contact</p>
     <h1 class="page-title">Request a <span class="accent">quote.</span></h1>
     <p class="lead">Send a short email about what you need. If it’s a fit, we’ll explain the suggested work and cost before you decide.</p>
-    <p>Not sure which service fits? A few sentences are enough.</p>
     <div class="contact-address" data-contact-address>
       <a class="text-link" data-address-link href="mailto:contact@anobviousway.com">contact@anobviousway.com</a>
       <button type="button" class="btn secondary contact-copy" data-address-copy hidden>Copy email address</button>
@@ -36,9 +35,36 @@
     </div>
   </header>
   <section class="section" aria-labelledby="quote-topics">
-    <p class="eyebrow">Choose your service</p>
+    <p class="eyebrow">Choose how to start</p>
     <h2 id="quote-topics">Start an email draft</h2>
     <p>Open a draft in your email app or copy a template for webmail. Nothing is sent until you send it.</p>
+    <article class="quote-topic card" id="quote-general" tabindex="-1">
+  <h3>Describe your project</h3><p>Not sure which service fits? A few sentences are enough.</p>
+  <a class="btn primary" aria-label="Open general quote email draft" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request&amp;body=Hi%20AOW%2C%0D%0A%0D%0AWhat%20I%20want%20to%20accomplish%3A%0D%0AWhere%20I%20need%20help%20and%20what%20a%20good%20result%20looks%20like%3A%0D%0ADeadline%2C%20if%20any%3A%0D%0A%0D%0AThanks%21">Open email draft</a>
+  <details class="quote-template" data-quote-template>
+    <summary>Use webmail instead</summary>
+    <div class="quote-template-inner">
+      <p class="small" id="template-general-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
+      <label class="small" for="template-general-to">To</label>
+      <input id="template-general-to" type="text" value="contact@anobviousway.com" readonly>
+      <button class="btn secondary" type="button" data-copy-field="template-general-to" data-copy-name="Recipient address" aria-label="Copy recipient address for a general quote" hidden>Copy recipient address</button>
+      <label class="small" for="template-general-subject">Subject</label>
+      <textarea id="template-general-subject" rows="2" readonly>AOW quote request</textarea>
+      <button class="btn secondary" type="button" data-copy-field="template-general-subject" data-copy-name="Subject" aria-label="Copy subject for a general quote" hidden>Copy subject</button>
+      <label class="small" for="template-general">Message</label>
+      <textarea id="template-general" data-quote-text aria-describedby="template-general-help" readonly rows="7">Hi AOW,
+
+What I want to accomplish:
+Where I need help and what a good result looks like:
+Deadline, if any:
+
+Thanks!</textarea>
+      <button class="btn secondary" type="button" data-copy-field="template-general" data-copy-name="Message" aria-label="Copy message for a general quote" hidden>Copy message</button>
+      <p class="small quote-status" data-copy-status role="status"></p>
+    </div>
+  </details>
+</article>
+    <p>Know what you need? Choose a service below for a more specific draft.</p>
     <div class="grid"><article class="quote-topic card" id="quote-support" tabindex="-1">
   <h3>Tech support</h3><p>Include the device or operating system, what changed, and any error text.</p>
   <a class="btn primary" aria-label="Open tech support email draft" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request%3A%20Tech%20support&amp;body=Hi%20AOW%2C%0D%0A%0D%0ADevice%20and%20operating%20system%3A%0D%0AWhat%20happened%20and%20when%20it%20started%3A%0D%0AError%20message%20or%20what%20I%20already%20tried%3A%0D%0A%0D%0AThanks%21">Open email draft</a>

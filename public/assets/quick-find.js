@@ -12,6 +12,7 @@
     ['/services/#tech-support', 'Tech support and diagnostic prices', 'Get help with devices, Windows, Wi-Fi or setup.', 'computer laptop pc fix repair troubleshooting internet wifi wireless network connection hardware remote access keeps dropping unreliable diagnostic diagnostics cost price prices pricing rates'],
     ['/services/#web-development', 'Website development and starting prices', 'Build or improve a small-business site.', 'website websites web design create new landing page mobile small business business site navigation redesign price pricing cost'],
     ['/services/#workflow-automation', 'Workflow automation and starting prices', 'Cut repetitive steps from a report or spreadsheet.', 'automate automated script task data processing spreadsheet excel csv recurring report repeat manual cleanup clean fix weekly cost price prices pricing rates'],
+    ['/contact/#quote-general', 'Request a quote', 'Describe your project when you’re not sure which service fits.', 'quotes general project email draft'],
     ['/contact/#quote-support', 'Start a tech support quote', 'Use an email draft or copy the webmail template.', 'support computer repair quote cost price wifi windows email help estimate keeps dropping unreliable diagnostic diagnostics'],
     ['/contact/#quote-web', 'Start a website quote', 'Use an email draft or copy the webmail template.', 'web design website websites site small business quote cost price mobile email contact estimate new'],
     ['/contact/#quote-automation', 'Start an automation quote', 'Use an email draft or copy the webmail template.', 'workflow automation report spreadsheet data quote price cost email estimate cleanup clean weekly recurring'],
@@ -30,7 +31,7 @@
   const searchIndex = pages.map(([url, title, description, aliases]) => ({
     url, title, description, titleWords: tokenize(title), otherWords: tokenize(description + ' ' + aliases)
   }));
-  const featured = [0, 1, 2, 3, 12].map(index => searchIndex[index]);
+  const featured = [0, 1, 2, 3, 13].map(index => searchIndex[index]);
   const demoPaths = new Set(['/portfolio/#report-demo-title', '/portfolio/#support-puzzle']);
 
   function near(term, word) {

@@ -9,6 +9,12 @@ const uiStart = source.indexOf('  function make(');
 assert(indexStart >= 0 && uiStart > indexStart, 'Locate the unchanged search-engine boundaries');
 const search = vm.runInNewContext(source.slice(indexStart, uiStart) + '\nsearch');
 const first = new Map([
+  ['quote', '/contact/#quote-general'],
+  ['quotes', '/contact/#quote-general'],
+  ['get a quote', '/contact/#quote-general'],
+  ['request a quote', '/contact/#quote-general'],
+  ['describe your project', '/contact/#quote-general'],
+  ['prepare a quote request', '/contact/#preflight-title'],
   ['Wi-Fi keeps dropping', '/services/#tech-support'],
   ['my wifi keeps dropping', '/services/#tech-support'],
   ['Wi-Fi keeps dropping quote', '/contact/#quote-support'],
@@ -60,4 +66,4 @@ const pricingUrls = Array.from(search('pricing'), result => result.url);
 for (const service of ['tech-support', 'web-development', 'workflow-automation']) {
   assert(pricingUrls.includes('/services/#' + service), 'Generic pricing includes ' + service);
 }
-console.log('47 Quick Find query regressions plus full generic pricing coverage passed.');
+console.log('53 Quick Find query regressions plus full generic pricing coverage passed.');
