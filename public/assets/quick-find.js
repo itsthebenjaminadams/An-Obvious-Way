@@ -53,8 +53,35 @@
     return 0;
   }
 
+  const queryTerms = query => [...new Set(tokenize(query).filter(word => !noise.has(word)))];
+
+  // Strip only recognized opening phrases, not unmatched words within a request.
+  // Keep "cost" in the pricing wrapper and leave all exclusions in the topic.
+  const spokenOpeners = [
+    [/^how much does it cost to\s+/, 'cost '],
+    [/^how much would\s+/, ''],
+    [/^what does\s+/, ''],
+    [/^can (?:you|someone) help(?: me)? with\s+/, ''],
+    [/^can you clean up\s+/, 'clean '],
+    [/^i need someone to\s+/, '']
+  ];
+
   function search(query) {
-    const terms = [...new Set(tokenize(query.slice(0, 80)).filter(word => !noise.has(word)))];
+    const bounded = query.slice(0, 80);
+    const terms = queryTerms(bounded);
+    if (!terms.length) return null;
+    const exact = rank(terms);
+    if (exact.length) return exact;
+    if (query.length >= 80) return []; // A truncated request may omit a qualification.
+    const spoken = bounded.toLowerCase().replace(/’/g, "'").trim();
+    if (/\b(?:not|no|never|without|except|excluding|avoid|rather|instead)\b|\bnor\b|n't\b/.test(spoken)) return [];
+    const opener = spokenOpeners.find(([pattern]) => pattern.test(spoken));
+    if (!opener) return [];
+    const topic = queryTerms(spoken.replace(opener[0], opener[1]));
+    return topic.length ? rank(topic) : [];
+  }
+
+  function rank(terms) {
     if (!terms.length) return null;
     // Put service information ahead of optional demos unless the visitor asks for a demo.
     const buying = terms.some(term => ['quote', 'pricing', 'price', 'prices', 'cost', 'estimate'].includes(term));
