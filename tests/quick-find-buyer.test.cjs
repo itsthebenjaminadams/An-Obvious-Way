@@ -33,6 +33,19 @@ const first = new Map([
   ['Wi-Fi quote', '/contact/#quote-support'],
   ['computer repair quote', '/contact/#quote-support'],
   ['repair', '/services/#tech-support'],
+  ['Wi-Fi diagnostic price', '/services/#tech-support'],
+  ['computer diagnostic price', '/services/#tech-support'],
+  ['diagnostic cost', '/services/#tech-support'],
+  ['how much is a Wi-Fi diagnostic', '/services/#tech-support'],
+  ['tech support pricing', '/services/#tech-support'],
+  ['support rates', '/services/#tech-support'],
+  ['Wi-Fi repair cost', '/services/#tech-support'],
+  ['automation pricing', '/services/#workflow-automation'],
+  ['spreadsheet cleanup pricing', '/services/#workflow-automation'],
+  ['report automation pricing', '/services/#workflow-automation'],
+  ['spreadsheet cleanup quote', '/contact/#quote-automation'],
+  ['weekly report quote', '/contact/#quote-automation'],
+  ['Wi-Fi diagnostic quote', '/contact/#quote-support'],
   ['pricing', '/services/#all-services'],
   ['dropping call', '/portfolio/#support-puzzle'],
   ['report repair lab', '/portfolio/#report-demo-title'],
@@ -40,7 +53,11 @@ const first = new Map([
   ['demo', '/portfolio/#report-demo-title'],
 ]);
 for (const [query, url] of first) assert.equal(search(query)?.[0]?.url, url, query);
-for (const query of ['website hosting pricing', 'hosting pricing', 'free website', 'Mac repair', 'WordPress website', 'iPhone screen repair', 'unrelated fictitious need']) {
+for (const query of ['phone screen pricing', 'Mac support pricing', 'website hosting pricing', 'hosting pricing', 'free website', 'Mac repair', 'WordPress website', 'iPhone screen repair', 'unrelated fictitious need']) {
   assert.equal(search(query)?.length, 0, query);
 }
-console.log('36 Quick Find buyer, demo, and unsupported-query regressions passed.');
+const pricingUrls = Array.from(search('pricing'), result => result.url);
+for (const service of ['tech-support', 'web-development', 'workflow-automation']) {
+  assert(pricingUrls.includes('/services/#' + service), 'Generic pricing includes ' + service);
+}
+console.log('47 Quick Find query regressions plus full generic pricing coverage passed.');
