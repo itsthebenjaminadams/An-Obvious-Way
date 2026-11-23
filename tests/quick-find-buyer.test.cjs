@@ -66,4 +66,35 @@ const pricingUrls = Array.from(search('pricing'), result => result.url);
 for (const service of ['tech-support', 'web-development', 'workflow-automation']) {
   assert(pricingUrls.includes('/services/#' + service), 'Generic pricing includes ' + service);
 }
-console.log('53 Quick Find query regressions plus full generic pricing coverage passed.');
+const spokenFirst = new Map([
+  ['How much does it cost to fix my Wi-Fi?', '/services/#tech-support'],
+  ['How much would a new website cost?', '/services/#web-development'],
+  ['Can you help me with my Wi-Fi?', '/services/#tech-support'],
+  ['Can you clean up my spreadsheet?', '/services/#workflow-automation'],
+  ['clean up my spreadsheet', '/services/#workflow-automation'],
+  ['What does a website cost?', '/services/#web-development'],
+  ['Can someone help with a laptop?', '/services/#tech-support'],
+  ['I need someone to fix my Wi-Fi', '/services/#tech-support'],
+  ['Can you help with my website?', '/services/#web-development'],
+  ['Can you help me with a website quote?', '/contact/#quote-web'],
+]);
+for (const [query, url] of spokenFirst) assert.equal(search(query)?.[0]?.url, url, query);
+for (const query of [
+  'clean up my registry', 'clean up my spreadsheet without Excel',
+  'Can you help with car brakes?', 'Can someone help with my fridge?', 'Can you help with pancakes?',
+  'Can you help with Mac support?', 'Can you help with my website without hosting?',
+  'Can you help with my Wi-Fi but not a website?', 'Can you help with my Wi-Fi instead of my website?',
+  'Can you help with my website? I don’t want hosting.', 'Can you help with my Wi-Fi except at night?',
+  'Can you help with my website?' + ' '.repeat(65) + ' except hosting',
+]) assert.equal(search(query)?.length, 0, query);
+
+if (process.argv[2]) {
+  const prior = fs.readFileSync(process.argv[2], 'utf8');
+  const previousSearch = vm.runInNewContext(prior.slice(prior.indexOf('  // Path, label'), prior.indexOf('  function make(')) + '\nsearch');
+  for (const query of first.keys()) {
+    const urls = (fn) => Array.from(fn(query), result => result.url);
+    assert.deepEqual(urls(search), urls(previousSearch), 'Full result order: ' + query);
+  }
+  console.log('All ' + first.size + ' established positive queries keep their full original result order.');
+}
+console.log('75 Quick Find query regressions plus full generic pricing coverage passed.');
