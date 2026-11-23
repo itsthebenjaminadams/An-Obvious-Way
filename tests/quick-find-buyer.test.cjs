@@ -71,6 +71,7 @@ const spokenFirst = new Map([
   ['How much would a new website cost?', '/services/#web-development'],
   ['Can you help me with my Wi-Fi?', '/services/#tech-support'],
   ['Can you clean up my spreadsheet?', '/services/#workflow-automation'],
+  ['clean up my spreadsheet', '/services/#workflow-automation'],
   ['What does a website cost?', '/services/#web-development'],
   ['Can someone help with a laptop?', '/services/#tech-support'],
   ['I need someone to fix my Wi-Fi', '/services/#tech-support'],
@@ -79,6 +80,7 @@ const spokenFirst = new Map([
 ]);
 for (const [query, url] of spokenFirst) assert.equal(search(query)?.[0]?.url, url, query);
 for (const query of [
+  'clean up my registry', 'clean up my spreadsheet without Excel',
   'Can you help with car brakes?', 'Can someone help with my fridge?', 'Can you help with pancakes?',
   'Can you help with Mac support?', 'Can you help with my website without hosting?',
   'Can you help with my Wi-Fi but not a website?', 'Can you help with my Wi-Fi instead of my website?',
@@ -95,4 +97,4 @@ if (process.argv[2]) {
   }
   console.log('All ' + first.size + ' established positive queries keep their full original result order.');
 }
-console.log('72 Quick Find query regressions plus full generic pricing coverage passed.');
+console.log('75 Quick Find query regressions plus full generic pricing coverage passed.');
