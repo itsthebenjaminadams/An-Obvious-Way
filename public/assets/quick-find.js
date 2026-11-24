@@ -9,11 +9,11 @@
   // Path, label, helpful action, and aliases. All destinations are static site links.
   const pages = [
     ['/services/#all-services', 'Services and starting prices', 'Compare services, starting prices and quote options.', 'service finder options compare services prices pricing cost rates'],
-    ['/services/#tech-support', 'Tech support and diagnostic prices', 'Get help with devices, Windows, Wi-Fi or setup.', 'computer laptop pc fix repair troubleshooting internet wifi wireless network connection hardware remote access keeps dropping unreliable diagnostic diagnostics cost price prices pricing rates'],
+    ['/services/#tech-support', 'Tech support and diagnostic prices', 'Get help with devices, Windows, Wi-Fi or setup.', 'computer laptop pc fix repair troubleshooting internet wifi wireless network connection hardware remote access keeps dropping disconnecting unreliable diagnostic diagnostics cost price prices pricing rates'],
     ['/services/#web-development', 'Website development and starting prices', 'Build or improve a small-business site.', 'website websites web design create new landing page mobile small business business site navigation redesign price pricing cost'],
     ['/services/#workflow-automation', 'Workflow automation and starting prices', 'Cut repetitive steps from a report or spreadsheet.', 'automate automated script task data processing spreadsheet excel csv recurring report repeat manual cleanup clean fix weekly cost price prices pricing rates'],
     ['/contact/#quote-general', 'Request a quote', 'Describe your project when you’re not sure which service fits.', 'quotes general project email draft'],
-    ['/contact/#quote-support', 'Start a tech support quote', 'Use an email draft or copy the webmail template.', 'support computer repair quote cost price wifi windows email help estimate keeps dropping unreliable diagnostic diagnostics'],
+    ['/contact/#quote-support', 'Start a tech support quote', 'Use an email draft or copy the webmail template.', 'support computer repair quote cost price wifi windows email help estimate keeps dropping disconnecting unreliable diagnostic diagnostics'],
     ['/contact/#quote-web', 'Start a website quote', 'Use an email draft or copy the webmail template.', 'web design website websites site small business quote cost price mobile email contact estimate new'],
     ['/contact/#quote-automation', 'Start an automation quote', 'Use an email draft or copy the webmail template.', 'workflow automation report spreadsheet data quote price cost email estimate cleanup clean weekly recurring'],
     ['/contact/#preflight-title', 'Prepare a quote request', 'Gather the right details before you reach out.', 'start contact intake preflight scope brief question estimate prepare checklist'],
@@ -27,11 +27,14 @@
   ];
 
   const noise = new Set(['a', 'an', 'and', 'can', 'do', 'does', 'for', 'get', 'how', 'i', 'in', 'is', 'much', 'my', 'need', 'of', 'on', 'please', 'the', 'to', 'with']);
-  const tokenize = value => value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\bwi[\s-]?fi\b/g, 'wifi').match(/[a-z0-9]+/g) || [];
-  const searchIndex = pages.map(([url, title, description, aliases]) => ({
-    url, title, description, titleWords: tokenize(title), otherWords: tokenize(description + ' ' + aliases)
-  }));
+  const tokenize = value => value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\bwi[\s\u2010-\u2015-]?fi\b/g, 'wifi').match(/[a-z0-9]+/g) || [];
+  const searchIndex = pages.map(([url, title, description, aliases]) => {
+    const otherWords = tokenize(description + ' ' + aliases);
+    return { url, title, description, titleWords: tokenize(title), otherWords,
+      unqualifiedWords: otherWords.filter(word => word !== 'disconnecting') };
+  });
   const featured = [0, 1, 2, 3, 13].map(index => searchIndex[index]);
+  const connectionTopics = new Set(['wifi', 'wireless', 'network', 'internet', 'computer', 'laptop', 'pc', 'windows']);
   const demoPaths = new Set(['/portfolio/#report-demo-title', '/portfolio/#support-puzzle']);
 
   function near(term, word) {
@@ -89,8 +92,11 @@
       || (terms.includes('dropping') && terms.includes('call'))
       || (terms.includes('report') && terms.includes('repair')));
     const priority = match => demoPaths.has(match.item.url) === demoIntent ? 1 : 0;
+    // A disconnection alone doesn't establish that the visitor means a supported device or connection.
+    const connectionTopic = terms.some(term => connectionTopics.has(term));
     return searchIndex.map(item => {
-      const scores = terms.map(term => Math.max(wordScore(term, item.titleWords, 8), wordScore(term, item.otherWords, 4)));
+      const aliases = connectionTopic ? item.otherWords : item.unqualifiedWords;
+      const scores = terms.map(term => Math.max(wordScore(term, item.titleWords, 8), wordScore(term, aliases, 4)));
       return { item, weight: scores.every(score => score > 0) ? scores.reduce((sum, score) => sum + score, 0) : 0 };
     }).filter(match => match.weight > 0).sort((a, b) => priority(b) - priority(a) || b.weight - a.weight).slice(0, 7).map(match => match.item);
   }
@@ -129,7 +135,20 @@
   const list = make('ul', 'quick-find-results');
   list.setAttribute('aria-label', 'Matching page links');
   const empty = make('p', 'quick-find-empty');
-  dialog.append(header, label, input, hint, status, list, empty);
+  const recovery = make('ul', 'quick-find-results');
+  recovery.setAttribute('aria-label', 'Browse instead');
+  recovery.hidden = true;
+  for (const [url, title] of [
+    ['/services/#all-services', 'Compare all services'],
+    ['/contact/#quote-general', 'Describe your project']
+  ]) {
+    const li = make('li');
+    const link = make('a', '', title);
+    link.href = url;
+    li.append(link);
+    recovery.append(li);
+  }
+  dialog.append(header, label, input, hint, status, list, empty, recovery);
   document.body.append(dialog);
   opener.hidden = false;
 
@@ -148,6 +167,7 @@
     list.replaceChildren(...links);
     list.hidden = links.length === 0;
     empty.hidden = links.length !== 0;
+    recovery.hidden = !query || matches === null || matches.length !== 0;
     empty.textContent = links.length ? '' : 'Try a short topic such as “website”, “tech support”, “quote”, or “demo”.';
     status.textContent = !query ? 'Popular starting points' : matches === null ? 'Enter a topic to search'
       : matches.length === 1 ? '1 result' : matches.length ? matches.length + ' results' : 'No matches';
@@ -164,13 +184,15 @@
   });
   close.addEventListener('click', () => dialog.close());
   input.addEventListener('input', render);
-  list.addEventListener('click', event => {
+  function closeOnNavigation(event) {
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     if (event.target.closest('a[href]')) {
       navigating = true;
       dialog.close();
     }
-  });
+  }
+  list.addEventListener('click', closeOnNavigation);
+  recovery.addEventListener('click', closeOnNavigation);
   // Native Escape dispatches close too; never override the browser's keyboard shortcuts.
   dialog.addEventListener('close', () => {
     input.value = '';
