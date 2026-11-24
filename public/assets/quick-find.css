@@ -22,7 +22,7 @@
 .quick-find-close{min-height:44px;padding:0 .7rem;border:1px solid var(--line);border-radius:.35rem;background:#0a1426;color:var(--text);font:inherit;cursor:pointer}
 .quick-find-panel label{display:block;margin-bottom:.28rem;font-weight:650}
 .quick-find-input{
- width:100%;min-height:44px;padding:.6rem .7rem;border:1px solid var(--line);
+ width:100%;min-height:44px;padding:.6rem .7rem;border:1px solid #607489;
  border-radius:.35rem;background:#060f1d;color:var(--text);font:inherit
 }
 .quick-find-input::placeholder{color:var(--muted);opacity:1}
