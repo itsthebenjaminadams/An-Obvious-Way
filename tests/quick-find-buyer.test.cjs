@@ -97,4 +97,20 @@ if (process.argv[2]) {
   }
   console.log('All ' + first.size + ' established positive queries keep their full original result order.');
 }
-console.log('75 Quick Find query regressions plus full generic pricing coverage passed.');
+for (const dash of ['\u2010', '\u2011', '\u2012', '\u2013', '\u2014', '\u2015']) {
+  for (const topic of ['Wi-Fi', 'Wi-Fi quote', 'Wi-Fi keeps dropping', 'Mac Wi-Fi repair', 'Wi-Fi without router']) {
+    assert.deepEqual(Array.from(search(topic.replace('-', dash), x => x.url), x => x.url),
+      Array.from(search(topic), x => x.url), topic + ': ' + dash);
+  }
+}
+for (const query of ['My Wi‑Fi keeps disconnecting', 'My network keeps disconnecting', 'My PC keeps disconnecting',
+  'My Windows laptop keeps disconnecting', 'My internet keeps disconnecting']) {
+  assert.equal(search(query)?.[0]?.url, '/services/#tech-support', query);
+}
+assert.equal(search('My Wi‑Fi keeps disconnecting quote')?.[0]?.url, '/contact/#quote-support');
+for (const query of ['disconnecting', 'keeps disconnecting', 'My iPhone keeps disconnecting',
+  'My Bluetooth headphones keep disconnecting', 'My Wi‑Fi keeps disconnecting without a router',
+  'My Wi‑Fi keeps disconnecting and need hosting', 'My Ethernet keeps disconnecting']) {
+  assert.equal(search(query)?.length, 0, query);
+}
+console.log('75 existing regressions plus symptom and punctuation cases passed.');
