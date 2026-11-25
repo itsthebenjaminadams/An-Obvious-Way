@@ -1,7 +1,7 @@
 const themes = { green: '#61e7aa', amber: '#ffc36b', cyan: '#65d9ed', purple: '#bc9bff' };
 
-function loadPreference(storage, key) {
-  try { return window[storage].getItem(key); } catch { return null; }
+function loadPreference(storage, key, fallback = null) {
+  try { return window[storage].getItem(key); } catch { return fallback; }
 }
 
 function savePreference(storage, key, value) {
@@ -12,14 +12,21 @@ function setupTheme() {
   const group = document.querySelector('.settings');
   if (!group) return;
   const buttons = [...group.querySelectorAll('[data-theme]')];
+  let selected = 'green';
   function apply(name) {
     if (!Object.prototype.hasOwnProperty.call(themes, name)) name = 'green';
+    selected = name;
     document.documentElement.style.setProperty('--accent', themes[name]);
-    savePreference('localStorage', 'aow-theme', name);
     buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.theme === name)));
   }
   apply(loadPreference('localStorage', 'aow-theme'));
-  buttons.forEach(button => button.addEventListener('click', () => apply(button.dataset.theme)));
+  buttons.forEach(button => button.addEventListener('click', () => {
+    apply(button.dataset.theme);
+    savePreference('localStorage', 'aow-theme', selected);
+  }));
+  window.addEventListener('pageshow', event => {
+    if (event.persisted) apply(loadPreference('localStorage', 'aow-theme', selected));
+  });
   group.hidden = false;
 }
 
@@ -45,6 +52,12 @@ function setupMotion() {
     if (media.matches) return;
     quiet = !quiet;
     savePreference('localStorage', 'aow-motion', quiet ? 'quiet' : 'full');
+    sync();
+  });
+  // Run before the intro's pageshow listener so it uses the current preference.
+  window.addEventListener('pageshow', event => {
+    if (!event.persisted) return;
+    quiet = loadPreference('localStorage', 'aow-motion', quiet ? 'quiet' : 'full') === 'quiet';
     sync();
   });
   media.addEventListener?.('change', sync);
