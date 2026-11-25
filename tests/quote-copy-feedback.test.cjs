@@ -43,8 +43,8 @@ test('all four templates report success next to the latest copied field and anno
       await button.click();
       assert.equal(writes.at(-1), button.field.value);
       assert.equal(doc.activeElement, button);
-      assert.equal(button.feedback.textContent, name + ' copied.');
-      assert.equal(announcement.textContent, button.feedback.textContent);
+      assert.equal(button.feedback.textContent, 'Copied.');
+      assert.equal(announcement.textContent, name + ' copied.');
       assert.equal(buttons.filter(b => b.feedback.textContent).length, 1);
     }
   }

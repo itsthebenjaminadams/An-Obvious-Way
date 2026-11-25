@@ -46,9 +46,11 @@
         previous = feedback;
         status.textContent = '';
         let message;
+        let caption;
         try {
           await navigator.clipboard.writeText(field.value);
           message = `${name} copied.`;
+          caption = 'Copied.';
         } catch {
           if (id !== operation || !template.open) return;
           if (document.activeElement === originalFocus) {
@@ -60,7 +62,7 @@
           }
         }
         if (id !== operation || !template.open) return;
-        feedback.textContent = message;
+        feedback.textContent = caption || message;
         status.textContent = message;
       });
     }
