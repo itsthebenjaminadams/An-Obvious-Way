@@ -35,10 +35,10 @@ main [tabindex="-1"]:focus-visible{outline:2px solid var(--accent);outline-offse
 .links a:hover{background:#192a38}
 .settings{gap:0}
 .theme-btn{position:relative;background:none!important;width:32px;height:44px;border:0;border-radius:.4rem}
-.theme-btn::after{content:"";display:block;width:.85rem;height:.85rem;border-radius:50%;background:var(--swatch);margin:auto}
+.theme-btn>span{display:grid;place-items:center;width:1.08rem;height:1.08rem;border-radius:50%;background:var(--swatch);color:#07120e;margin:auto;font:800 .64rem/1 var(--aow-mono,monospace)}
 .theme-btn[data-theme=green]{--swatch:#61e7aa}.theme-btn[data-theme=amber]{--swatch:#ffc36b}.theme-btn[data-theme=cyan]{--swatch:#65d9ed}.theme-btn[data-theme=purple]{--swatch:#bc9bff}
 .theme-btn[aria-pressed=true]{outline:none}
-.theme-btn[aria-pressed=true]::after{outline:2px solid var(--text);outline-offset:3px}
+.theme-btn[aria-pressed=true]>span{outline:2px solid var(--text);outline-offset:3px}
 .theme-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 h1{font-size:clamp(2.25rem,5.55vw,4.5rem);margin-block:.8rem 1.15rem}
 .eyebrow{margin-top:0;line-height:1.5}
