@@ -5,10 +5,16 @@ const vm = require('node:vm');
 const test = require('node:test');
 const fromPublic = p => fs.readFileSync(path.join(__dirname, '../public', p), 'utf8');
 
-test('all three native shortcuts lead to focusable service quote cards', () => {
+test('native shortcuts and return links connect all four focusable quote choices', () => {
   const html = fromPublic('contact/index.html');
-  const nav = html.match(/<nav class="service-chooser" aria-label="Jump to a quote template">([\s\S]*?)<\/nav>/)?.[1];
+  const nav = html.match(/<nav class="service-chooser" aria-label="Jump to a quote template" id="quote-choices" tabindex="-1">([\s\S]*?)<\/nav>/)?.[1];
   assert.ok(nav);
+  assert.ok(nav.includes('href="#quote-general">Not sure yet</a>'));
+  const cards = Array.from(html.matchAll(/<article class="quote-topic card" id="quote-([a-z]+)" tabindex="-1">([\s\S]*?)<\/article>/g));
+  assert.deepEqual(cards.map(card => card[1]), ['general', 'support', 'web', 'automation']);
+  for (const [, , card] of cards) {
+    assert.match(card, /<\/details>\s*<a class="text-link quote-return" href="#quote-choices">Choose another template<\/a>/);
+  }
   for (const [id, label] of [['support', 'Tech support'], ['web', 'Web development'], ['automation', 'Workflow automation']]) {
     assert.ok(nav.includes(`href="#quote-${id}">${label}</a>`));
     assert.ok(html.includes(`id="quote-${id}" tabindex="-1">\n  <h3>${label}</h3>`));
