@@ -25,7 +25,5 @@
     const link = event.target.closest?.('a[href]');
     if (link?.href === window.location.href) openLinkedDemo();
   });
-  window.addEventListener('pageshow', event => {
-    if (event.persisted) openLinkedDemo();
-  });
+  // Back/Forward to this cached page should keep any manual disclosure choice.
 })();
