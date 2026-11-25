@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/assets/page-interactions.css">  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
   <script src="/assets/quick-find.js?v=9" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
-  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=2">
+  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=3">
   <script src="/assets/contact-affordances.js?v=6" defer></script>
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
   <script src="/assets/window-panels.js?v=3" defer></script>
@@ -39,7 +39,8 @@
     <p class="eyebrow">Choose how to start</p>
     <h2 id="quote-topics">Start an email draft</h2>
     <p>Open a draft in your email app or copy a template for webmail. Nothing is sent until you send it.</p>
-    <nav class="service-chooser" aria-label="Jump to a quote template">
+    <nav class="service-chooser" aria-label="Jump to a quote template" id="quote-choices" tabindex="-1">
+      <a href="#quote-general">Not sure yet</a>
       <a href="#quote-support">Tech support</a>
       <a href="#quote-web">Web development</a>
       <a href="#quote-automation">Workflow automation</a>
@@ -69,6 +70,7 @@ Thanks!</textarea>
       <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
+  <a class="text-link quote-return" href="#quote-choices">Choose another template</a>
 </article>
 
     <div class="grid"><article class="quote-topic card" id="quote-support" tabindex="-1">
@@ -96,6 +98,7 @@ Thanks!</textarea>
       <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
+  <a class="text-link quote-return" href="#quote-choices">Choose another template</a>
 </article>
 <article class="quote-topic card" id="quote-web" tabindex="-1">
   <h3>Web development</h3><p>Building a new site? Tell us who it’s for and what visitors should be able to do. Improving a site you already have? Share the public page link and where visitors get stuck. Don’t share login details.</p>
@@ -124,6 +127,7 @@ Thanks!</textarea>
       <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
+  <a class="text-link quote-return" href="#quote-choices">Choose another template</a>
 </article>
 <article class="quote-topic card" id="quote-automation" tabindex="-1">
   <h3>Workflow automation</h3><p>Describe the steps, the tools you use, and the result you need. Use sample data if an example helps. Don’t attach files or include private records in your first email.</p>
@@ -150,6 +154,7 @@ Thanks!</textarea>
       <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
+  <a class="text-link quote-return" href="#quote-choices">Choose another template</a>
 </article></div>
   </section>
   <section class="section" aria-labelledby="preflight-title">
