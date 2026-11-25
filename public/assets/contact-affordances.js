@@ -8,19 +8,28 @@
   const status = group.querySelector('[data-address-status]');
   const address = link?.textContent.trim();
   if (!address || !button || !fallback || !input || !status) return;
+  let operation = 0;
   button.hidden = false;
   button.addEventListener('click', async () => {
+    const id = ++operation;
+    const originalFocus = document.activeElement;
     status.textContent = '';
     try {
       await navigator.clipboard.writeText(address);
-      fallback.hidden = true;
+      if (id !== operation) return;
+      if (document.activeElement !== input) fallback.hidden = true;
       status.textContent = 'Email address copied.';
     } catch {
+      if (id !== operation) return;
       input.value = address;
       fallback.hidden = false;
-      input.focus();
-      input.select();
-      status.textContent = 'Automatic copy is unavailable. Copy the selected email address.';
+      if (document.activeElement === originalFocus) {
+        input.focus();
+        input.select();
+        status.textContent = 'Automatic copy is unavailable. Copy the selected email address.';
+      } else {
+        status.textContent = 'Automatic copy is unavailable. The email address is available to select and copy.';
+      }
     }
   });
 })();
