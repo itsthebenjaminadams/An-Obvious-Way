@@ -149,7 +149,7 @@
     restoreHash(location.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
   window.addEventListener('hashchange', revealLocationTarget);
-  window.addEventListener('pageshow', event => { if (event.persisted) revealLocationTarget(); });
+  // A cached history entry already has the visitor's panel and scroll state.
   document.addEventListener('click', event => {
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     const link = event.target.closest?.('a[href]');

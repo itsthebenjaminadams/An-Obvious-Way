@@ -9,7 +9,7 @@ for(const [p,count] of Object.entries(pages)) {
   assert.equal([...html.matchAll(/data-window-panel=/g)].length,count);
   assert.equal([...html.matchAll(/class="lights" aria-hidden="true"/g)].length,count);
   assert(!html.includes('window-panel-button'));
-  assert(html.includes('/assets/window-panels.js?v=2') && html.includes('/assets/window-panels.css?v=1'));
+  assert(html.includes('/assets/window-panels.js?v=3') && html.includes('/assets/window-panels.css?v=1'));
 }
 let active;
 class E {
@@ -23,6 +23,7 @@ class E {
   closest(sel) { if(sel==='details') return this.tagName==='DETAILS'?this:this.parent?.closest(sel); }
   querySelector(sel) { return this.children.find(x=>sel === 'summary'?x.tagName==='SUMMARY':x.className===sel.replace(/^(?::scope > )?\./,'')); }
   setAttribute(k,v){this.attrs[k]=v;}
+  hasAttribute(k){return Object.hasOwn(this.attrs,k);}
   addEventListener(k, fn){this.events[k]=fn;}
   getBoundingClientRect(){return {height:this.dataset.windowState==='minimized'?47:240};}
   focus(){active=this;}
@@ -43,7 +44,7 @@ for(const [i,name] of ['Homepage console','Signal desk'].entries()) {
   const box=new E(i?'details':'section'), h=new E(), b=new E(), p=new E(), light=new E(), target=new E(), summary=new E('summary');
   if(i) {summary.id='support-puzzle';box.append(summary);}
   h.className='window-head'; b.className='window-body'; light.className='lights'; p.dataset.windowPanel=name;
-  target.id='body-target-'+i; b.append(target); h.append(light); p.append(h,b); box.append(p); doc.body.append(box); nodes.push(p);
+  target.id='body-target-'+i; target.setAttribute('tabindex','-1'); b.append(target); h.append(light); p.append(h,b); box.append(p); doc.body.append(box); nodes.push(p);
 }
 doc.getElementById=(id)=>{const find=(n)=>n.id===id?n:n.children.map(find).find(Boolean);return find(doc.body)};
 vm.runInNewContext(source,{document:doc,window:win,URL,location});
@@ -85,7 +86,16 @@ location.hash='#support-puzzle'; run(win,'hashchange'); assert(!lab.children[1].
 run(btns(lab)[0].children[0],'click');
 run(doc,'click',{button:0,target:{closest:()=>({href:'https://site.example/#support-puzzle',hasAttribute:()=>false})}});
 assert(!lab.children[1].hidden);
-run(close,'click'); location.hash='#body-target-0'; run(win,'pageshow',{persisted:true}); assert(!body.hidden);
+// Returning to an existing history entry is not a new request to reopen it.
+location.hash='#body-target-0';
+run(close,'click'); body.children[0].scrolled=false;
+win.events.pageshow?.({persisted:true});
+assert(body.hidden && !reopen.hidden && active===reopen && !body.children[0].scrolled);
+run(doc,'click',{button:0,target:{closest:()=>({href:'https://site.example/#body-target-0',hasAttribute:()=>false})}});
+assert(!body.hidden && body.children[0].scrolled);
+run(minimize,'click'); assert(body.hidden && active===minimize);
+win.events.pageshow?.({persisted:true}); assert(body.hidden && active===minimize);
+run(minimize,'click');
 const showModal=modal.showModal;
 modal.showModal=()=>{throw new Error('exception opening modal');};
 run(maximize,'click'); assert(!modal.open && place.children[0]===panel && active===maximize);
