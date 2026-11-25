@@ -43,15 +43,16 @@
 
   function expand(item) {
     if (expanded || dialog.open) return;
-    setState(item, 'open');
+    const previousState = item.panel.dataset.windowState;
     const spacer = document.createElement('div');
     spacer.className = 'window-panel-spacer';
     spacer.style.blockSize = item.panel.getBoundingClientRect().height + 'px';
     spacer.setAttribute('aria-hidden', 'true');
     item.panel.before(spacer);
+    setState(item, 'open');
     dialog.setAttribute('aria-label', item.name + ' reading mode');
     item.panel.dataset.windowExpanded = '';
-    expanded = { item, spacer };
+    expanded = { item, spacer, previousState };
     dialog.append(item.panel);
     item.group.hidden = true;
     item.exit.hidden = false;
@@ -68,14 +69,14 @@
 
   function leaveReadingMode(restoreFocus = true) {
     if (!expanded) return;
-    const { item, spacer } = expanded;
+    const { item, spacer, previousState } = expanded;
     expanded = undefined;
     if (dialog.open) dialog.close();
     document.documentElement.classList.remove('aow-reading-open');
     spacer.replaceWith(item.panel);
     delete item.panel.dataset.windowExpanded;
     item.exit.hidden = true;
-    item.group.hidden = false;
+    setState(item, previousState);
     if (restoreFocus) item.maximize.focus({ preventScroll: true });
   }
 
