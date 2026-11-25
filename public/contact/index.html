@@ -19,7 +19,8 @@
 <link rel="stylesheet" href="/assets/page-interactions.css">  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
   <script src="/assets/quick-find.js?v=9" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
-  <script src="/assets/contact-affordances.js?v=3" defer></script>
+  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=1">
+  <script src="/assets/contact-affordances.js?v=4" defer></script>
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
   <script src="/assets/window-panels.js?v=1" defer></script>
 </head><body data-page="contact"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><div class="quick-find-brand"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><button class="quick-find-toggle" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden><svg focusable="false" aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.15"/><path d="m10 10 4 4"/></svg><span>Find</span></button></div><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" >Portfolio</a><a href="/about/" >About</a><a href="/contact/" aria-current="page">Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button type="button" class="theme-btn" data-theme="green" aria-label="Green theme" title="Green theme"><span aria-hidden="true">G</span></button><button type="button" class="theme-btn" data-theme="amber" aria-label="Amber theme" title="Amber theme"><span aria-hidden="true">A</span></button><button type="button" class="theme-btn" data-theme="cyan" aria-label="Cyan theme" title="Cyan theme"><span aria-hidden="true">C</span></button><button type="button" class="theme-btn" data-theme="purple" aria-label="Purple theme" title="Purple theme"><span aria-hidden="true">P</span></button><button type="button" class="motion-switch" data-motion-switch aria-label="Reduce site motion" aria-pressed="false" title="Reduce site motion"><span aria-hidden="true">FX</span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
@@ -47,10 +48,10 @@
       <p class="small" id="template-general-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-general-to">To</label>
       <input id="template-general-to" type="text" value="contact@anobviousway.com" readonly>
-      <button class="btn secondary" type="button" data-copy-field="template-general-to" data-copy-name="Recipient address" aria-label="Copy recipient address for a general quote" hidden>Copy recipient address</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-general-to" data-copy-name="Recipient address" aria-label="Copy recipient address for a general quote" hidden>Copy recipient address</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-general-subject">Subject</label>
       <textarea id="template-general-subject" rows="2" readonly>AOW quote request</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-general-subject" data-copy-name="Subject" aria-label="Copy subject for a general quote" hidden>Copy subject</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-general-subject" data-copy-name="Subject" aria-label="Copy subject for a general quote" hidden>Copy subject</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-general">Message</label>
       <textarea id="template-general" data-quote-text aria-describedby="template-general-help" readonly rows="7">Hi AOW,
 
@@ -59,8 +60,8 @@ Where I need help and what a good result looks like:
 Deadline, if any:
 
 Thanks!</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-general" data-copy-name="Message" aria-label="Copy message for a general quote" hidden>Copy message</button>
-      <p class="small quote-status" data-copy-status role="status"></p>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-general" data-copy-name="Message" aria-label="Copy message for a general quote" hidden>Copy message</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
+      <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
 </article>
@@ -74,10 +75,10 @@ Thanks!</textarea>
       <p class="small" id="template-support-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-support-to">To</label>
       <input id="template-support-to" type="text" value="contact@anobviousway.com" readonly>
-      <button class="btn secondary" type="button" data-copy-field="template-support-to" data-copy-name="Recipient address" aria-label="Copy recipient address for tech support" hidden>Copy recipient address</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-support-to" data-copy-name="Recipient address" aria-label="Copy recipient address for tech support" hidden>Copy recipient address</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-support-subject">Subject</label>
       <textarea id="template-support-subject" rows="2" readonly>AOW quote request: Tech support</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-support-subject" data-copy-name="Subject" aria-label="Copy subject for tech support" hidden>Copy subject</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-support-subject" data-copy-name="Subject" aria-label="Copy subject for tech support" hidden>Copy subject</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-support">Message</label>
       <textarea id="template-support" data-quote-text aria-describedby="template-support-help" readonly rows="7">Hi AOW,
 
@@ -86,8 +87,8 @@ What happened and when it started:
 Optional error code or short excerpt (remove private details), or what I already tried:
 
 Thanks!</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-support" data-copy-name="Message" aria-label="Copy message for tech support" hidden>Copy message</button>
-      <p class="small quote-status" data-copy-status role="status"></p>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-support" data-copy-name="Message" aria-label="Copy message for tech support" hidden>Copy message</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
+      <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
 </article>
@@ -100,10 +101,10 @@ Thanks!</textarea>
       <p class="small" id="template-web-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-web-to">To</label>
       <input id="template-web-to" type="text" value="contact@anobviousway.com" readonly>
-      <button class="btn secondary" type="button" data-copy-field="template-web-to" data-copy-name="Recipient address" aria-label="Copy recipient address for web development" hidden>Copy recipient address</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-web-to" data-copy-name="Recipient address" aria-label="Copy recipient address for web development" hidden>Copy recipient address</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-web-subject">Subject</label>
       <textarea id="template-web-subject" rows="2" readonly>AOW quote request: Web development</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-web-subject" data-copy-name="Subject" aria-label="Copy subject for web development" hidden>Copy subject</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-web-subject" data-copy-name="Subject" aria-label="Copy subject for web development" hidden>Copy subject</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-web">Message</label>
       <textarea id="template-web" data-quote-text aria-describedby="template-web-help" readonly rows="8">Hi AOW,
 
@@ -113,8 +114,8 @@ What visitors should be able to do:
 Ideal timeline (if any):
 
 Thanks!</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-web" data-copy-name="Message" aria-label="Copy message for web development" hidden>Copy message</button>
-      <p class="small quote-status" data-copy-status role="status"></p>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-web" data-copy-name="Message" aria-label="Copy message for web development" hidden>Copy message</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
+      <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
 </article>
@@ -127,10 +128,10 @@ Thanks!</textarea>
       <p class="small" id="template-automation-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-automation-to">To</label>
       <input id="template-automation-to" type="text" value="contact@anobviousway.com" readonly>
-      <button class="btn secondary" type="button" data-copy-field="template-automation-to" data-copy-name="Recipient address" aria-label="Copy recipient address for workflow automation" hidden>Copy recipient address</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-automation-to" data-copy-name="Recipient address" aria-label="Copy recipient address for workflow automation" hidden>Copy recipient address</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-automation-subject">Subject</label>
       <textarea id="template-automation-subject" rows="2" readonly>AOW quote request: Workflow automation</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-automation-subject" data-copy-name="Subject" aria-label="Copy subject for workflow automation" hidden>Copy subject</button>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-automation-subject" data-copy-name="Subject" aria-label="Copy subject for workflow automation" hidden>Copy subject</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
       <label class="small" for="template-automation">Message</label>
       <textarea id="template-automation" data-quote-text aria-describedby="template-automation-help" readonly rows="7">Hi AOW,
 
@@ -139,8 +140,8 @@ Steps I repeat and how often (describe only; no attachments or private records):
 Desired output or result:
 
 Thanks!</textarea>
-      <button class="btn secondary" type="button" data-copy-field="template-automation" data-copy-name="Message" aria-label="Copy message for workflow automation" hidden>Copy message</button>
-      <p class="small quote-status" data-copy-status role="status"></p>
+      <div class="quote-copy-action" hidden><button class="btn secondary" type="button" data-copy-field="template-automation" data-copy-name="Message" aria-label="Copy message for workflow automation" hidden>Copy message</button><span class="small quote-copy-feedback" data-copy-feedback aria-hidden="true"></span></div>
+      <p class="small quote-status quote-copy-announcement" data-copy-status role="status"></p>
     </div>
   </details>
 </article></div>
