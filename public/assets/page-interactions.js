@@ -31,21 +31,17 @@
     const choices = [...document.querySelectorAll('.finder-list details')];
     const status = diagnostic.querySelector('[data-finder-status]');
     const match = ['Tech support', 'Web development', 'Workflow automation', 'General inquiry'];
-    let current = -1;
+    let current;
     function update() {
       const selected = choices.findIndex(choice => choice.open);
       if (selected === current) return;
       current = selected;
-      status.textContent = selected < 0 ? 'Awaiting selection / 4 routes available' : 'Route ' + (selected + 1) + ' of 4 / ' + match[selected];
+      status.textContent = selected < 0 ? '' : selected === 3 ? 'You can start without choosing a service.' : 'Suggested starting point: ' + match[selected];
     }
-    const compare = diagnostic.querySelector('[data-finder-compare]');
-    compare.addEventListener('click', () => {
-      choices.forEach(choice => { choice.open = false; });
-      update();
-    });
+    // Comparing services is navigation, not a reset of the visitor's choice.
     choices.forEach(choice => choice.addEventListener('toggle', update));
     update();
-    diagnostic.hidden = false;
+    status.hidden = false;
   }
 
   const viewer = document.querySelector('[data-process-controls]');
