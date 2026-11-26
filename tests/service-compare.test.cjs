@@ -35,3 +35,29 @@ test('comparing services works without JS and does not clear the finder choice',
   choices[3].toggle();
   assert.equal(status.textContent, 'You can start without choosing a service.');
 });
+
+test('explicit finder links open the disclosure without opening it when a cached page returns', () => {
+  const html = file('services/index.html');
+  assert.match(html, /href="#service-finder">Help me choose /);
+  assert.match(html, /<details class="section" data-service-finder>\s*<summary id="service-finder">/);
+  const disclosure = {open:false, querySelector: () => ({id:'service-finder'})};
+  const diagnostic = {querySelector: () => ({}), closest: () => disclosure};
+  const document = {querySelector: sel => sel === '[data-finder-signal]' ? diagnostic : null, querySelectorAll: () => [], addEventListener(type, cb) { this[type] = cb; }};
+  const window = { location: { hash: '#service-finder', href: 'https://test.invalid/services/#service-finder' }, addEventListener(type, cb) { this[type] = cb; } };
+  vm.runInNewContext(file('assets/page-interactions.js'), {document,window});
+  assert(disclosure.open);
+  disclosure.open = false;
+  assert.equal(window.pageshow,undefined);
+  const click = (options = {}) => document.click({button:0,target:{closest: () => ({href:window.location.href,hasAttribute:()=>false})},...options});
+  click({ctrlKey:true});
+  assert(!disclosure.open);
+  click();
+  assert(disclosure.open);
+  disclosure.open = false;
+  window.location.hash = '#all-services';
+  window.hashchange();
+  assert(!disclosure.open);
+  window.location.hash = '#service-finder';
+  window.hashchange();
+  assert(disclosure.open);
+});

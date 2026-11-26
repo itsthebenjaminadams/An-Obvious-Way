@@ -42,6 +42,25 @@
     choices.forEach(choice => choice.addEventListener('toggle', update));
     update();
     status.hidden = false;
+
+    const disclosure = diagnostic.closest?.('[data-service-finder]');
+    const summary = disclosure?.querySelector('summary');
+    if (summary) {
+      const hash = '#' + summary.id;
+      // Only an explicit jump opens the finder. Cached Back/Forward preserves
+      // whatever the visitor chose, including manually closing the disclosure.
+      function openLinkedFinder() {
+        if (window.location.hash !== hash) return;
+        disclosure.open = true;
+      }
+      openLinkedFinder();
+      window.addEventListener('hashchange', openLinkedFinder);
+      document.addEventListener('click', event => {
+        if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const link = event.target.closest?.('a[href]');
+        if (link && !link.target && !link.hasAttribute('download') && link.href === window.location.href) openLinkedFinder();
+      });
+    }
   }
 
   const viewer = document.querySelector('[data-process-controls]');

@@ -16,8 +16,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://anobviousway.com/assets/aow-social.jpg">
   <meta name="twitter:image:alt" content="An Obvious Way terminal mark on a radar grid. Tech support, websites and automation.">
-<link rel="stylesheet" href="/assets/page-interactions.css"><script src="/assets/page-interactions.js?v=2" defer></script>  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
-  <script src="/assets/quick-find.js?v=10" defer></script>
+<link rel="stylesheet" href="/assets/page-interactions.css"><script src="/assets/page-interactions.js?v=3" defer></script>  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
+  <script src="/assets/quick-find.js?v=11" defer></script>
   <link rel="stylesheet" href="/assets/portfolio-pathways.css?v=1">
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
@@ -26,10 +26,11 @@
   <div class="eyebrow">/ services</div>
   <h1 class="page-title">Tech help for <span class="accent">the job at hand.</span></h1>
   <p class="lead">Compare tech support, website projects, and workflow automation. Each option includes a starting price and a direct link to request a quote.</p>
-  <nav class="service-chooser" aria-label="Jump to a service">
+  <nav class="service-chooser" aria-label="Jump to service information">
     <a href="#tech-support">Tech support <span aria-hidden="true">↓</span></a>
     <a href="#web-development">Web development <span aria-hidden="true">↓</span></a>
     <a href="#workflow-automation">Automation <span aria-hidden="true">↓</span></a>
+    <a href="#service-finder">Help me choose <span aria-hidden="true">↓</span></a>
   </nav>
   <section class="section" id="all-services" tabindex="-1" aria-label="Service details">
     <div class="grid">
@@ -82,8 +83,8 @@
       </div>
     </div>
   </section>
-  <details class="section">
-    <summary>Not sure which service fits? Use the service finder</summary>
+  <details class="section" data-service-finder>
+    <summary id="service-finder">Not sure which service fits? Use the service finder</summary>
   <section class="window service-finder" data-window-panel="Service finder" aria-labelledby="finder-title">
     <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>aow / service finder</div>
     <div class="window-body">

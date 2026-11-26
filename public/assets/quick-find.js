@@ -27,9 +27,11 @@
     ['/contact/#quote-general', 'Describe your project', 'Start a general draft if you’re not sure which service fits.', 'general project email draft']
   ];
 
-  // Only match these whole questions. An unrelated qualification should not
+  // Only match these whole questions or named tools. An unrelated qualification should not
   // route someone to a generic answer, and terse service searches retain their ranking.
   const guidance = [
+    [new Set(['service finder', 'find my service', 'find your service', 'which service fits', 'which service do i need', 'what service do i need', 'not sure which service fits', 'help me choose a service']),
+      { url: '/services/#service-finder', title: 'Find your service', description: 'Pick a goal and see the best place to start.' }],
     [new Set(['what to include', 'what should i include', 'what should i include in a quote request', 'what should i put in my email', 'what do i include in my email', 'what to include in my email', 'what to include in a quote request', 'what information do you need for a quote', 'what do you need for a quote']),
       { url: '/contact/#preflight-title', title: 'What to include in a quote request', description: 'See which project details help and what to leave out.' }],
     [new Set(['what happens after i email', 'what happens after i email you', 'what happens after i send an email', 'what happens after i request a quote', 'what happens after requesting a quote', 'what happens next', 'what to expect after emailing', 'what to expect after requesting a quote']),
