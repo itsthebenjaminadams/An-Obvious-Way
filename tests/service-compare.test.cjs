@@ -36,6 +36,22 @@ test('comparing services works without JS and does not clear the finder choice',
   assert.equal(status.textContent, 'You can start without choosing a service.');
 });
 
+test('compact comparison links to exact service cards and uses their published price units', () => {
+  const html = file('services/index.html');
+  const comparison = html.split('<ul class="service-comparison"')[1].split('</ul>')[0];
+  const rows = [...comparison.matchAll(/<a href="#([^"]+)"><strong>([^<]+)<\/strong><span class="comparison-scope">([^<]+)<\/span><span class="comparison-price">([^<]+)<\/span>/g)];
+  assert.deepEqual(rows.map(row => row[1]), ['tech-support', 'web-development', 'workflow-automation']);
+  for (const [, id, title, scope, price] of rows) {
+    const card = html.split('id="' + id + '" tabindex="-1"')[1].split('</article>')[0];
+    assert.ok(scope.trim());
+    assert.ok(card.includes('<h2>' + title + '</h2>'));
+    assert.ok(card.includes('<div class="price">' + price + '</div>'));
+  }
+  assert.match(html, /id="all-services" tabindex="-1" aria-labelledby="service-comparison-title"/);
+  assert.match(html, /id="service-comparison-title">Compare services at a glance/);
+  assert.match(html, /<\/ul>\s*<a class="text-link comparison-finder-link" href="#service-finder">Find a service by goal/);
+});
+
 test('explicit finder links open the disclosure without opening it when a cached page returns', () => {
   const html = file('services/index.html');
   assert.match(html, /href="#service-finder">Help me choose /);
