@@ -9,7 +9,7 @@ for(const [p,count] of Object.entries(pages)) {
   assert.equal([...html.matchAll(/data-window-panel=/g)].length,count);
   assert.equal([...html.matchAll(/class="lights" aria-hidden="true"/g)].length,count);
   assert(!html.includes('window-panel-button'));
-  assert(html.includes('/assets/window-panels.js?v=3') && html.includes('/assets/window-panels.css?v=1'));
+  assert(html.includes('/assets/window-panels.js?v=4') && html.includes('/assets/window-panels.css?v=1'));
 }
 let active;
 class E {
@@ -80,7 +80,7 @@ assert.equal(stop,2); assert(!modal.open && place.children[0]===panel && panel.c
 assert(!doc.documentElement.classList.has('aow-reading-open'));
 run(maximize,'click'); run(exit,'click'); assert(!modal.open && active===maximize);
 run(maximize,'click'); run(modal,'cancel',{preventDefault(){stop++}}); assert(!modal.open && active===maximize);
-run(close,'click'); location.hash='#body-target-0'; run(win,'hashchange'); assert(!body.hidden && body.children[0].scrolled);
+run(close,'click'); location.hash='#body-target-0'; run(win,'hashchange'); assert(!body.hidden && body.children[0].scrolled && active===body.children[0]);
 run(btns(lab)[0].children[1],'click'); assert(lab.children[1].hidden);
 location.hash='#support-puzzle'; run(win,'hashchange'); assert(!lab.children[1].hidden && doc.getElementById('support-puzzle').scrolled);
 run(btns(lab)[0].children[0],'click');
@@ -92,7 +92,7 @@ run(close,'click'); body.children[0].scrolled=false;
 win.events.pageshow?.({persisted:true});
 assert(body.hidden && !reopen.hidden && active===reopen && !body.children[0].scrolled);
 run(doc,'click',{button:0,target:{closest:()=>({href:'https://site.example/#body-target-0',hasAttribute:()=>false})}});
-assert(!body.hidden && body.children[0].scrolled);
+assert(!body.hidden && body.children[0].scrolled && active===body.children[0]);
 run(minimize,'click'); assert(body.hidden && active===minimize);
 win.events.pageshow?.({persisted:true}); assert(body.hidden && active===minimize);
 run(minimize,'click');
@@ -104,3 +104,30 @@ run(maximize,'click');
 run(doc,'click',{button:0,target:{closest:()=>({href:'https://site.example/#body-target-0',hasAttribute:()=>false})}});
 assert(!modal.open && place.children[0]===panel);
 console.log('PASS: 9 progressive panel declarations; close/reopen, min/restore, native expansion/node identity, focus, Escape/cancel/explicit exit, scroll lock and body/lab hash restore');
+
+// A browser without showModal still gets usable close/minimize controls.
+const fallbackDoc = new E('document'), fallbackWin = new E('window');
+fallbackDoc.createElement = tag => {
+  const el = new E(tag);
+  if (tag === 'dialog') el.showModal = undefined;
+  return el;
+};
+fallbackDoc.documentElement = doc.documentElement;
+fallbackDoc.body = new E('body');
+const fallbackPanel = new E(), fallbackHead = new E(), fallbackBody = new E(), fallbackLights = new E();
+fallbackPanel.dataset.windowPanel = 'Support';
+fallbackHead.className = 'window-head';
+fallbackBody.className = 'window-body';
+fallbackLights.className = 'lights';
+fallbackHead.append(fallbackLights); fallbackPanel.append(fallbackHead, fallbackBody); fallbackDoc.body.append(fallbackPanel);
+fallbackDoc.querySelectorAll = () => [fallbackPanel];
+vm.runInNewContext(source, { document: fallbackDoc, window: fallbackWin, URL, location });
+const [fallbackGroup, fallbackReopen] = fallbackHead.children;
+const [fallbackClose, fallbackMin] = fallbackGroup.children;
+assert.equal(fallbackGroup.children.length, 2);
+assert.equal(fallbackHead.children.length, 2);
+assert.equal(fallbackDoc.body.children.length, 1);
+run(fallbackMin, 'click'); assert(fallbackBody.hidden && active === fallbackMin);
+run(fallbackMin, 'click'); assert(!fallbackBody.hidden && active === fallbackMin);
+run(fallbackClose, 'click'); assert(fallbackBody.hidden && active === fallbackReopen);
+run(fallbackReopen, 'click'); assert(!fallbackBody.hidden && active === fallbackClose);

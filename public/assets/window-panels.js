@@ -2,7 +2,7 @@
   'use strict';
 
   const dialog = document.createElement('dialog');
-  if (typeof dialog.showModal !== 'function') return;
+  const canExpand = typeof dialog.showModal === 'function';
   dialog.className = 'window-reading-mode';
 
   const panels = [];
@@ -42,7 +42,7 @@
   }
 
   function expand(item) {
-    if (expanded || dialog.open) return;
+    if (!canExpand || expanded || dialog.open) return;
     const previousState = item.panel.dataset.windowState;
     const spacer = document.createElement('div');
     spacer.className = 'window-panel-spacer';
@@ -112,9 +112,10 @@
     content.id ||= 'aow-panel-content-' + (index + 1);
     for (const button of [close, minimize, maximize, reopen]) button.setAttribute('aria-controls', content.id);
     maximize.setAttribute('aria-haspopup', 'dialog');
-    group.append(close, minimize, maximize);
+    group.append(close, minimize);
+    if (canExpand) group.append(maximize);
     lights.replaceWith(group, reopen);
-    head.append(exit);
+    if (canExpand) head.append(exit);
     exit.hidden = true;
     const item = { panel, content, group, minimize, maximize, reopen, exit, name };
     panels.push(item);
@@ -131,7 +132,7 @@
   });
 
   if (!panels.length) return;
-  document.body.append(dialog);
+  if (canExpand) document.body.append(dialog);
   dialog.addEventListener('cancel', event => {
     event.preventDefault();
     leaveReadingMode();
@@ -146,7 +147,12 @@
   }, true);
   function revealLocationTarget() {
     if (expanded) leaveReadingMode(false);
-    restoreHash(location.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    focusRevealedTarget(restoreHash(location.hash));
+  }
+  function focusRevealedTarget(target) {
+    if (!target) return;
+    if (target.tagName === 'SUMMARY' || target.hasAttribute('tabindex')) target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
   window.addEventListener('hashchange', revealLocationTarget);
   // A cached history entry already has the visitor's panel and scroll state.
@@ -158,10 +164,7 @@
     if (!url.hash || url.origin !== location.origin || url.pathname !== location.pathname || url.search !== location.search) return;
     if (expanded) leaveReadingMode(false);
     if (url.hash === location.hash) {
-      const target = restoreHash(url.hash);
-      if (!target) return;
-      if (target.tagName === 'SUMMARY' || target.hasAttribute('tabindex')) target.focus({ preventScroll: true });
-      target.scrollIntoView({ block: 'start', behavior: 'instant' });
+      focusRevealedTarget(restoreHash(url.hash));
     }
   });
 })();
