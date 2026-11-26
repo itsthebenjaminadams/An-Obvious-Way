@@ -27,6 +27,17 @@
     ['/contact/#quote-general', 'Describe your project', 'Start a general draft if you’re not sure which service fits.', 'general project email draft']
   ];
 
+  // Only match these whole questions. An unrelated qualification should not
+  // route someone to a generic answer, and terse service searches retain their ranking.
+  const guidance = [
+    [new Set(['what to include', 'what should i include', 'what should i include in a quote request', 'what should i put in my email', 'what do i include in my email', 'what to include in my email', 'what to include in a quote request', 'what information do you need for a quote', 'what do you need for a quote']),
+      { url: '/contact/#preflight-title', title: 'What to include in a quote request', description: 'See which project details help and what to leave out.' }],
+    [new Set(['what happens after i email', 'what happens after i email you', 'what happens after i send an email', 'what happens after i request a quote', 'what happens after requesting a quote', 'what happens next', 'what to expect after emailing', 'what to expect after requesting a quote']),
+      { url: '/contact/#after-email', title: 'What happens after I email?', description: 'See how AOW follows up and when you decide whether to proceed.' }],
+    [new Set(['email address', 'contact email address', 'aow email address', 'copy email address', 'what is your email address', 'what is the aow email address', 'where do i send my email']),
+      { url: '/contact/#contact-email', title: 'AOW email address', description: 'View or copy the address without opening an email app.' }]
+  ];
+
   const noise = new Set(['a', 'an', 'and', 'can', 'do', 'does', 'for', 'get', 'how', 'i', 'in', 'is', 'much', 'my', 'need', 'of', 'on', 'please', 'the', 'to', 'with']);
   const tokenize = value => value.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\bwi[\s\u2010-\u2015-]?fi\b/g, 'wifi').match(/[a-z0-9]+/g) || [];
   const searchIndex = pages.map(([url, title, description, aliases]) => {
@@ -72,6 +83,11 @@
 
   function search(query) {
     const bounded = query.slice(0, 80);
+    if (query.length < 80) {
+      const phrase = tokenize(bounded).join(' ');
+      const answer = guidance.find(([phrases]) => phrases.has(phrase));
+      if (answer) return [answer[1]];
+    }
     const terms = queryTerms(bounded);
     if (!terms.length) return null;
     const exact = rank(terms);

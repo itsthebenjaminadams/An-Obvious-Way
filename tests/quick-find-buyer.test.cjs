@@ -114,3 +114,17 @@ for (const query of ['disconnecting', 'keeps disconnecting', 'My iPhone keeps di
   assert.equal(search(query)?.length, 0, query);
 }
 console.log('75 existing regressions plus symptom and punctuation cases passed.');
+
+for (const [query, expected] of [
+  ['What should I include in a quote request?', '/contact/#preflight-title'],
+  ['What information do you need for a quote?', '/contact/#preflight-title'],
+  ['What happens after I email you?', '/contact/#after-email'],
+  ['What happens after I request a quote?', '/contact/#after-email'],
+  ['Contact email address', '/contact/#contact-email'],
+  ['Where do I send my email?', '/contact/#contact-email']
+]) assert.deepEqual(Array.from(search(query), result => result.url), [expected], query);
+for (const query of ['what happens after I email outside business hours',
+  'what should I include in a quote request for Mac support', 'what is your email address for payroll',
+  'what happens after I email' + ' '.repeat(60) + ' about warranties']) {
+  assert.equal(search(query)?.length, 0, query);
+}
