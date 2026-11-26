@@ -365,3 +365,5 @@ html[data-motion="quiet"] .btn:hover{transform:none}
 .finder-answer strong{color:var(--text)}
 .finder-answer .actions{margin-top:.65rem}
 @media(max-width:460px){.finder-answer .actions{display:grid;grid-template-columns:1fr}.finder-answer .btn{width:100%}}
+
+.quote-guide-links{align-items:flex-start;gap:.15rem 1rem;margin-top:.65rem}.quote-guide-links .text-link{display:inline-flex;align-items:center;min-height:44px}
