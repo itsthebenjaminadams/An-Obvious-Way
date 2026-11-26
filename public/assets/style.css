@@ -138,12 +138,14 @@ body::after{
  background:linear-gradient(0deg,color-mix(in srgb,var(--accent) 16%,transparent),transparent);
 }
 .motion-switch{
- display:grid;place-items:center;min-width:39px;min-height:44px;margin-left:4px;padding:0 .35rem;
+ display:grid;place-content:center;justify-items:center;gap:.13rem;min-width:3.1rem;min-height:44px;margin-left:4px;padding:0 .35rem;white-space:nowrap;
  border:1px solid var(--line);border-radius:.35rem;background:#0a1426;color:var(--muted);
  font:700 .7rem var(--aow-mono);letter-spacing:.07em;cursor:pointer;
 }
 .motion-switch[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
-.motion-switch:disabled{cursor:default}
+.motion-switch[aria-disabled="true"]{cursor:default;border-style:dashed}
+.motion-switch [data-motion-reason]{color:var(--muted);font-size:.57rem;letter-spacing:0}
+.motion-switch .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .motion-switch:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 main.wrap{padding-top:clamp(2.5rem,6vw,5.1rem)}
 .aow-hero{
@@ -253,7 +255,6 @@ body:not([data-page="home"]) .page-title::after{
  .brand{font-size:1.47rem}
  .links a{font-size:.72rem;padding-inline:.38rem;letter-spacing:0}
  .theme-btn{width:29px}
- .motion-switch{min-width:33px;padding-inline:.23rem}
  .actions{gap:.65rem}
  .hero-brief .actions{margin-top:1.18rem}
  .hero-brief h1{font-size:clamp(2.4rem,10.5vw,3.25rem);margin-block:.67rem .9rem}
@@ -263,13 +264,14 @@ body:not([data-page="home"]) .page-title::after{
  .console-content{min-height:7.2rem}
  .console-footer{gap:.35rem .6rem}
 }
+@media(max-width:390px){.nav{padding-inline:12px}}
 @media(max-width:355px){
  .links a{padding-inline:.28rem}
  .hero-brief .btn{padding-inline:.62rem}
 }
 @media(hover:hover) and (pointer:fine){
  .card:hover,.process-list li:hover{border-color:color-mix(in srgb,var(--accent) 49%,var(--line))}
- .links a:hover,.motion-switch:hover{color:var(--accent)}
+ .links a:hover,.motion-switch:not([aria-disabled="true"]):hover{color:var(--accent)}
 }
 @media(prefers-reduced-motion:no-preference){
  html[data-motion="full"] .hero-console.is-cinematic[data-stage="scan"] .signal-sweep{animation:aow-radar 1.08s cubic-bezier(.22,.61,.36,1) both}

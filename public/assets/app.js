@@ -33,6 +33,8 @@ function setupTheme() {
 function setupMotion() {
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
   const button = document.querySelector('[data-motion-switch]');
+  const state = button?.querySelector('[data-motion-state]');
+  const reason = button?.querySelector('[data-motion-reason]');
   const callbacks = [];
   let quiet = loadPreference('localStorage', 'aow-motion') === 'quiet';
   const motion = {
@@ -42,9 +44,15 @@ function setupMotion() {
   function sync() {
     document.documentElement.dataset.motion = motion.matches ? 'quiet' : 'full';
     if (button) {
-      button.disabled = media.matches;
+      button.setAttribute('aria-disabled', String(media.matches));
       button.setAttribute('aria-pressed', String(motion.matches));
-      button.title = media.matches ? 'Motion reduced by your device setting' : 'Reduce site motion';
+      button.title = media.matches ? 'Your device is set to reduce motion' : (quiet ? 'Turn on site effects' : 'Reduce site motion');
+      if (state) state.textContent = motion.matches ? 'FX OFF' : 'FX ON';
+      if (reason) {
+        reason.hidden = !media.matches;
+        if (media.matches) button.setAttribute('aria-describedby', reason.id);
+        else button.removeAttribute('aria-describedby');
+      }
     }
     callbacks.forEach(callback => callback());
   }
@@ -127,7 +135,9 @@ function setupIntro(motion) {
 
   function syncMotion() {
     if (motion.matches) finish();
+    const returnFocus = motion.matches && document.activeElement === button;
     button.hidden = motion.matches;
+    if (returnFocus) document.querySelector('[data-motion-switch]')?.focus();
   }
   syncMotion();
   motion.listen(syncMotion);

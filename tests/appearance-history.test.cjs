@@ -13,6 +13,7 @@ function node() {
     addEventListener(k, action) { (this.listeners[k] ??= []).push(action); },
     emit(k, event = {}) { for (const action of this.listeners[k] ?? []) action(event); },
     setAttribute(k, v) { this.attrs[k] = v; },
+    removeAttribute(k) { delete this.attrs[k]; },
     getAttribute(k) { return this.attrs[k]; }
   };
 }
@@ -27,9 +28,14 @@ function load({ deviceQuiet = false, storageBlocked = false } = {}) {
     setItem(k, v) { if (storageBlocked) throw Error('unavailable'); saved[k] = v; }
   };
   const color = ['green','amber','cyan','purple'].map(theme => Object.assign(node(), { dataset: { theme } }));
+  const state = node(), reason = Object.assign(node(), { id: 'motion-reason' });
+  const motionSwitch = Object.assign(node(), {
+    querySelector: k => k === '[data-motion-state]' ? state : reason,
+    focus() { document.activeElement = this; }
+  });
   const groups = {
     '.settings': Object.assign(node(), { querySelectorAll: () => color }),
-    '[data-motion-switch]': node(),
+    '[data-motion-switch]': motionSwitch,
     '[data-cinematic-console]': node(), '[data-console]': node(),
     '[data-intro]': node(), '[data-intro-output]': node(), '[data-intro-bar]': node(),
     '[data-intro-control]': node(), '[data-signal-status]': node(),
@@ -40,7 +46,7 @@ function load({ deviceQuiet = false, storageBlocked = false } = {}) {
   document.querySelectorAll = () => [];
   runInNewContext(code, { window, document, setTimeout() {}, clearTimeout() {} });
   document.emit('DOMContentLoaded');
-  return { window, saved, root: document.documentElement, color, motion: groups['[data-motion-switch]'], intro: groups['[data-intro]'], control: groups['[data-intro-control]'] };
+  return { window, document, media, state, reason, saved, root: document.documentElement, color, motion: groups['[data-motion-switch]'], intro: groups['[data-intro]'], control: groups['[data-intro-control]'] };
 }
 
 test('history restore syncs changes made on another page before checking intro autoplay', () => {
@@ -83,6 +89,38 @@ test('device reduced motion still wins on history restore', () => {
   window.emit('pagehide');
   window.emit('pageshow', { persisted: true });
   assert.equal(root.dataset.motion, 'quiet');
-  assert.equal(motion.disabled, true);
+  assert.equal(motion.attrs['aria-disabled'], 'true');
+  assert.equal(control.hidden, true);
+});
+
+test('motion switch explains a device override without replacing the local choice', () => {
+  const { document, media, state, reason, saved, control, motion } = load();
+  assert.equal(state.textContent, 'FX ON');
+  assert.equal(reason.hidden, true);
+  document.activeElement = control;
+  media.matches = true;
+  media.emit('change');
+  assert.equal(control.hidden, true);
+  assert.equal(document.activeElement, motion);
+  assert.equal(state.textContent, 'FX OFF');
+  assert.equal(reason.hidden, false);
+  assert.equal(motion.attrs['aria-describedby'], reason.id);
+  motion.emit('click');
+  assert.equal(saved['aow-motion'], undefined);
+  media.matches = false;
+  media.emit('change');
+  assert.equal(motion.attrs['aria-disabled'], 'false');
+  assert.equal(motion.attrs['aria-describedby'], undefined);
+  assert.equal(state.textContent, 'FX ON');
+  assert.equal(reason.hidden, true);
+  assert.equal(control.textContent, 'Replay intro');
+  motion.emit('click');
+  assert.equal(state.textContent, 'FX OFF');
+  assert.equal(saved['aow-motion'], 'quiet');
+  media.matches = true;
+  media.emit('change');
+  media.matches = false;
+  media.emit('change');
+  assert.equal(state.textContent, 'FX OFF');
   assert.equal(control.hidden, true);
 });
