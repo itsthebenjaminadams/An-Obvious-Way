@@ -9,10 +9,10 @@ const uiStart = source.indexOf('  function make(');
 assert(indexStart >= 0 && uiStart > indexStart, 'Locate the unchanged search-engine boundaries');
 const search = vm.runInNewContext(source.slice(indexStart, uiStart) + '\nsearch');
 const first = new Map([
-  ['quote', '/contact/#quote-general'],
-  ['quotes', '/contact/#quote-general'],
-  ['get a quote', '/contact/#quote-general'],
-  ['request a quote', '/contact/#quote-general'],
+  ['quote', '/contact/#quote-choices'],
+  ['quotes', '/contact/#quote-choices'],
+  ['get a quote', '/contact/#quote-choices'],
+  ['request a quote', '/contact/#quote-choices'],
   ['describe your project', '/contact/#quote-general'],
   ['prepare a quote request', '/contact/#preflight-title'],
   ['Wi-Fi keeps dropping', '/services/#tech-support'],
