@@ -49,6 +49,7 @@ test('compact comparison links to exact service cards and uses their published p
   }
   assert.match(html, /id="all-services" tabindex="-1" aria-labelledby="service-comparison-title"/);
   assert.match(html, /id="service-comparison-title">Compare services at a glance/);
+  assert.match(html, /<\/ul>\s*<a class="text-link comparison-finder-link" href="#service-finder">Find a service by goal/);
 });
 
 test('explicit finder links open the disclosure without opening it when a cached page returns', () => {

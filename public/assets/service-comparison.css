@@ -6,7 +6,7 @@
   gap: .5rem;
   list-style: none;
   padding: 0;
-  margin: 0 0 1.75rem;
+  margin: 0 0 .25rem;
 }
 
 .service-comparison a {
@@ -26,6 +26,15 @@
 .comparison-price { grid-row: 3; font-size: .85rem; font-weight: 650; }
 .comparison-arrow { grid-area: 1 / 2 / 4 / 3; align-self: center; color: var(--accent); }
 .service-comparison a:hover, .service-comparison a:focus-visible { border-color: var(--accent); }
+
+/* Let buyers return to their goal without scrolling back to the top shortcuts. */
+.comparison-finder-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  min-height: 44px;
+  margin-bottom: .85rem;
+}
 
 @media (max-width: 40rem) {
   .service-offers > h2 { font-size: 1.3rem; margin-bottom: .65rem; }
