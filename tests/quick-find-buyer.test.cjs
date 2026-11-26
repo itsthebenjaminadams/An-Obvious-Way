@@ -128,3 +128,7 @@ for (const query of ['what happens after I email outside business hours',
   'what happens after I email' + ' '.repeat(60) + ' about warranties']) {
   assert.equal(search(query)?.length, 0, query);
 }
+
+for(const query of ['service finder', 'Which service do I need?', 'Help me choose a service']) {
+  assert.deepEqual(Array.from(search(query), result => result.url), ['/services/#service-finder'], query);
+}
