@@ -36,6 +36,14 @@
       { url: '/contact/#preflight-title', title: 'What to include in a quote request', description: 'See which project details help and what to leave out.' }],
     [new Set(['what happens after i email', 'what happens after i email you', 'what happens after i send an email', 'what happens after i request a quote', 'what happens after requesting a quote', 'what happens next', 'what to expect after emailing', 'what to expect after requesting a quote']),
       { url: '/contact/#after-email', title: 'What happens after I email?', description: 'See how AOW follows up and when you decide whether to proceed.' }],
+    [new Set(['webmail', 'use webmail', 'no email app', 'email app did not open', 'email app didn t open', 'email app doesn t open', 'no email app use webmail', 'how do i use webmail', 'copy a quote template', 'copy quote template']),
+      { url: '/contact/#webmail-general', title: 'Use webmail for a quote', description: 'Copy the recipient, subject and message without opening an email app.' }],
+    [new Set(['website quote webmail', 'webmail website quote', 'copy website quote template', 'copy a website quote template']),
+      { url: '/contact/#webmail-web', title: 'Website quote for webmail', description: 'Copy the website quote template into your email.' }],
+    [new Set(['tech support quote webmail', 'webmail tech support quote', 'copy tech support quote template', 'copy a tech support quote template']),
+      { url: '/contact/#webmail-support', title: 'Tech support quote for webmail', description: 'Copy the tech support quote template into your email.' }],
+    [new Set(['automation quote webmail', 'webmail automation quote', 'copy automation quote template', 'copy an automation quote template']),
+      { url: '/contact/#webmail-automation', title: 'Automation quote for webmail', description: 'Copy the automation quote template into your email.' }],
     [new Set(['email address', 'contact email address', 'aow email address', 'copy email address', 'what is your email address', 'what is the aow email address', 'where do i send my email']),
       { url: '/contact/#contact-email', title: 'AOW email address', description: 'View or copy the address without opening an email app.' }]
   ];

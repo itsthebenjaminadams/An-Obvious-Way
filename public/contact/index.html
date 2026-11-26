@@ -17,10 +17,10 @@
   <meta name="twitter:image" content="https://anobviousway.com/assets/aow-social.jpg">
   <meta name="twitter:image:alt" content="An Obvious Way terminal mark on a radar grid. Tech support, websites and automation.">
 <link rel="stylesheet" href="/assets/page-interactions.css">  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
-  <script src="/assets/quick-find.js?v=11" defer></script>
+  <script src="/assets/quick-find.js?v=12" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
-  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=3">
-  <script src="/assets/contact-affordances.js?v=6" defer></script>
+  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=4">
+  <script src="/assets/contact-affordances.js?v=7" defer></script>
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
   <script src="/assets/window-panels.js?v=4" defer></script>
 </head><body data-page="contact"><a class="skip-link" href="#main-content">Skip to content</a><header class="top"><div class="wrap nav"><div class="quick-find-brand"><a href="/" class="brand" aria-label="AOW Home">AOW<span>_</span></a><button class="quick-find-toggle" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden><svg focusable="false" aria-hidden="true" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6.5" cy="6.5" r="4.15"/><path d="m10 10 4 4"/></svg><span>Find</span></button></div><nav class="links" aria-label="Main navigation"><a href="/" >Home</a><a href="/services/" >Services</a><a href="/portfolio/" >Portfolio</a><a href="/about/" >About</a><a href="/contact/" aria-current="page">Contact</a></nav><div class="settings" role="group" aria-label="Appearance" hidden><button type="button" class="theme-btn" data-theme="green" aria-label="Green theme" title="Green theme"><span aria-hidden="true">G</span></button><button type="button" class="theme-btn" data-theme="amber" aria-label="Amber theme" title="Amber theme"><span aria-hidden="true">A</span></button><button type="button" class="theme-btn" data-theme="cyan" aria-label="Cyan theme" title="Cyan theme"><span aria-hidden="true">C</span></button><button type="button" class="theme-btn" data-theme="purple" aria-label="Purple theme" title="Purple theme"><span aria-hidden="true">P</span></button><button type="button" class="motion-switch" data-motion-switch aria-label="FX: Reduce site motion" aria-pressed="false" title="Reduce site motion"><span data-motion-state aria-hidden="true">FX ON</span><span id="motion-reason" data-motion-reason hidden><span aria-hidden="true">Device</span><span class="sr-only">Reduced by your device setting</span></span></button></div></div></header><main class="wrap" id="main-content" tabindex="-1">
@@ -45,13 +45,13 @@
       <a href="#quote-web">Web development</a>
       <a href="#quote-automation">Workflow automation</a>
     </nav>
-    <div class="actions quote-guide-links"><a class="text-link" href="#preflight-title">What to include</a><a class="text-link" href="#after-email">What happens after I email?</a></div>
+    <div class="actions quote-guide-links"><a class="text-link webmail-jump" href="#webmail-general">No email app? Use webmail</a><a class="text-link" href="#preflight-title">What to include</a><a class="text-link" href="#after-email">What happens after I email?</a></div>
     <article class="quote-topic card" id="quote-general" tabindex="-1">
   <h3>Describe your project</h3><p>Not sure which service fits? A few sentences are enough. Leave out passwords and payment details.</p>
   <a class="btn primary" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request&amp;body=Hi%20AOW%2C%0D%0A%0D%0AWhat%20I%20want%20to%20accomplish%3A%0D%0AWhere%20I%20need%20help%20and%20what%20a%20good%20result%20looks%20like%3A%0D%0ADeadline%2C%20if%20any%3A%0D%0A%0D%0AThanks%21">Open general quote draft</a>
   <details class="quote-template" data-quote-template>
-    <summary>Use webmail for a general quote</summary>
-    <div class="quote-template-inner">
+    <summary id="webmail-general-label">Use webmail for a general quote</summary>
+    <div class="quote-template-inner" id="webmail-general" tabindex="-1" role="group" aria-labelledby="webmail-general-label">
       <p class="small" id="template-general-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-general-to">To</label>
       <input id="template-general-to" type="text" value="contact@anobviousway.com" readonly>
@@ -78,8 +78,8 @@ Thanks!</textarea>
   <h3>Tech support</h3><p>Include the device or operating system and what changed. If helpful, add an error code or short excerpt with private details removed.</p>
   <a class="btn primary" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request%3A%20Tech%20support&amp;body=Hi%20AOW%2C%0D%0A%0D%0ADevice%20and%20operating%20system%3A%0D%0AWhat%20happened%20and%20when%20it%20started%3A%0D%0AOptional%20error%20code%20or%20short%20excerpt%20%28remove%20private%20details%29%2C%20or%20what%20I%20already%20tried%3A%0D%0A%0D%0AThanks%21">Open tech support draft</a>
   <details class="quote-template" data-quote-template>
-    <summary>Use webmail for tech support</summary>
-    <div class="quote-template-inner">
+    <summary id="webmail-support-label">Use webmail for tech support</summary>
+    <div class="quote-template-inner" id="webmail-support" tabindex="-1" role="group" aria-labelledby="webmail-support-label">
       <p class="small" id="template-support-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-support-to">To</label>
       <input id="template-support-to" type="text" value="contact@anobviousway.com" readonly>
@@ -105,8 +105,8 @@ Thanks!</textarea>
   <h3>Web development</h3><p>Building a new site? Tell us who it’s for and what visitors should be able to do. Improving a site you already have? Share the public page link and where visitors get stuck. Don’t share login details.</p>
   <a class="btn primary" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request%3A%20Web%20development&amp;body=Hi%20AOW%2C%0D%0A%0D%0ACurrent%20website%20%28if%20any%29%3A%0D%0AWho%20the%20site%20is%20for%3A%0D%0AWhat%20visitors%20should%20be%20able%20to%20do%3A%0D%0AWhere%20they%20get%20stuck%20today%20%28if%20applicable%29%3A%0D%0AIdeal%20timeline%20%28if%20any%29%3A%0D%0A%0D%0AThanks%21">Open website quote draft</a>
   <details class="quote-template" data-quote-template>
-    <summary>Use webmail for a website quote</summary>
-    <div class="quote-template-inner">
+    <summary id="webmail-web-label">Use webmail for a website quote</summary>
+    <div class="quote-template-inner" id="webmail-web" tabindex="-1" role="group" aria-labelledby="webmail-web-label">
       <p class="small" id="template-web-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-web-to">To</label>
       <input id="template-web-to" type="text" value="contact@anobviousway.com" readonly>
@@ -134,8 +134,8 @@ Thanks!</textarea>
   <h3>Workflow automation</h3><p>Describe the steps, the tools you use, and the result you need. Use sample data if an example helps. Don’t attach files or include private records in your first email.</p>
   <a class="btn primary" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request%3A%20Workflow%20automation&amp;body=Hi%20AOW%2C%0D%0A%0D%0ATools%20or%20file%20types%3A%0D%0ASteps%20I%20repeat%20and%20how%20often%20%28describe%20only%3B%20no%20attachments%20or%20private%20records%29%3A%0D%0ADesired%20output%20or%20result%3A%0D%0A%0D%0AThanks%21">Open automation quote draft</a>
   <details class="quote-template" data-quote-template>
-    <summary>Use webmail for automation</summary>
-    <div class="quote-template-inner">
+    <summary id="webmail-automation-label">Use webmail for automation</summary>
+    <div class="quote-template-inner" id="webmail-automation" tabindex="-1" role="group" aria-labelledby="webmail-automation-label">
       <p class="small" id="template-automation-help">In webmail, start a new message. Copy or select each field below and paste it into the matching field, then fill in the prompts.</p>
       <label class="small" for="template-automation-to">To</label>
       <input id="template-automation-to" type="text" value="contact@anobviousway.com" readonly>
