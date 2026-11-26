@@ -28,5 +28,6 @@
 .service-comparison a:hover, .service-comparison a:focus-visible { border-color: var(--accent); }
 
 @media (max-width: 40rem) {
+  .service-offers > h2 { font-size: 1.3rem; margin-bottom: .65rem; }
   .service-comparison { grid-template-columns: 1fr; }
 }
