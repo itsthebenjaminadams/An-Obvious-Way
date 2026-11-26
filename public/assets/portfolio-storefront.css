@@ -49,3 +49,7 @@
 .portfolio-fold-after .portfolio-fold-marker{top:31%;color:var(--accent)}
 @media(max-width:460px){.portfolio-layout-figure dl{grid-template-columns:minmax(0,1fr)}}
 .portfolio-live-link{display:inline-flex;align-items:center;gap:.3rem;min-height:44px}
+
+.portfolio-lab-next{margin-top:1.25rem;padding-top:.85rem;border-top:1px solid var(--line)}
+.portfolio-lab-next p{margin:0 0 .4rem}
+.portfolio-lab-next .btn{display:inline-flex;align-items:center;min-height:44px;max-width:100%;white-space:normal;text-align:start}
