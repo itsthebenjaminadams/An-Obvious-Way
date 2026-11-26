@@ -6,6 +6,8 @@
 
 .console-service {
   display: block;
+  min-block-size: 44px;
+  align-content: center;
   border-radius: .2rem;
 }
 
@@ -20,17 +22,43 @@
   color: var(--text);
 }
 
-/* During the brief intro, keyboard focus reveals the actual service links. */
-.console-content.is-playing [data-readout]:not(:focus-within) {
-  pointer-events: none;
-}
-
-.console-content.is-playing [data-readout]:focus-within {
+/* The movie runs in the display. Service links stay visible and usable below it. */
+.console-content.is-playing [data-readout] {
   opacity: 1;
 }
 
-.console-content.is-playing:focus-within [data-intro] {
-  visibility: hidden;
+.console-intro-tools:has(.intro-control:not([hidden])) {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: .55rem;
+}
+
+.signal-screen {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-block-size: 9.5rem;
+}
+
+.signal-screen > .signal-map {
+  grid-area: 1 / 1;
+}
+
+.signal-screen > .console-boot {
+  inset: auto;
+  grid-area: 1 / 1;
+  position: relative;
+  z-index: 1;
+  gap: .68rem;
+  margin-inline: .55rem;
+  padding: .55rem .65rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--line));
+  border-radius: .25rem;
+  background: rgba(6, 16, 34, .9);
+}
+
+.signal-screen .console-boot pre {
+  overflow-wrap: anywhere;
 }
 
 @media (hover: hover) {
