@@ -13,7 +13,7 @@ test('native shortcuts and return links connect all four focusable quote choices
   const cards = Array.from(html.matchAll(/<article class="quote-topic card" id="quote-([a-z]+)" tabindex="-1">([\s\S]*?)<\/article>/g));
   assert.deepEqual(cards.map(card => card[1]), ['general', 'support', 'web', 'automation']);
   for (const [, , card] of cards) {
-    assert.match(card, /<\/details>\s*<a class="text-link quote-return" href="#quote-choices">Choose another template<\/a>/);
+    assert.match(card, /<\/details>[\s\S]*?<a class="text-link quote-return" href="#quote-choices">Choose another template<\/a>/);
   }
   for (const [id, label] of [['support', 'Tech support'], ['web', 'Web development'], ['automation', 'Workflow automation']]) {
     assert.ok(nav.includes(`href="#quote-${id}">${label}</a>`));
