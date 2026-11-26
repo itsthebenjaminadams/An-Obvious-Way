@@ -12,7 +12,7 @@
     ['/services/#tech-support', 'Tech support and diagnostic prices', 'Get help with devices, Windows, Wi-Fi or setup.', 'computer laptop pc fix repair troubleshooting internet wifi wireless network connection hardware remote access keeps dropping disconnecting unreliable diagnostic diagnostics cost price prices pricing rates'],
     ['/services/#web-development', 'Website development and starting prices', 'Build or improve a small-business site.', 'website websites web design create new landing page mobile small business business site navigation redesign price pricing cost'],
     ['/services/#workflow-automation', 'Workflow automation and starting prices', 'Cut repetitive steps from a report or spreadsheet.', 'automate automated script task data processing spreadsheet excel csv recurring report repeat manual cleanup clean fix weekly cost price prices pricing rates'],
-    ['/contact/#quote-general', 'Request a quote', 'Describe your project when you’re not sure which service fits.', 'quotes general project email draft'],
+    ['/contact/#quote-choices', 'Request a quote', 'Choose a quote template or start with Not sure yet.', 'quotes email draft'],
     ['/contact/#quote-support', 'Start a tech support quote', 'Use an email draft or copy the webmail template.', 'support computer repair quote cost price wifi windows email help estimate keeps dropping disconnecting unreliable diagnostic diagnostics'],
     ['/contact/#quote-web', 'Start a website quote', 'Use an email draft or copy the webmail template.', 'web design website websites site small business quote cost price mobile email contact estimate new'],
     ['/contact/#quote-automation', 'Start an automation quote', 'Use an email draft or copy the webmail template.', 'workflow automation report spreadsheet data quote price cost email estimate cleanup clean weekly recurring'],
@@ -23,7 +23,8 @@
     ['/about/#how-we-work', 'How AOW works', 'See how we scope and hand off small projects.', 'about team process delivery project support approach'],
     ['/contact/', 'Contact AOW', 'Find ways to start a conversation or request a quote.', 'mail email contact get in touch ask message'],
     ['/portfolio/', 'Explore the portfolio', 'Start with AOW’s live website case study; demos are optional.', 'projects previous work fun demo samples interactive'],
-    ['/', 'AOW homepage', 'Return to the main site.', 'home homepage start bios mission control landing page']
+    ['/', 'AOW homepage', 'Return to the main site.', 'home homepage start bios mission control landing page'],
+    ['/contact/#quote-general', 'Describe your project', 'Start a general draft if you’re not sure which service fits.', 'general project email draft']
   ];
 
   const noise = new Set(['a', 'an', 'and', 'can', 'do', 'does', 'for', 'get', 'how', 'i', 'in', 'is', 'much', 'my', 'need', 'of', 'on', 'please', 'the', 'to', 'with']);
