@@ -77,3 +77,27 @@
     }
   }
 })();
+
+(() => {
+  function revealWebmail() {
+    const hash = window.location.hash;
+    if (!/^#webmail-(general|support|web|automation)$/.test(hash)) return;
+    const fields = document.getElementById(hash.slice(1));
+    const template = fields?.closest('[data-quote-template]');
+    if (!template) return;
+    template.open = true;
+    fields.focus({ preventScroll: true });
+    fields.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+
+  revealWebmail();
+  window.addEventListener('hashchange', revealWebmail);
+  // Following the same fragment does not fire hashchange if it was closed by hand.
+  document.addEventListener('click', event => {
+    if (event.defaultPrevented || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const link = event.target.closest?.('a[href]');
+    if (link && !link.target && !link.hasAttribute('download') &&
+        link.href === window.location.href) revealWebmail();
+  });
+})();

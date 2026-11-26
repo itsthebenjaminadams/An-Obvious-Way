@@ -6,3 +6,7 @@
 
 /* Return to the template choices without leaving the current draft options. */
 .quote-return{display:inline-flex;align-items:center;align-self:flex-start;min-height:44px;margin-top:.5rem}
+
+/* A visible, touch-sized alternative to handing off to an email app. */
+.webmail-jump{display:inline-flex;align-items:center;min-height:44px}
+.quote-template-inner[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}

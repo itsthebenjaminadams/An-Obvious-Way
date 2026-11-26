@@ -12,6 +12,7 @@ function fixture(writeText) {
   const doc = {
     activeElement: null,
     querySelector: () => null,
+    addEventListener() {},
     querySelectorAll: () => templates,
     getElementById: id => fields.get(id)
   };
@@ -27,7 +28,7 @@ function fixture(writeText) {
     });
     return {announcement, buttons, open: true, querySelector: key => key === '[data-copy-status]' ? announcement : null, querySelectorAll: () => buttons, contains: field => buttons.some(button => button.field === field)};
   });
-  vm.runInNewContext(js, {document: doc, navigator: writeText ? {clipboard: {writeText}} : {}});
+  vm.runInNewContext(js, {document: doc, window: {location: {hash: ''}, addEventListener() {}}, navigator: writeText ? {clipboard: {writeText}} : {}});
   return {doc, templates};
 }
 

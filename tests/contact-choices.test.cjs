@@ -30,7 +30,8 @@ for (const moved of [false, true]) {
     const selectors = {'[data-address-link]':{textContent:'contact@example.test'},'[data-address-copy]':button,'[data-address-fallback]':fallback,'[data-address-text]':input,'[data-address-status]':status};
     let reject;
     const writeText = () => new Promise((pass, fail) => {reject = fail;});
-    vm.runInNewContext(fromPublic('assets/contact-affordances.js'), {document:doc,navigator:{clipboard:{writeText}}});
+    doc.addEventListener = () => {};
+    vm.runInNewContext(fromPublic('assets/contact-affordances.js'), {document:doc,window:{location:{hash:''},addEventListener(){}},navigator:{clipboard:{writeText}}});
     const pending = button.click(), next = {};
     if (moved) doc.activeElement = next;
     reject(new Error('unavailable'));
