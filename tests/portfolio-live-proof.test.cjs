@@ -16,3 +16,16 @@ test('live portfolio walkthrough starts at the Contact chooser, not an email app
   assert.match(page('contact'), /href="#quote-choices">Choose another template/);
   assert.match(portfolio, /href="\/contact\/#quote-web">Get a quote for your site/);
 });
+
+test('the clearly labeled missing-page walkthrough offers a route back to quotes before the fictional labs', () => {
+  const portfolio = page('portfolio');
+  const start = portfolio.indexOf('id="recovery-proof"');
+  const end = portfolio.indexOf('id="example-projects"');
+  assert.ok(start > 0 && end > start);
+  const proof = portfolio.slice(start, end);
+  assert.match(proof, /same recovery screen a visitor sees/);
+  assert.match(proof, /href="\/404\.html">Try the missing-page recovery example/);
+  assert.doesNotMatch(proof, /mailto:/);
+  const recovery = readFileSync(join(__dirname, '../public/404.html'), 'utf8');
+  assert.match(recovery, /href="\/contact\/#quote-choices">Request a quote/);
+});
