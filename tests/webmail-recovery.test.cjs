@@ -10,7 +10,12 @@ const kinds = ['general', 'support', 'web', 'automation'];
 
 test('webmail links point inside the original native disclosures and keep manual-copy fields', () => {
   const html = read('contact/index.html');
-  assert.match(html, /href="#webmail-general">No email app\? Use webmail<\/a>/);
+  const chooser = html.match(/<details class="webmail-chooser">([\s\S]*?)<\/details>/)?.[1];
+  assert.ok(chooser, 'webmail alternatives are a native, optional disclosure');
+  assert.match(chooser, /<summary>No email app\? Use webmail<\/summary>/);
+  assert.match(chooser, /aria-label="Choose a webmail quote template"/);
+  assert.deepEqual([...chooser.matchAll(/href="#webmail-([a-z]+)"/g)].map(m => m[1]), kinds);
+  assert.doesNotMatch(chooser, /mailto:|<form/);
   for (const kind of kinds) {
     const target = 'webmail-' + kind;
     const group = html.split('<details class="quote-template" data-quote-template>').find(part => part.startsWith('\n    <summary id="' + target + '-label"')).split('</details>')[0];
