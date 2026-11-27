@@ -35,6 +35,16 @@
     return { accepted, flagged, hours: (hundredths / 100).toFixed(2), done, inProgress };
   }
 
+  // Export only the cleaned rows of the last completed run, never the raw table.
+  function reportCsv(rows) {
+    const quote = value => '"' + value.replace(/"/g, '""') + '"';
+    // Spreadsheet apps may interpret a leading formula marker even in a quoted CSV cell.
+    const safeText = value => /^[=+@-]/.test(value) ? "'" + value : value;
+    const lines = rows.map(([job, owner, hours, status]) =>
+      [safeText(job), safeText(owner), hours, safeText(status)].map(quote).join(','));
+    return ['Job,Owner,Hours,Status', ...lines].join('\r\n') + '\r\n';
+  }
+
   const demo = document.querySelector('[data-report-demo]');
   if (!demo) return;
   const get = selector => demo.querySelector('[data-report-' + selector + ']');
@@ -43,6 +53,7 @@
   const run = get('run');
   const reset = get('reset');
   const result = get('result');
+  const download = get('download');
   const status = get('status');
   const cleaned = get('cleaned');
   const flags = get('flags');
@@ -97,6 +108,9 @@
     repairCount.textContent = repaired + ' of ' + repairJobs.size + ' repaired';
     repairPanel.dataset.cleared = String(completed);
     repairPanel.hidden = false;
+    if (download) {
+      download.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(reportCsv(summary.accepted));
+    }
     result.hidden = false;
     reset.disabled = false;
     status.textContent = 'Report ready: ' + summary.accepted.length + ' included, ' + summary.flagged.length + ' flagged, ' + summary.hours + ' total hours. ' + repaired + ' of ' + repairJobs.size + ' challenge rows repaired.';
@@ -112,6 +126,7 @@
 
   reset.addEventListener('click', () => {
     result.hidden = true;
+    download?.removeAttribute('href');
     repairPanel.hidden = true;
     repairPanel.dataset.cleared = 'false';
     repairs.forEach(selection => { selection.selectedIndex = 0; });
