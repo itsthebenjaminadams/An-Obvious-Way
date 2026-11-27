@@ -28,9 +28,17 @@ test('Quick Find routes explicit webmail intent to an exact service or a general
   for (const [query, suffix] of Object.entries({
     'Email app didn’t open': 'webmail-general', 'Use webmail': 'webmail-general', 'Copy a quote template': 'webmail-general',
     'Website quote webmail': 'webmail-web', 'copy a tech support quote template': 'webmail-support',
-    'Webmail automation quote': 'webmail-automation', 'Website quote': 'quote-web'
+    'Webmail automation quote': 'webmail-automation', 'Website quote': 'quote-web',
+    'Website webmail': 'webmail-web', 'webmail for my website': 'webmail-web',
+    'webmail quote for website design': 'webmail-web', 'Quote webmail tech support': 'webmail-support',
+    'Webmail for computer repair': 'webmail-support', 'WI-FI support webmail': 'webmail-support',
+    'Workflow automation webmail': 'webmail-automation', 'webmail for spreadsheet automation': 'webmail-automation'
   })) assert.equal(search(query)[0]?.url, '/contact/#' + suffix, query);
-  assert.equal(search('webmail website quote without email')?.length, 0);
+  for (const query of [
+    'webmail website quote without email', 'no webmail for website', 'webmail not website',
+    'website or automation webmail', 'website and automation webmail', 'website webmail migration',
+    'webmail website security', 'website webmail '.padEnd(80, ' ')
+  ]) assert.ok(!search(query)?.some(item => item.url.startsWith('/contact/#webmail-')), query);
 });
 
 test('deep links open and focus only the requested fields; same-link reopening honors modifiers', () => {

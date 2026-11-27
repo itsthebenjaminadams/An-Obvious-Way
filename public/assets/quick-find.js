@@ -38,12 +38,6 @@
       { url: '/contact/#after-email', title: 'What happens after I email?', description: 'See how AOW follows up and when you decide whether to proceed.' }],
     [new Set(['webmail', 'use webmail', 'no email app', 'email app did not open', 'email app didn t open', 'email app doesn t open', 'no email app use webmail', 'how do i use webmail', 'copy a quote template', 'copy quote template']),
       { url: '/contact/#webmail-general', title: 'Use webmail for a quote', description: 'Copy the recipient, subject and message without opening an email app.' }],
-    [new Set(['website quote webmail', 'webmail website quote', 'copy website quote template', 'copy a website quote template']),
-      { url: '/contact/#webmail-web', title: 'Website quote for webmail', description: 'Copy the website quote template into your email.' }],
-    [new Set(['tech support quote webmail', 'webmail tech support quote', 'copy tech support quote template', 'copy a tech support quote template']),
-      { url: '/contact/#webmail-support', title: 'Tech support quote for webmail', description: 'Copy the tech support quote template into your email.' }],
-    [new Set(['automation quote webmail', 'webmail automation quote', 'copy automation quote template', 'copy an automation quote template']),
-      { url: '/contact/#webmail-automation', title: 'Automation quote for webmail', description: 'Copy the automation quote template into your email.' }],
     [new Set(['email address', 'contact email address', 'aow email address', 'copy email address', 'what is your email address', 'what is the aow email address', 'where do i send my email']),
       { url: '/contact/#contact-email', title: 'AOW email address', description: 'View or copy the address without opening an email app.' }]
   ];
@@ -80,6 +74,30 @@
 
   const queryTerms = query => [...new Set(tokenize(query).filter(word => !noise.has(word)))];
 
+  // Recognize the destination even when a visitor omits “quote” or types the words in
+  // a different order. Exact topic sets avoid routing mixed requests or ignoring exclusions.
+  const webmailTopics = [
+    [new Set(['web', 'web design', 'web development', 'website', 'website design', 'website development']), 'web', 'Website'],
+    [new Set(['support', 'tech support', 'computer repair', 'wifi support']), 'support', 'Tech support'],
+    [new Set(['automation', 'workflow automation', 'spreadsheet automation']), 'automation', 'Automation']
+  ].map(([topics, id, label]) => [topics, {
+    url: '/contact/#webmail-' + id,
+    title: label + ' quote for webmail',
+    description: 'Copy the ' + label.toLowerCase() + ' quote template into your email.'
+  }]);
+  const templateWords = new Set(['webmail', 'quote', 'template', 'copy', 'use']);
+  const matchesWebmailTopic = (topics, words) => [...topics].some(topic => {
+    const expected = topic.split(' ');
+    return expected.length === words.length && expected.every(word => words.includes(word));
+  });
+
+  function serviceWebmail(terms) {
+    if (!terms.includes('webmail') && !['copy', 'quote', 'template'].every(word => terms.includes(word))) return null;
+    const topic = terms.filter(word => !templateWords.has(word));
+    // “or” isn't noise; “and” is, so mixed topics still cannot match a single service.
+    return webmailTopics.find(([topics]) => matchesWebmailTopic(topics, topic))?.[1] || null;
+  }
+
   // Strip only recognized opening phrases, not unmatched words within a request.
   // Keep "cost" in the pricing wrapper and leave all exclusions in the topic.
   const spokenOpeners = [
@@ -100,6 +118,8 @@
     }
     const terms = queryTerms(bounded);
     if (!terms.length) return null;
+    const webmail = query.length < 80 && serviceWebmail(terms);
+    if (webmail) return [webmail];
     const exact = rank(terms);
     if (exact.length) return exact;
     if (query.length >= 80) return []; // A truncated request may omit a qualification.
