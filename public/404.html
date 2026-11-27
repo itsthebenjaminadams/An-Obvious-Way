@@ -5,19 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Page not found | An Obvious Way</title>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/style.css?v=9">
+  <link rel="stylesheet" href="/assets/style.css?v=12">
+  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
+  <script src="/assets/quick-find.js?v=12" defer></script>
 </head>
 <body>
   <main class="wrap">
     <div class="eyebrow">AOW / recovery console</div>
     <h1>Page not found<span class="accent" aria-hidden="true">_</span></h1>
-    <p class="lead">This link leads to a dead end. It may be out of date, or the address may have a typo.</p>
+    <p class="lead">This link may be out of date. You can still find help, see our work, or request a quote.</p>
     <div class="window">
-      <div class="window-head"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>route / 404</div>
+      <div class="window-head">route / 404</div>
       <div class="window-body">
-        <h2>Pick a working route</h2>
+        <h2>Find what you were looking for</h2>
+        <p>Choose a page below, or start a quote if you already know what you need.</p>
+        <div class="actions">
+          <button class="btn secondary" data-quick-find type="button" aria-haspopup="dialog" aria-controls="quick-find" hidden>Search AOW</button>
+          <a class="btn primary" href="/contact/#quote-choices">Request a quote</a>
+        </div>
         <nav aria-label="Recovery links" class="actions">
-          <a class="btn primary" href="/">Home</a>
+          <a class="btn secondary" href="/">Home</a>
           <a class="btn secondary" href="/services/">Services</a>
           <a class="btn secondary" href="/portfolio/">Portfolio</a>
           <a class="btn secondary" href="/about/">About</a>
