@@ -30,6 +30,10 @@
   // Only match these whole questions or named tools. An unrelated qualification should not
   // route someone to a generic answer, and terse service searches retain their ranking.
   const guidance = [
+    [new Set(['diagnostic scope', 'diagnostic vs repair', 'diagnostic versus repair', 'what does a diagnostic cover', 'what does the diagnostic cover', 'what is included in a diagnostic', 'what s included in a diagnostic', 'what s included in the 49 diagnostic', 'what does the 49 diagnostic cover', 'is 49 the repair price']),
+      { url: '/services/#tech-support', title: 'What a tech support diagnostic covers', description: 'See what the diagnostic includes and why it is not a fixed repair price.' }],
+    [new Set(['does requesting a quote book a diagnostic', 'does a quote book a diagnostic', 'does requesting a quote approve a repair', 'does a tech support quote book a diagnostic']),
+      { url: '/contact/#quote-support', title: 'Requesting a tech support quote', description: 'An email request doesn’t book a diagnostic or approve repair work.' }],
     [new Set(['service finder', 'find my service', 'find your service', 'which service fits', 'which service do i need', 'what service do i need', 'not sure which service fits', 'help me choose a service']),
       { url: '/services/#service-finder', title: 'Find your service', description: 'Pick a goal and see the best place to start.' }],
     [new Set(['what to include', 'what should i include', 'what should i include in a quote request', 'what should i put in my email', 'what do i include in my email', 'what to include in my email', 'what to include in a quote request', 'what information do you need for a quote', 'what do you need for a quote']),

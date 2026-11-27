@@ -132,3 +132,18 @@ for (const query of ['what happens after I email outside business hours',
 for(const query of ['service finder', 'Which service do I need?', 'Help me choose a service']) {
   assert.deepEqual(Array.from(search(query), result => result.url), ['/services/#service-finder'], query);
 }
+
+for (const [query, url] of [
+  ['Diagnostic scope', '/services/#tech-support'],
+  ['What does a diagnostic cover?', '/services/#tech-support'],
+  ['What’s included in the $49 diagnostic?', '/services/#tech-support'],
+  ['Is $49 the repair price?', '/services/#tech-support'],
+  ['Diagnostic vs. repair', '/services/#tech-support'],
+  ['Does requesting a quote book a diagnostic?', '/contact/#quote-support'],
+  ['Does requesting a quote approve a repair?', '/contact/#quote-support']
+]) assert.deepEqual(Array.from(search(query), result => result.url), [url], query);
+for (const query of ['what does a diagnostic cover for a Mac', 'what does a diagnostic cover for iPhone',
+  'does a quote book a diagnostic on weekends', 'what does a diagnostic cover except Wi-Fi',
+  'what does a diagnostic cover' + ' '.repeat(60) + ' for Mac']) {
+  assert.equal(search(query)?.length, 0, query);
+}
