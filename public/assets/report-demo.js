@@ -53,7 +53,12 @@
   const run = get('run');
   const reset = get('reset');
   const result = get('result');
-  const download = get('download');
+  const copyCsv = get('copy-csv');
+  const csvText = get('csv-text');
+  const csvStatus = get('csv-status');
+  const manualCsv = get('manual-csv');
+  const canCopyCsv = copyCsv && csvText && csvStatus && manualCsv;
+  let csvOperation = 0;
   const status = get('status');
   const cleaned = get('cleaned');
   const flags = get('flags');
@@ -108,12 +113,34 @@
     repairCount.textContent = repaired + ' of ' + repairJobs.size + ' repaired';
     repairPanel.dataset.cleared = String(completed);
     repairPanel.hidden = false;
-    if (download) {
-      download.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(reportCsv(summary.accepted));
+    if (canCopyCsv) {
+      csvOperation += 1;
+      csvText.value = reportCsv(summary.accepted);
+      csvStatus.textContent = '';
     }
     result.hidden = false;
     reset.disabled = false;
     status.textContent = 'Report ready: ' + summary.accepted.length + ' included, ' + summary.flagged.length + ' flagged, ' + summary.hours + ' total hours. ' + repaired + ' of ' + repairJobs.size + ' challenge rows repaired.';
+  }
+  if (canCopyCsv) {
+    copyCsv.addEventListener('click', async () => {
+      const operation = ++csvOperation;
+      const focus = document.activeElement;
+      csvStatus.textContent = '';
+      try {
+        // Textarea values normalize line endings; export standard CSV CRLF.
+        await navigator.clipboard.writeText(csvText.value.replace(/\r?\n/g, '\r\n'));
+        if (operation === csvOperation) csvStatus.textContent = 'Cleaned sample CSV copied.';
+      } catch {
+        if (operation !== csvOperation) return;
+        manualCsv.open = true;
+        if (document.activeElement === focus && focus === copyCsv) {
+          csvText.focus();
+          csvText.select();
+        }
+        csvStatus.textContent = 'Automatic copy is unavailable. Copy the text in the Cleaned sample CSV field.';
+      }
+    });
   }
   run.addEventListener('click', runReport);
   repairApply.addEventListener('click', runReport);
@@ -126,7 +153,12 @@
 
   reset.addEventListener('click', () => {
     result.hidden = true;
-    download?.removeAttribute('href');
+    if (canCopyCsv) {
+      csvOperation += 1;
+      csvText.value = '';
+      csvStatus.textContent = '';
+      manualCsv.open = false;
+    }
     repairPanel.hidden = true;
     repairPanel.dataset.cleared = 'false';
     repairs.forEach(selection => { selection.selectedIndex = 0; });

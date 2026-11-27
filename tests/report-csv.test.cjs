@@ -19,9 +19,12 @@ test('the fictional CSV exports only accepted rows with correct escaping and num
   assert.equal(reportCsv([]), 'Job,Owner,Hours,Status\r\n');
 });
 
-test('download is inside the initially hidden output, generated and cleared locally', () => {
-  assert.match(html, /data-report-result hidden>[\s\S]*?<a class="btn secondary" download="aow-fictional-cleaned-report\.csv" data-report-download aria-describedby="report-download-note">/);
-  assert.match(html, /id="report-download-note">Fictional data from the last run\. Flagged rows are left out\./);
-  assert.match(source, /data:text\/csv;charset=utf-8,' \+ encodeURIComponent\(reportCsv\(summary\.accepted\)\)/);
-  assert.match(source, /reset\.addEventListener\('click',[\s\S]*?download\?\.removeAttribute\('href'\)/);
+test('CSV controls are native, inside the initially hidden result, and use no external link', () => {
+  const result = html.slice(html.indexOf('data-report-result hidden>'), html.indexOf('<noscript>'));
+  assert.match(result, /<button [^>]*data-report-copy-csv/);
+  assert.match(result, /<textarea [^>]*data-report-csv-text[^>]*readonly/);
+  assert.match(result, /Fictional data from the last run\. Flagged rows are left out\./);
+  assert.doesNotMatch(result, /download=|mailto:|<form/);
+  assert.match(source, /navigator\.clipboard\.writeText/);
+  assert.match(source, /reset\.addEventListener\('click',[\s\S]*?csvText\.value = ''/);
 });
