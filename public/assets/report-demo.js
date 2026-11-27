@@ -35,6 +35,16 @@
     return { accepted, flagged, hours: (hundredths / 100).toFixed(2), done, inProgress };
   }
 
+  // Export only the cleaned rows of the last completed run, never the raw table.
+  function reportCsv(rows) {
+    const quote = value => '"' + value.replace(/"/g, '""') + '"';
+    // Spreadsheet apps may interpret a leading formula marker even in a quoted CSV cell.
+    const safeText = value => /^[=+@-]/.test(value) ? "'" + value : value;
+    const lines = rows.map(([job, owner, hours, status]) =>
+      [safeText(job), safeText(owner), hours, safeText(status)].map(quote).join(','));
+    return ['Job,Owner,Hours,Status', ...lines].join('\r\n') + '\r\n';
+  }
+
   const demo = document.querySelector('[data-report-demo]');
   if (!demo) return;
   const get = selector => demo.querySelector('[data-report-' + selector + ']');
@@ -43,6 +53,12 @@
   const run = get('run');
   const reset = get('reset');
   const result = get('result');
+  const copyCsv = get('copy-csv');
+  const csvText = get('csv-text');
+  const csvStatus = get('csv-status');
+  const manualCsv = get('manual-csv');
+  const canCopyCsv = copyCsv && csvText && csvStatus && manualCsv;
+  let csvOperation = 0;
   const status = get('status');
   const cleaned = get('cleaned');
   const flags = get('flags');
@@ -97,9 +113,34 @@
     repairCount.textContent = repaired + ' of ' + repairJobs.size + ' repaired';
     repairPanel.dataset.cleared = String(completed);
     repairPanel.hidden = false;
+    if (canCopyCsv) {
+      csvOperation += 1;
+      csvText.value = reportCsv(summary.accepted);
+      csvStatus.textContent = '';
+    }
     result.hidden = false;
     reset.disabled = false;
     status.textContent = 'Report ready: ' + summary.accepted.length + ' included, ' + summary.flagged.length + ' flagged, ' + summary.hours + ' total hours. ' + repaired + ' of ' + repairJobs.size + ' challenge rows repaired.';
+  }
+  if (canCopyCsv) {
+    copyCsv.addEventListener('click', async () => {
+      const operation = ++csvOperation;
+      const focus = document.activeElement;
+      csvStatus.textContent = '';
+      try {
+        // Textarea values normalize line endings; export standard CSV CRLF.
+        await navigator.clipboard.writeText(csvText.value.replace(/\r?\n/g, '\r\n'));
+        if (operation === csvOperation) csvStatus.textContent = 'Cleaned sample CSV copied.';
+      } catch {
+        if (operation !== csvOperation) return;
+        manualCsv.open = true;
+        if (document.activeElement === focus && focus === copyCsv) {
+          csvText.focus();
+          csvText.select();
+        }
+        csvStatus.textContent = 'Automatic copy is unavailable. Copy the text in the Cleaned sample CSV field.';
+      }
+    });
   }
   run.addEventListener('click', runReport);
   repairApply.addEventListener('click', runReport);
@@ -112,6 +153,12 @@
 
   reset.addEventListener('click', () => {
     result.hidden = true;
+    if (canCopyCsv) {
+      csvOperation += 1;
+      csvText.value = '';
+      csvStatus.textContent = '';
+      manualCsv.open = false;
+    }
     repairPanel.hidden = true;
     repairPanel.dataset.cleared = 'false';
     repairs.forEach(selection => { selection.selectedIndex = 0; });
