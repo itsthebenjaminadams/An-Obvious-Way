@@ -12,4 +12,7 @@ for (const [service, caption] of [['support', 'tech support'], ['web', 'web deve
   assert.ok(page('services').includes(`href="/contact/#quote-${service}">Get a quote for ${caption}`));
 }
 assert.ok(page('services').includes('href="/contact/#quote-general">Describe your project</a>'));
-assert.match(page('contact'), /id="quote-choices" tabindex="-1">\s*<a href="#quote-general">Not sure yet<\/a>/);
+const contact = page('contact');
+assert.match(contact, /<section class="section" id="quote-topics" aria-labelledby="quote-choices">/);
+assert.match(contact, /<h2 id="quote-choices" tabindex="-1">Start an email draft<\/h2>\s*<p>Pick the closest match, or choose Not sure yet\.[^<]+Nothing is sent until you send it\.<\/p>\s*<nav[^>]+>\s*<a href="#quote-general">Not sure yet<\/a>/);
+assert.equal([...contact.matchAll(/id="quote-choices"/g)].length, 1);

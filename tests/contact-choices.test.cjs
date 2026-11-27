@@ -7,7 +7,7 @@ const fromPublic = p => fs.readFileSync(path.join(__dirname, '../public', p), 'u
 
 test('native shortcuts and return links connect all four focusable quote choices', () => {
   const html = fromPublic('contact/index.html');
-  const nav = html.match(/<nav class="service-chooser" aria-label="Jump to a quote template" id="quote-choices" tabindex="-1">([\s\S]*?)<\/nav>/)?.[1];
+  const nav = html.match(/<nav class="service-chooser" aria-label="Jump to a quote template">([\s\S]*?)<\/nav>/)?.[1];
   assert.ok(nav);
   assert.ok(nav.includes('href="#quote-general">Not sure yet</a>'));
   const cards = Array.from(html.matchAll(/<article class="quote-topic card" id="quote-([a-z]+)" tabindex="-1">([\s\S]*?)<\/article>/g));
