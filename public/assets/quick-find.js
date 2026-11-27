@@ -169,12 +169,13 @@
   const input = make('input', 'quick-find-input');
   input.id = 'quick-find-input';
   input.type = 'search';
+  input.enterKeyHint = 'go';
   input.maxLength = 80;
   input.autocomplete = 'off';
   input.spellcheck = false;
   input.placeholder = 'Try “Wi-Fi”, “website quote”, or “pricing”';
   input.setAttribute('aria-describedby', 'quick-find-hint');
-  const hint = make('p', 'quick-find-hint', 'Type a goal or topic, then Tab to the links. Searches stay on this page.');
+  const hint = make('p', 'quick-find-hint', 'Press Enter to open a single match, or Tab to browse links. Search text stays on this page.');
   hint.id = 'quick-find-hint';
   const status = make('p', 'quick-find-status');
   status.setAttribute('role', 'status');
@@ -199,16 +200,20 @@
   document.body.append(dialog);
   opener.hidden = false;
 
+  let singleResult = null;
+
   function render() {
     const query = input.value.trim();
     const matches = search(query);
     const results = !query || matches === null ? featured : matches;
+    singleResult = null;
     const links = results.map(({url, title, description}) => {
       const li = make('li');
       const a = make('a');
       a.href = url;
       a.append(make('strong', '', title), make('span', '', description));
       li.append(a);
+      if (query && matches?.length === 1) singleResult = a;
       return li;
     });
     list.replaceChildren(...links);
@@ -231,6 +236,13 @@
   });
   close.addEventListener('click', () => dialog.close());
   input.addEventListener('input', render);
+  input.addEventListener('keydown', event => {
+    if (!dialog.open || !singleResult || event.key !== 'Enter' ||
+        event.defaultPrevented || event.repeat || event.isComposing || event.keyCode === 229 ||
+        event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    singleResult.click();
+  });
   function closeOnNavigation(event) {
     if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     if (event.target.closest('a[href]')) {
@@ -243,6 +255,7 @@
   // Native Escape dispatches close too; never override the browser's keyboard shortcuts.
   dialog.addEventListener('close', () => {
     input.value = '';
+    singleResult = null;
     if (!navigating) opener.focus({ preventScroll: true });
   });
 })();
