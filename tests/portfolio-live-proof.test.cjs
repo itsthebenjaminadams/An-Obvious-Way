@@ -29,3 +29,16 @@ test('the clearly labeled missing-page walkthrough offers a route back to quotes
   const recovery = readFileSync(join(__dirname, '../public/404.html'), 'utf8');
   assert.match(recovery, /href="\/contact\/#quote-choices">Request a quote/);
 });
+
+test('case-study shortcuts sit outside the closable panel and reach focusable proof before the demos', () => {
+  const portfolio = page('portfolio');
+  const start = portfolio.indexOf('<nav class="service-chooser" aria-label="Explore the live case study">');
+  const finish = portfolio.indexOf('</nav>', start);
+  const panel = portfolio.indexOf('data-window-panel="Featured project"');
+  const examples = portfolio.indexOf('id="example-projects"');
+  assert.ok(start > 0 && finish > start && panel > finish && examples > panel);
+  const links = [...portfolio.slice(start, finish).matchAll(/href="#([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(links, ['live-quote-proof', 'short-laptop-proof', 'recovery-proof']);
+  const proof = portfolio.slice(panel, examples);
+  for (const id of links) assert.match(proof, new RegExp('<h3 id="' + id + '" tabindex="-1">'));
+});
