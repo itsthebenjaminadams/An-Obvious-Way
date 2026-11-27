@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="/assets/page-interactions.css">  <link rel="stylesheet" href="/assets/quick-find.css?v=2">
   <script src="/assets/quick-find.js?v=14" defer></script>
   <link rel="stylesheet" href="/assets/storefront-actions.css?v=1">
-  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=4">
+  <link rel="stylesheet" href="/assets/contact-copy-feedback.css?v=5">
   <script src="/assets/contact-affordances.js?v=7" defer></script>
   <link rel="stylesheet" href="/assets/window-panels.css?v=1">
   <script src="/assets/window-panels.js?v=4" defer></script>
@@ -45,7 +45,17 @@
       <a href="#quote-web">Web development</a>
       <a href="#quote-automation">Workflow automation</a>
     </nav>
-    <div class="actions quote-guide-links"><a class="text-link webmail-jump" href="#webmail-general">No email app? Use webmail</a><a class="text-link" href="#preflight-title">What to include</a><a class="text-link" href="#after-email">What happens after I email?</a></div>
+    <details class="webmail-chooser">
+      <summary>No email app? Use webmail</summary>
+      <p class="small">Choose a service to copy its quote template into your webmail.</p>
+      <nav class="service-chooser" aria-label="Choose a webmail quote template">
+        <a href="#webmail-general">Not sure yet</a>
+        <a href="#webmail-support">Tech support</a>
+        <a href="#webmail-web">Web development</a>
+        <a href="#webmail-automation">Workflow automation</a>
+      </nav>
+    </details>
+    <div class="actions quote-guide-links"><a class="text-link" href="#preflight-title">What to include</a><a class="text-link" href="#after-email">What happens after I email?</a></div>
     <article class="quote-topic card" id="quote-general" tabindex="-1">
   <h3>Describe your project</h3><p>Not sure which service fits? A few sentences are enough. Leave out passwords and payment details.</p>
   <a class="btn primary" href="mailto:contact@anobviousway.com?subject=AOW%20quote%20request&amp;body=Hi%20AOW%2C%0D%0A%0D%0AWhat%20I%20want%20to%20accomplish%3A%0D%0AWhere%20I%20need%20help%20and%20what%20a%20good%20result%20looks%20like%3A%0D%0ADeadline%2C%20if%20any%3A%0D%0A%0D%0AThanks%21">Open general quote draft</a>
