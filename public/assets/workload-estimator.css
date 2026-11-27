@@ -8,3 +8,9 @@
 @media (max-width: 500px) {
   .workload-fields { grid-template-columns: 1fr; gap: 0; }
 }
+
+.workload-handoff { margin-block-start: .75rem; }
+.workload-handoff .field { margin-block-start: .75rem; }
+.workload-copy-status:empty { margin: 0; }
+
+.workload-handoff textarea { min-block-size: 5rem; min-height: 5rem; }
