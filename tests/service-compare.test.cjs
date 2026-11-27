@@ -49,12 +49,19 @@ test('compact comparison links to exact service cards and uses their published p
   }
   assert.match(html, /id="all-services" tabindex="-1" aria-labelledby="service-comparison-title"/);
   assert.match(html, /id="service-comparison-title">Compare services at a glance/);
-  assert.match(html, /<\/ul>\s*<a class="text-link comparison-finder-link" href="#service-finder">Find a service by goal/);
+  assert.match(html, /<\/ul>\s*<a class="text-link comparison-finder-link" href="#service-finder">Not sure\? Find a service by goal/);
+});
+
+test('buyers get one set of named service links before the offer details', () => {
+  const html = file('services/index.html');
+  const firstChoices = html.slice(html.indexOf('<h1 '), html.indexOf('<article class="card" id="tech-support"'));
+  const destinations = [...firstChoices.matchAll(/<a [^>]*href="#([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(destinations, ['tech-support', 'web-development', 'workflow-automation', 'service-finder']);
 });
 
 test('explicit finder links open the disclosure without opening it when a cached page returns', () => {
   const html = file('services/index.html');
-  assert.match(html, /href="#service-finder">Help me choose /);
+  assert.match(html, /href="#service-finder">Not sure\? Find a service by goal /);
   assert.match(html, /<details class="section" data-service-finder>\s*<summary id="service-finder">/);
   const disclosure = {open:false, querySelector: () => ({id:'service-finder'})};
   const diagnostic = {querySelector: () => ({}), closest: () => disclosure};
