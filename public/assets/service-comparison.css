@@ -36,6 +36,18 @@
   margin-bottom: .85rem;
 }
 
+.service-return {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  gap: .35rem;
+  min-height: 44px;
+  max-width: 100%;
+  font-size: .88rem;
+}
+
+.workload-navigation { align-items: baseline; }
+
 @media (max-width: 40rem) {
   .service-offers > h2 { font-size: 1.3rem; margin-bottom: .65rem; }
   .service-comparison { grid-template-columns: 1fr; }

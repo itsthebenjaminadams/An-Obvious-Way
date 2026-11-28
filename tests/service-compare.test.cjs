@@ -48,7 +48,7 @@ test('compact comparison links to exact service cards and uses their published p
     assert.ok(card.includes('<div class="price">' + price + '</div>'));
   }
   assert.match(html, /id="all-services" tabindex="-1" aria-labelledby="service-comparison-title"/);
-  assert.match(html, /id="service-comparison-title">Compare services at a glance/);
+  assert.match(html, /id="service-comparison-title" tabindex="-1">Compare services at a glance/);
   assert.match(html, /<\/ul>\s*<a class="text-link comparison-finder-link" href="#service-finder">Not sure\? Find a service by goal/);
 });
 
@@ -83,4 +83,18 @@ test('explicit finder links open the disclosure without opening it when a cached
   window.location.hash = '#service-finder';
   window.hashchange();
   assert(disclosure.open);
+});
+
+test('every offer returns to a focusable comparison heading without JavaScript', () => {
+  const html = file('services/index.html');
+  const css = file('assets/service-comparison.css');
+  const returnLink = /<a class="text-link service-return" href="#service-comparison-title">Back to service comparison /;
+  for (const offer of ['tech-support', 'web-development', 'workflow-automation']) {
+    const card = html.split('id="' + offer + '" tabindex="-1"')[1].split('</article>')[0];
+    assert.match(card, returnLink);
+  }
+  const estimator = html.split('id="workflow-time" tabindex="-1"')[1].split('</section>')[0];
+  assert.match(estimator, /href="\/contact\/#quote-automation">Discuss this workflow in a quote /);
+  assert.match(estimator, /href="#workflow-automation">Back to workflow automation details /);
+  assert.match(css, /\.service-return\s*\{[^}]*min-height:\s*44px/);
 });
