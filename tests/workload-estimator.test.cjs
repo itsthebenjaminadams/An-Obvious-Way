@@ -11,6 +11,7 @@ function fixture(clipboard = { writeText: async () => {} }) {
   const callbacks = {};
   const minutes = { valueAsNumber: 15 };
   const runs = { valueAsNumber: 4 };
+  const period = { value: 'week' };
   const result = { textContent: '' };
   const handoff = { hidden: true }, manual = { hidden: true }, status = { textContent: '' };
   const copy = { addEventListener: (_, fn) => { callbacks.copy = fn; } };
@@ -24,13 +25,13 @@ function fixture(clipboard = { writeText: async () => {} }) {
     addEventListener: (name, listener) => { callbacks[name] = listener; },
     checkValidity: () => form.valid,
     querySelector: key => ({
-      '[data-workload-minutes]': minutes, '[data-workload-runs]': runs, '[data-workload-result]': result,
+      '[data-workload-minutes]': minutes, '[data-workload-runs]': runs, '[data-workload-period]': period, '[data-workload-result]': result,
       '[data-workload-handoff]': handoff, '[data-workload-copy]': copy, '[data-workload-manual]': manual,
       '[data-workload-summary]': summary, '[data-workload-copy-status]': status
     })[key]
   };
   runInNewContext(js, { document, navigator: { clipboard } });
-  return { document, handoff, manual, status, summary, copy: () => callbacks.copy(), form, minutes, runs, result, edit: () => callbacks.input(), submit: () => {
+  return { document, handoff, manual, status, summary, copy: () => callbacks.copy(), form, minutes, runs, period, result, edit: () => callbacks.input(), submit: () => {
     let stopped = false;
     callbacks.submit({ preventDefault: () => { stopped = true; } });
     assert.ok(stopped);
@@ -83,6 +84,7 @@ test('service page offers a manual example and calculator without sending inputs
   assert.match(html, /href="\/contact\/#quote-automation">Discuss this workflow/);
   const inputs = [...form.matchAll(/<input[^>]*>/g)].map(m => m[0]);
   assert.equal(inputs.length, 2);
+  assert.match(form, /<select[^>]+data-workload-period><option value="week">Week<\/option><option value="month">Month<\/option>/);
   for (const input of inputs) assert.match(input, /type="number"[^>]*min="1"[^>]*step="1" required/);
 });
 
@@ -130,4 +132,27 @@ test('clipboard failure exposes selectable text, and a stale failure cannot rest
   assert.equal(f.manual.hidden, true);
   assert.equal(f.summary.value, '');
   assert.equal(f.status.textContent, '');
+});
+
+test('monthly work stays monthly in the estimate and the copied quote context', async () => {
+  const writes = [];
+  const f = fixture({ writeText: async text => { writes.push(text); } });
+  f.submit();
+  f.period.value = 'month';
+  f.edit();
+  assert.equal(f.result.textContent, '');
+  assert.equal(f.handoff.hidden, true);
+  await f.copy();
+  assert.deepEqual(writes, []);
+  f.minutes.valueAsNumber = 90;
+  f.runs.valueAsNumber = 1;
+  f.submit();
+  assert.equal(f.result.textContent, '1 hour 30 minutes per month. 18 hours over 12 months at the same pace.');
+  await f.copy();
+  assert.deepEqual(writes, ['Current workload for one person: 1 hour 30 minutes per run, 1 run per month (1 hour 30 minutes per month). Estimate of time spent today, not savings.']);
+  f.minutes.valueAsNumber = 1440;
+  f.runs.valueAsNumber = 32;
+  f.submit();
+  assert.match(f.result.textContent, /more than 744 hours in a month/);
+  assert.equal(f.handoff.hidden, true);
 });

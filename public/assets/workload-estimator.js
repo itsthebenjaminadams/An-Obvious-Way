@@ -4,13 +4,14 @@
   const form = document.querySelector('[data-workload]');
   const minutes = form?.querySelector('[data-workload-minutes]');
   const runs = form?.querySelector('[data-workload-runs]');
+  const period = form?.querySelector('[data-workload-period]');
   const result = form?.querySelector('[data-workload-result]');
   const handoff = form?.querySelector('[data-workload-handoff]');
   const copy = form?.querySelector('[data-workload-copy]');
   const manual = form?.querySelector('[data-workload-manual]');
   const summary = form?.querySelector('[data-workload-summary]');
   const status = form?.querySelector('[data-workload-copy-status]');
-  if (!minutes || !runs || !result) return;
+  if (!minutes || !runs || !period || !result) return;
   const canShare = handoff && copy && manual && summary && status;
   let copyOperation = 0;
 
@@ -36,15 +37,20 @@
     event.preventDefault();
     resetSummary();
     if (!form.checkValidity()) { result.textContent = ''; return; }
-    const weekly = minutes.valueAsNumber * runs.valueAsNumber;
-    if (weekly > 7 * 24 * 60) {
-      result.textContent = 'That adds up to more than 168 hours in a week. Check the minutes and runs for one person.';
+    const monthly = period.value === 'month';
+    const unit = monthly ? 'month' : 'week';
+    const count = runs.valueAsNumber;
+    const total = minutes.valueAsNumber * count;
+    const maxHours = (monthly ? 31 : 7) * 24;
+    if (total > maxHours * 60) {
+      result.textContent = `That adds up to more than ${maxHours} hours in a ${unit}. Check the minutes and runs for one person.`;
       return;
     }
-    result.textContent = `${duration(weekly)} per week. ${duration(weekly * 4)} over four weeks.`;
+    result.textContent = monthly
+      ? `${duration(total)} per month. ${duration(total * 12)} over 12 months at the same pace.`
+      : `${duration(total)} per week. ${duration(total * 4)} over four weeks.`;
     if (canShare) {
-      const count = runs.valueAsNumber;
-      summary.value = `Current workload for one person: ${duration(minutes.valueAsNumber)} per run, ${count.toLocaleString('en-US')} ${count === 1 ? 'run' : 'runs'} per week (${duration(weekly)} per week). Estimate of time spent today, not savings.`;
+      summary.value = `Current workload for one person: ${duration(minutes.valueAsNumber)} per run, ${count.toLocaleString('en-US')} ${count === 1 ? 'run' : 'runs'} per ${unit} (${duration(total)} per ${unit}). Estimate of time spent today, not savings.`;
       handoff.hidden = false;
     }
   });
