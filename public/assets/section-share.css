@@ -1,0 +1,31 @@
+.section-share { margin-block-start: .35rem; min-width: 0; }
+.section-share button {
+  min-block-size: 44px;
+  max-inline-size: 100%;
+  padding: .25rem .5rem;
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: .85rem;
+  text-align: start;
+  cursor: pointer;
+}
+.section-share button:hover { border-color: var(--accent); }
+.section-share-status { color: var(--accent); }
+.section-share-status:not(:empty) { margin-inline-start: .35rem; }
+.section-share-fallback { margin-block-start: .35rem; }
+.section-share-fallback label { display: block; }
+.section-share-fallback input {
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 44px;
+  padding: .35rem .5rem;
+  color: var(--text);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: .35rem;
+  font: inherit;
+}
