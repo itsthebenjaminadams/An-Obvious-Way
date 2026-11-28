@@ -10,7 +10,7 @@ test('live portfolio walkthrough starts at the Contact chooser, not an email app
   const end = portfolio.indexOf('id="short-laptop-proof"');
   assert.ok(start > 0 && end > start);
   const proof = portfolio.slice(start, end);
-  assert.match(proof, /href="\/contact\/#quote-choices">Try the live quote chooser/);
+  assert.match(proof, /href="\/contact\/\?from=quote-walkthrough#quote-choices">Try the live quote chooser/);
   assert.doesNotMatch(proof, /mailto:/);
   assert.match(page('contact'), /id="quote-choices" tabindex="-1"/);
   assert.match(page('contact'), /href="#quote-choices">Choose another template/);
@@ -41,4 +41,26 @@ test('case-study shortcuts sit outside the closable panel and reach focusable pr
   assert.deepEqual(links, ['live-quote-proof', 'short-laptop-proof', 'recovery-proof']);
   const proof = portfolio.slice(panel, examples);
   for (const id of links) assert.match(proof, new RegExp('<h3 id="' + id + '" tabindex="-1">'));
+});
+
+
+test('walkthrough offers a fixed return to the exact proof without changing regular quote entry', () => {
+  const { runInNewContext } = require('node:vm');
+  const contact = page('contact');
+  assert.equal([...contact.matchAll(/data-quote-walkthrough-return hidden href="\/portfolio\/#live-quote-proof"/g)].length, 6);
+  const source = readFileSync(join(__dirname, '../public/assets/contact-affordances.js'), 'utf8');
+  for (const [search, visible] of [
+    ['?from=quote-walkthrough', true],
+    ['', false],
+    ['?from=pricing', false],
+    ['?from=quote-walkthrough&from=other', false]
+  ]) {
+    const links = [{ hidden: true }, { hidden: true }];
+    runInNewContext(source, {
+      URLSearchParams,
+      document: { querySelector: () => null, querySelectorAll: selector => selector === '[data-quote-walkthrough-return]' ? links : [], addEventListener() {} },
+      window: { location: { search, hash: '#quote-choices' }, addEventListener() {} }
+    });
+    assert.deepEqual(links.map(link => !link.hidden), [visible, visible]);
+  }
 });

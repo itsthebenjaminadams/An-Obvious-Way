@@ -101,3 +101,12 @@
         link.href === window.location.href) revealWebmail();
   });
 })();
+
+(() => {
+  if (!window.location.search) return;
+  const origins = new URLSearchParams(window.location.search).getAll('from');
+  if (origins.length !== 1 || origins[0] !== 'quote-walkthrough') return;
+  for (const link of document.querySelectorAll('[data-quote-walkthrough-return]')) {
+    link.hidden = false;
+  }
+})();
